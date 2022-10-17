@@ -27,16 +27,7 @@
               >Rol
             </label>
             <div class="col-md-6 col-sm-6">
-              <select
-                class="form-control"
-                formControlName="role"
-                id="role"
-                [class.is-invalid]="
-                  addForm.get('role')?.touched &&
-                  addForm.get('role')?.invalid
-                "
-              >
-              
+              <select class="form-control" id="role">
                 <option *ngFor="let role of roles" [ngValue]="role">
                   {{ role.name }}
                 </option>
@@ -126,7 +117,7 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
-          
+
           <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
@@ -155,6 +146,7 @@
               </div>
             </div>
           </div>
+
           <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
@@ -162,11 +154,53 @@
               >Şifre
             </label>
             <div class="col-md-6 col-sm-6">
-              <input
+              <!-- <input
                 type="password"
                 id="passWord"
                 class="form-control"
+                [(ngModel)]="passWord"
+                #password="ngModel"
               />
+              <div
+                *ngIf="
+                  password.invalid == true &&
+                  (password.dirty == true || password.touched == true)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="password.value == null">
+                  Bu alan boş bırakılamaz
+                </div>
+                <div *ngIf="passWord.errors.minlength(8)">
+                  En az 8 karakter olmalıdır.
+                </div>
+                <div *ngIf="passWord.errors.maxlength(16)">
+                  En fazla 16 karakter olmalıdır.
+                </div>
+              </div> -->
+              <input
+                type="password"
+                id="name"
+                name="name"
+                class="form-control"
+                required
+                minlength="8"
+                [(ngModel)]="passWord"
+                [ngModelOptions]="{ standalone: true }"
+                #password="ngModel"
+              />
+
+              <div
+                *ngIf="password.invalid && (password.dirty || password.touched)"
+                class="text-danger"
+              >
+                <div *ngIf="password.errors?.['required']">
+                  Bu kısım boş bırakılamaz
+                </div>
+                <div *ngIf="password.errors?.['minlength']">
+                  En az 8 karakter içermelidir
+                </div>
+              </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>
@@ -177,11 +211,15 @@
               >Şifre Tekrar
             </label>
             <div class="col-md-6 col-sm-6">
-              <input
-                type="password"
-                id="passWord"
-                class="form-control"
-              />
+              <input type="text" id="confirmPassWord" class="form-control" [(ngModel)]="confirmPassWord" [ngModelOptions]="{ standalone: true }" #confirmpassWord="ngModel"/>
+              <div
+                *ngIf="confirmpassWord.invalid && (confirmpassWord.dirty || confirmpassWord.touched)"
+                class="text-danger"
+              >
+                <div *ngIf="passWord.value != confirmPassWord.value">
+                  Şifreler uyuşmuyor
+                </div>
+              </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>

@@ -103,8 +103,8 @@
                 "
               >
                 <td>{{ i + 1 }}</td>
-                <td>{{ paymentduration.duration }}</td>
-                <td>{{ paymentduration.price }}</td>
+                <td>{{ paymentduration.duration + " Ay" }}</td>
+                <td>{{ paymentduration.price | currency:"₺" }}</td>
                 <td>
                   <button
                     class="btn btn-primary"

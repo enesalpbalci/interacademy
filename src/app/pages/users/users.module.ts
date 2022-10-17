@@ -10,7 +10,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { DataTablesModule } from "angular-datatables";
 import { AddAuthoritiesComponent } from './add-authorities/add-authorities.component';
 import { UpdateAuthoritiesComponent } from './update-authorities/update-authorities.component';
-
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -29,6 +29,9 @@ import { UpdateAuthoritiesComponent } from './update-authorities/update-authorit
     FormsModule,
     NgxMaskModule.forRoot(),
     DataTablesModule
+  ],
+  providers:[
+    DatePipe,
   ],
   exports: [],
 })

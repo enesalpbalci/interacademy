@@ -20,7 +20,7 @@ export class UserService {
 
   addUser(passWord: string, roleName: string, data: User): Observable<User> {
     return this.http.post<User>(
-      `${this.apiUrl}/users?rolename=Administrator&passWord=${passWord}`,
+      `${this.apiUrl}/users?rolename=${roleName}&passWord=${passWord}`,
       data
     );
   }

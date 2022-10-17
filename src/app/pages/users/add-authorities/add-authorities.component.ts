@@ -12,29 +12,27 @@ import { PaymentDurationService } from 'src/app/services/payment-duration.servic
 import { RoleService } from 'src/app/services/role.service';
 import { UserRoleService } from 'src/app/services/user-role.service';
 import { UserService } from 'src/app/services/user.service';
-import { pipe } from 'rxjs';
-
 @Component({
   selector: 'app-add-authorities',
   templateUrl: './add-authorities.component.html',
-  styleUrls: ['./add-authorities.component.css']
+  styleUrls: ['./add-authorities.component.css'],
 })
 export class AddAuthoritiesComponent implements OnInit {
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService:UserService,
-    private roleService:RoleService,
-    private userRoleService:UserRoleService,
+    private userService: UserService,
+    private roleService: RoleService,
+    private userRoleService: UserRoleService,
   ) {}
   addForm: FormGroup;
   users: User[] = [];
   roles: Role[] = [];
 
-  passWord = 'aaaa';
+  public passWord :any;
+  public confirmPassWord:any;
   approvedId: string;
-  roleName :string;
+  roleName: string;
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group(
@@ -79,7 +77,7 @@ export class AddAuthoritiesComponent implements OnInit {
             Validators.minLength(2),
             Validators.maxLength(50),
           ],
-        ]
+        ],
       }
       // {
       //   validators: this.MustMuch('passWord', 'confirmPassword'),
@@ -89,13 +87,17 @@ export class AddAuthoritiesComponent implements OnInit {
     this.fillRoles();
   }
 
-  fillRoles(){
-    this.roleService.getAllRoles().subscribe((res)=>{
-      this.roles = res
-    },
-    (err)=>{
-      console.log(err)
-    })
+  fillRoles() {
+    this.roleService.getAllRoles().subscribe(
+      (res) => {
+        this.roles = res.filter(
+          (r) => r.name != 'Student' && r.name != 'Parent'
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   MustMuch(controlName: string, matchingControlName: string) {
@@ -113,22 +115,25 @@ export class AddAuthoritiesComponent implements OnInit {
     };
   }
 
-   addUser() {
+  addUser() {
     if (true || this.addForm.valid) {
       // await this.setDurationToForm();
-      let email = this.addForm.get('email').value
-      this.addForm.get('userName').setValue(email)
-      console.log(email)
+      let email = this.addForm.get('email').value;
+      this.addForm.get('userName').setValue(email);
+
+      console.log(email);
       // this.userRoleService.addUserRole().subscribe()
       this.userService
-        .addStudent(this.passWord, this.roleName, this.addForm.value)
-        .subscribe((res) => {
-          alert('Kullanıcı Eklendi');
-          console.log(res);
-        },
-        (err)=>{
-          alert('Kullanıcı eklenirken bir hata oluştu!')
-        });
+        .addUser(this.passWord, this.roleName, this.addForm.value)
+        .subscribe(
+          (res) => {
+            alert('Kullanıcı Eklendi');
+            console.log(res);
+          },
+          (err) => {
+            alert('Kullanıcı eklenirken bir hata oluştu!');
+          }
+        );
       this.addForm.reset();
       this.router.navigate(['/users']);
     }
@@ -184,13 +189,11 @@ export class AddAuthoritiesComponent implements OnInit {
     const paymentDurationId = this.addForm.get('paymentDurationId').value;
 
     console.log(paymentDurationId, this.roles);
-    const duration: Role = this.roles.find(
-      (paymentDuration) => {
-        if (paymentDuration.id == paymentDurationId) {
-          return paymentDuration;
-        }
+    const duration: Role = this.roles.find((paymentDuration) => {
+      if (paymentDuration.id == paymentDurationId) {
+        return paymentDuration;
       }
-    );
+    });
 
     if (typeof duration !== 'undefined') {
       this.addForm.get('userId').setValue(duration.id);

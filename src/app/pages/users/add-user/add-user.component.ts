@@ -16,6 +16,7 @@ import { PaymentDurationService } from 'src/app/services/payment-duration.servic
 import { ContractService } from 'src/app/services/contract.service';
 import { Contract } from 'src/app/models/contract.interface';
 import { UserService } from 'src/app/services/user.service';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-user',
@@ -29,7 +30,8 @@ export class AddUserComponent implements OnInit {
     private dependetDropdown: DependetDropdownService,
     private paymentDurationService: PaymentDurationService,
     private contratService: ContractService,
-    private userService:UserService
+    private userService:UserService,
+    private datePipe:DatePipe
   ) {}
   addForm: FormGroup;
   users: User[] = [];
@@ -43,7 +45,7 @@ export class AddUserComponent implements OnInit {
 
   passWord = 'aaaa';
   approvedId: string;
-  roleName = 'student'
+  roleName :string;
 
   url: string;
 
@@ -149,7 +151,7 @@ export class AddUserComponent implements OnInit {
           ],
         ],
         gender: [true, Validators.required],
-        birthDay: ['2022-10-05T17:34:03.594Z', [Validators.required]],
+        birthDay: ['', [Validators.required]],
         bloodGroup: [null, Validators.required],
         scholl: ['aaa', Validators.required],
         height: [222, Validators.required],
@@ -216,7 +218,11 @@ export class AddUserComponent implements OnInit {
       // await this.setDurationToForm();
       let email = this.addForm.get('email').value
       this.addForm.get('userName').setValue(email)
-      console.log(email)
+
+      let bDay = this.addForm.get('birthDay').value;
+      bDay = this.datePipe.transform(bDay,'yyyy-MM-dd')
+      this.addForm.get('birthDay').setValue(bDay)
+
       this.userService
         .addStudent(this.passWord, this.roleName, this.addForm.value)
         .subscribe((res) => {
@@ -227,7 +233,7 @@ export class AddUserComponent implements OnInit {
           alert('Üye eklenirken bir hata oluştu!')
         });
       this.addForm.reset();
-      this.router.navigate(['/users']);
+      this.router.navigate(['/contracts']);
     }
     console.log(this.addForm.value);
   }

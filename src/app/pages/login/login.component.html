@@ -7,7 +7,7 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form [formGroup]="loginForm" >
-              <h1>Login Form</h1>
+              <h1>Giriş</h1>
               <div>
                 <input type="text" formControlName="userName" class="form-control" placeholder="Username" />
               </div>
@@ -15,17 +15,15 @@
                 <input type="password" formControlName="passWord" class="form-control" placeholder="Password" />
               </div>
               <div>
-                <button class="btn btn-default submit" (click)="login()">Log in</button>
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <button class="btn btn-default submit" (click)="login()">Giriş Yap</button>
+                <button class="btn btn-default" href="#">Şifremi unuttum?</button>
               </div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="#signup" class="to_register"> Create Account </a>
-                </p>
-
+                  <a href="#signup" class="to_register"> Kayıt Ol </a>
+                
                 <div class="clearfix"></div>
               </div>
             </form>
