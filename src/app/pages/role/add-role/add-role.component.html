@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Rol Ekleme Formu</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <form
+          id="form"
+          data-parsley-validate
+          class="form-horizontal form-label-left"
+          [formGroup]="addForm"
+          #form="ngForm"
+          (ngSubmit)="addRole()"
+        >
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="name"
+              >Rol <small>/ Role</small>
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+                [class.is-invalid]="
+                  addForm.get('name')?.touched && addForm.get('name')?.invalid
+                "
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="ln_solid"></div>
+          <div class="item form-group">
+            <div class="col-md-6 col-sm-6 offset-md-3">
+              <button class="btn btn-primary" type="reset">Temizle</button>
+              <button type="submit" [disabled]="!form.valid" class="btn btn-success">
+                Ekle
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

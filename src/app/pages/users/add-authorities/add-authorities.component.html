@@ -1,0 +1,233 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Kullanıcı Kayıt Formu</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <form
+          id="form"
+          data-parsley-validate
+          class="form-horizontal form-label-left"
+          enctype="multipart/form-data"
+          [formGroup]="addForm"
+          #form="ngForm"
+          (ngSubmit)="addUser()"
+        >
+          <div class="item form-group">
+            <div class="col-md-3 col-sm-3 label-align"></div>
+            <h2 class="col-md-6 col-sm-6">Kullanıcı Bilgileri</h2>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="role"
+              >Rol
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                formControlName="role"
+                id="role"
+                [class.is-invalid]="
+                  addForm.get('role')?.touched &&
+                  addForm.get('role')?.invalid
+                "
+              >
+              
+                <option *ngFor="let role of roles" [ngValue]="role">
+                  {{ role.name }}
+                </option>
+              </select>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group" hidden>
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="userName"
+              >Kullanıcı Adı
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="text"
+                id="userName"
+                class="form-control"
+                formControlName="userName"
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="name"
+              >Ad
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+              />
+
+              <div
+                *ngIf="
+                  f['name'].invalid && (f['name'].dirty || f['name'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['name'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+                <div *ngIf="f['name'].errors.minlength">
+                  Minimum 2 karakter olmalıdır.
+                </div>
+                <div *ngIf="f['name'].errors.maxlength">
+                  Maksimum 50 karakter olmalıdır.
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="surName"
+              >Soyad
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="text"
+                id="surName"
+                class="form-control"
+                formControlName="surName"
+              />
+              <div
+                *ngIf="
+                  f['surName'].invalid &&
+                  (f['surName'].dirty || f['surName'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['surName'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+                <div *ngIf="f['surName'].errors.minlength">
+                  Minimum 2 karakter olmalıdır.
+                </div>
+                <div *ngIf="f['surName'].errors.maxlength">
+                  Maksimum 50 karakter olmalıdır.
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="email"
+              >E-Posta
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                id="email"
+                type="text"
+                class="form-control"
+                formControlName="email"
+              />
+              <div
+                *ngIf="
+                  f['email'].invalid && (f['email'].dirty || f['email'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['email'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+                <div *ngIf="f['email'].errors.pattern">
+                  Düzgün format ile giriniz örn: interacademy@ex.com
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="passWord"
+              >Şifre
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="password"
+                id="passWord"
+                class="form-control"
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="passWord"
+              >Şifre Tekrar
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="password"
+                id="passWord"
+                class="form-control"
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="phoneNumber"
+              >Telefon
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                id="phoneNumber"
+                type="text"
+                class="form-control"
+                formControlName="phoneNumber"
+                (keypress)="keyPress($event)"
+                [mask]="'(000)-000-00-00'"
+              />
+              <div
+                *ngIf="
+                  f['phoneNumber'].invalid &&
+                  (f['phoneNumber'].dirty || f['phoneNumber'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['phoneNumber'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+                <div *ngIf="f['phoneNumber'].errors.minlength">
+                  10 karakter olmalıdır.
+                </div>
+                <div *ngIf="f['phoneNumber'].errors.maxlength">
+                  10 karakter olmalıdır.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ln_solid"></div>
+          <div class="item form-group">
+            <div class="col-md-6 col-sm-6 offset-md-3">
+              <button class="btn btn-primary" type="reset">Temizle</button>
+              <button type="submit" class="btn btn-success">Ekle</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

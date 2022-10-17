@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Üye Güncelleme</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-box">
+                <form (ngSubmit)="updateContract()">
+                    <div class="mb-3">
+                        <label for="id" class="form-label">Id</label>
+                        <!-- <input type="text" disabled class="form-control" id="id" name="id" [(ngModel)]="userDetails.id"> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ad</label>
+                        <!-- <input type="text" class="form-control" id="name" name="name" [(ngModel)]="userDetails.name"> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Soyad</label>
+                        <!-- <input type="text" class="form-control" id="surname" name="surname" [(ngModel)]="userDetails.surName"> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">E-Mail</label>
+                        <!-- <input type="text" class="form-control" id="email" name="email" [(ngModel)]="userDetails.email"> -->
+                    </div>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

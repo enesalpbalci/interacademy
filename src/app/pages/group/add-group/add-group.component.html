@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Grup Ekleme Formu</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <div class="item form-group">
+          <label
+            class="col-form-label col-md-3 col-sm-3 label-align"
+            for="city"
+            >Şehir <small>/ City</small>
+          </label>
+          <div class="col-md-6 col-sm-6">
+            <select
+              class="form-control"
+              id="cityId"
+              [(ngModel)]="selCityId"
+              (change)="fillFacility()"
+              [class.is-invalid]="
+                city.get('cityId')?.touched &&
+                city.get('cityId')?.invalid
+              "
+            >
+              <option
+                *ngFor="let city of allCity "
+                [ngValue]="city.plateCode"
+              >
+                {{ city.name }}
+              </option>
+            </select>
+            <div class="invalide-feedback"></div>
+          </div>
+        </div>
+        <form
+          id="form"
+          data-parsley-validate
+          class="form-horizontal form-label-left"
+          [formGroup]="addForm"
+          #form="ngForm"
+          (ngSubmit)="addGroup()"
+        >
+        <div class="item form-group">
+          <label
+            class="col-form-label col-md-3 col-sm-3 label-align"
+            for="facility"
+            >Tesis <small>/ Facility</small>
+          </label>
+          <div class="col-md-6 col-sm-6">
+            <select
+              class="form-control"
+              id="facilityId"
+              formControlName="facilityId"
+              [(ngModel)]="selFacilityId"
+              (change)="fillGroup()"
+              [class.is-invalid]="
+                addForm.get('facilityId')?.touched &&
+                addForm.get('facilityId')?.invalid
+              "
+            >
+              <option
+                *ngFor="let facility of allFacility
+                "
+                [ngValue]="facility.id"
+              >
+                {{ facility.name }}
+              </option>
+            </select>
+            
+            <div class="invalide-feedback"></div>
+          </div>
+        </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="name"
+              >Grup <small>/ Group</small>
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+                [class.is-invalid]="
+                  addForm.get('name')?.touched && addForm.get('name')?.invalid
+                "
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="ln_solid"></div>
+          <div class="item form-group">
+            <div class="col-md-6 col-sm-6 offset-md-3">
+              <button class="btn btn-primary" type="reset">Temizle</button>
+              <button
+                type="submit"
+                [disabled]="!form.valid"
+                class="btn btn-success"
+              >
+                Ekle
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

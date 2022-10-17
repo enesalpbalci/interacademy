@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Ödemeler</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box">
+              <button (click)="toggleShowTable()" class="btn btn-primary">
+                Ödemeleri Listele
+              </button>
+              <div class="item form-group">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="city"
+                  >Şehir
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="city"
+                    [(ngModel)]="selCityId"
+                    (change)="fillFacility()"
+                    [class.is-invalid]="
+                      listForm.get('city')?.touched &&
+                      listForm.get('city')?.invalid
+                    "
+                  >
+                    <option
+                      *ngFor="let city of allCities"
+                      [ngValue]="city.plateCode"
+                    >
+                      {{ city.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+
+              <div class="item form-group" *ngIf="selCityId">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="facility"
+                  >Tesis
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="facility"
+                    [(ngModel)]="selFacilityId"
+                    (change)="fillPaymentList()"
+                    [class.is-invalid]="
+                      listForm.get('facility')?.touched &&
+                      listForm.get('facility')?.invalid
+                    "
+                  >
+                    <option
+                      *ngFor="let facility of allFacilities"
+                      [ngValue]="facility.id"
+                    >
+                      {{ facility.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+            </div>
+            <table
+              datatable
+              [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger"
+              class="table table-hover table-responsive"
+              style="width: 100%"
+              *ngIf="showTable|| selFacilityId; else hide"
+            >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Süre</th>
+                  <th>Fiyat</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let payment of allPayments; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ payment.paymentDate }}</td>
+                  <td>{{ payment.user }}</td>
+                  <td>
+                    <button
+                      class="btn btn-primary"
+                      routerLink="/payments/update/{{ payment.id }}"
+                    >
+                      Güncelle
+                    </button>
+                    <button
+                      class="btn btn-light"
+                      routerLink="/payments/get/{{ payment.id }}"
+                    >
+                      Detay
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ng-template #hide>
+              <div class="text-center">
+                Listelencek ödeme fiyatları için lütfen tesis seçiniz
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

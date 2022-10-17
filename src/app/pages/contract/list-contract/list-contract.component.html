@@ -1,0 +1,147 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Kontratlar</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box table-responsive">
+              <button routerLink="/users/add" class="btn btn-success">
+                Kontrat Ekle
+              </button>
+              <button (click)="toggleShowTable()" class="btn btn-primary">
+                Kontratları Listele
+              </button>
+              <div class="item form-group mt-3">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="city"
+                  >Şehir <small>/ City</small>
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="city"
+                    [(ngModel)]="selCityId"
+                    (change)="fillFacility(); fillContract()"
+                  >
+                    <option
+                      *ngFor="let city of allCities"
+                      [ngValue]="city.plateCode"
+                    >
+                      {{ city.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+
+              <div class="item form-group">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="facility"
+                  >Tesis
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="facility"
+                    [(ngModel)]="selFacilityId"
+                    (change)="fillGroup(); fillContract()"
+                  >
+                    <option
+                      *ngFor="let facility of allFacilities"
+                      [ngValue]="facility.id"
+                    >
+                      {{ facility.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+              <div class="item form-group">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="group"
+                  >Grup
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="group"
+                    [(ngModel)]="selGroupId"
+                    (change)="fillContract()"
+                  >
+                    <option
+                      *ngFor="let group of allGroups"
+                      [ngValue]="group.id"
+                    >
+                      {{ group.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+            </div>
+            <table
+              datatable
+              [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger"
+              class="table table-hover table-responsive"
+              style="width: 100%"
+              *ngIf="showTable || selCityId; else hide"
+            >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Kişi Adı</th>
+                  <th>Telefonu</th>
+                  <th>Başlama Tarihi</th>
+                  <th>Bitiş Tarihi</th>
+                  <th>Abonelik Süresi</th>
+                  <th>Fiyat</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let contract of allContracts; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ contract.student.name }}</td>
+                  <td>{{ contract.student.phoneNumber }}</td>
+                  <td>{{ contract.start | date: "longDate":"mmm" }}</td>
+                  <td>{{ contract.end | date: "longDate" }}</td>
+                  <td>{{ contract.duration }}</td>
+                  <td>{{ contract.price | currency: "₺" }}</td>
+                  <td>
+                    <button
+                      class="btn btn-primary"
+                      routerLink="/contracts/update/{{ contract.id }}"
+                    >
+                      Güncelle
+                    </button>
+                    <button
+                      class="btn btn-light"
+                      routerLink="/contracts/get/{{ contract.id }}"
+                    >
+                      Detay
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ng-template #hide>
+              <div class="text-center">
+                Listelenecek kontratlar için lütfen yukarıdaki seçenekleri
+                doldurunuz!
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

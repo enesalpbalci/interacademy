@@ -1,0 +1,36 @@
+<div *ngIf="role; else no_role">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>{{role.name}} Rol Detayı</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-box">
+                <p>Ad: {{ role.name }}</p>
+                <!-- <p>Durum: {{ role.concurrencyStamp }}</p> -->
+                <ul>
+                  <li>Yetkiler</li>
+                </ul>
+                <button class="btn btn-danger" (click)="removeRole(role.id)">
+                  Sil
+                </button>
+                <button
+                  class="btn btn-primary"
+                  routerLink="/roles/update/{{ role.id }}"
+                >
+                  Güncelle
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #no_role> Rol bulunamadı </ng-template>

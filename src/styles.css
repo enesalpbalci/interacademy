@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.dataTables_wrapper {
+  margin-top: 1.5rem;
+}
+.buttons-print,
+.buttons-pdf,
+.buttons-excel,
+.buttons-csv,
+.buttons-copy {
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.buttons-pdf {
+  background-color: #dc3545;
+}
+.buttons-print {
+  background-color: #ffc107;
+}
+.buttons-excel {
+  background-color: #198754;
+}
+.buttons-print:hover,
+.buttons-pdf:hover,
+.buttons-excel:hover,
+.buttons-csv:hover,
+.buttons-copy:hover{
+    opacity: .7;
+}

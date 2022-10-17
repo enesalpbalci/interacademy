@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Grup Güncelleme</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box">
+              <div class="mb-3">
+                <label class="form-label" for="cityId"
+                  >Şehir <small>/ City</small>
+                </label>
+                <select
+                  class="form-control"
+                  name="cityId"
+                  id="cityId"
+                  [(ngModel)]="selCityId"
+                  (change)="fillFacility()"
+                  [class.is-invalid]="
+                    updateForm.get('cityId')?.touched &&
+                    updateForm.get('cityId')?.invalid
+                  "
+                >
+                  <option *ngFor="let city of allCity" [value]="city.plateCode">
+                    {{ city.name }}
+                  </option>
+                </select>
+                <div class="invalide-feedback"></div>
+              </div>
+              <form [formGroup]="updateForm">
+                <div class="mb-3">
+                  <label for="name" class="form-label"
+                    >Tesis Adı <small>/Facility Name</small></label
+                  >
+                  <select
+                    class="form-control"
+                    formControlName="facilityId"
+                    id="facilityId"
+                    ngPreserveWhitespaces
+                    [class.is-invalid]="
+                      updateForm.get('facilityId')?.touched &&
+                      updateForm.get('facilityId')?.invalid
+                    "
+                  >
+                    <option
+                      *ngFor="let facility of allFacility"
+                      [ngValue]="facility.id"
+                    >
+                      {{ facility.name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="name" class="form-label"
+                    >Grup Adı <small>/Group Name</small></label
+                  >
+                  <input
+                    type="text"
+                    formControlName="name"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  (click)="updateGroup()"
+                  class="btn btn-primary"
+                >
+                  Güncelle
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

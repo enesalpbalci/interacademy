@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Üyelik Fiyatlandırma</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box ">
+              <button
+                routerLink="/paymentdurations/add"
+                class="btn btn-success"
+              >
+                Üyelik Fiyatı Ekle
+              </button>
+              <div class="item form-group">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="city"
+                  >Şehir 
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="city"
+                    [(ngModel)]="selCityId"
+                    (change)="fillFacility()"
+                    [class.is-invalid]="
+                      listForm.get('city')?.touched &&
+                      listForm.get('city')?.invalid
+                    "
+                  >
+                    <option
+                      *ngFor="let city of allCities"
+                      [ngValue]="city.plateCode"
+                    >
+                      {{ city.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+
+              <div class="item form-group" *ngIf="selCityId">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="facility"
+                  >Tesis
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="facility"
+                    [(ngModel)]="selFacilityId"
+                    (change)="fillListPaymentDuration()"
+                    [class.is-invalid]="
+                      listForm.get('facility')?.touched &&
+                      listForm.get('facility')?.invalid
+                    "
+                  >
+                    <option
+                      *ngFor="let facility of allFacilities"
+                      [ngValue]="facility.id"
+                    >
+                      {{ facility.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+
+             
+              <ng-template #hide>
+                <div class="text-center">
+                  Listelencek ödeme fiyatları için lütfen tesis seçiniz
+                </div>
+              </ng-template>
+            </div>
+            <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="table table-hover table-responsive"
+            style="width: 100%"
+            *ngIf="selFacilityId; else hide"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Süre</th>
+                <th>Fiyat</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                *ngFor="
+                  let paymentduration of allPaymentDurations;
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ paymentduration.duration }}</td>
+                <td>{{ paymentduration.price }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary"
+                    routerLink="/paymentdurations/update/{{
+                      paymentduration.id
+                    }}"
+                  >
+                    Güncelle
+                  </button>
+                  <button
+                    class="btn btn-light"
+                    routerLink="/PaymentDurations/get/{{paymentduration.id}}"
+                  >
+                    Detay
+                  </button>
+                  <button
+                    class="btn btn-danger"
+                    (click)="removePaymentDuration(paymentduration.id)"
+                  >
+                    Sil
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

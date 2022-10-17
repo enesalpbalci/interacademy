@@ -1,0 +1,33 @@
+<div *ngIf="facility; else no_facility">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>{{facility.name}} Tesis Detayı</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card-box">
+                  <p>Tesis Adı: {{ facility.name}}</p>
+                  <p>Bulunduğu Şehir: {{ facility.cityId }}</p>
+                    {{cityId}}
+                  <!-- <p>Durum: {{ role.concurrencyStamp }}</p> -->
+                  <button
+                    class="btn btn-primary"
+                    routerLink="/facilities/update/{{ facility.id }}"
+                  >
+                    Güncelle
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #no_facility> Tesis bulunamadı </ng-template>
+  
