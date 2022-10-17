@@ -29,8 +29,7 @@ export class AddAuthoritiesComponent implements OnInit {
   users: User[] = [];
   roles: Role[] = [];
 
-  public passWord :any;
-  public confirmPassWord:any;
+  passWord : any;
   approvedId: string;
   roleName: string;
 

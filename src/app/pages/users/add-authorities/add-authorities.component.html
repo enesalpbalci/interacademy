@@ -204,25 +204,21 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
-          <div class="item form-group">
+          <!-- <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="passWord"
               >Şifre Tekrar
             </label>
             <div class="col-md-6 col-sm-6">
-              <input type="text" id="confirmPassWord" class="form-control" [(ngModel)]="confirmPassWord" [ngModelOptions]="{ standalone: true }" #confirmpassWord="ngModel"/>
-              <div
-                *ngIf="confirmpassWord.invalid && (confirmpassWord.dirty || confirmpassWord.touched)"
-                class="text-danger"
-              >
-                <div *ngIf="passWord.value != confirmPassWord.value">
-                  Şifreler uyuşmuyor
-                </div>
-              </div>
+              <input
+                type="text"
+                id="confirmPassWord"
+                class="form-control"
+              />
               <div class="invalide-feedback"></div>
             </div>
-          </div>
+          </div> -->
           <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
