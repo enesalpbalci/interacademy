@@ -28,9 +28,11 @@
               "src/styles.css"
             ],
             "scripts": [
+              
               "src/assets/vendors/jquery/dist/jquery.min.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "src/assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js",
               "node_modules/datatables.net-buttons/js/dataTables.buttons.min.js",
               "node_modules/jszip/dist/jszip.js",
               "node_modules/pdfmake/build/pdfmake.min.js",

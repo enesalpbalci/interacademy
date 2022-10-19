@@ -22,17 +22,20 @@
 
         <!-- top navigation -->
         <app-header></app-header>
-        <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" style="min-height: 100vh;" role="main">
+        <div
+          id="main"
+          [ngStyle]="{'margin-left.px':getMargin(token)}"
+          class="right_col"
+          style="min-height: 100vh"
+          role="main"
+        >
           <router-outlet></router-outlet>
         </div>
-        <!-- /page content -->
 
         <!-- footer content -->
         <app-footer></app-footer>
-        <!-- /footer content -->
       </div>
     </div>
   </body>

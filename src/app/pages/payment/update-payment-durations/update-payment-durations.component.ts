@@ -24,7 +24,7 @@ export class UpdatePaymentDurationsComponent implements OnInit {
     private dependetDropdown: DependetDropdownService,
     private router: Router
   ) {}
-  durations : PaymentDuration[]=[]
+  durations: PaymentDuration[] = [];
   allCity: City[] = [];
   allFacility: Facility[];
 
@@ -55,7 +55,7 @@ export class UpdatePaymentDurationsComponent implements OnInit {
     );
   }
 
-  disabled:boolean=true
+  disabled: boolean = true;
 
   ngOnInit(): void {
     this.updateForm = this.formBuilder.group({
@@ -76,7 +76,7 @@ export class UpdatePaymentDurationsComponent implements OnInit {
             this.updateForm.controls['facilityId'].setValue(res.facilityId);
           },
           (error) => {
-            console.log(error)
+            console.log(error);
           }
         );
       }
@@ -100,5 +100,8 @@ export class UpdatePaymentDurationsComponent implements OnInit {
           }
         );
     }
+  }
+  get f() {
+    return this.updateForm.controls;
   }
 }

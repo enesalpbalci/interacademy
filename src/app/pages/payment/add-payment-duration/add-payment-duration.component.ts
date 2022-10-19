@@ -79,4 +79,8 @@ export class AddPaymentDurationComponent implements OnInit {
         );
     }
   }
+
+  get f(){
+    return this.addForm.controls
+  }
 }

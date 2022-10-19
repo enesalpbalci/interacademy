@@ -27,8 +27,8 @@
               >Rol
             </label>
             <div class="col-md-6 col-sm-6">
-              <select class="form-control" id="role">
-                <option *ngFor="let role of roles" [ngValue]="role">
+              <select class="form-control" id="role" formControlName="roleName">
+                <option *ngFor="let role of roles" [ngValue]="role.name">
                   {{ role.name }}
                 </option>
               </select>
@@ -71,13 +71,13 @@
                 "
                 class="text-danger"
               >
-                <div *ngIf="f['name'].errors.required">
+                <div *ngIf="f['name'].errors?.required">
                   Bu alan boş bırakılamaz
                 </div>
-                <div *ngIf="f['name'].errors.minlength">
+                <div *ngIf="f['name'].errors?.minlength">
                   Minimum 2 karakter olmalıdır.
                 </div>
-                <div *ngIf="f['name'].errors.maxlength">
+                <div *ngIf="f['name'].errors?.maxlength">
                   Maksimum 50 karakter olmalıdır.
                 </div>
               </div>
@@ -104,13 +104,13 @@
                 "
                 class="text-danger"
               >
-                <div *ngIf="f['surName'].errors.required">
+                <div *ngIf="f['surName'].errors?.required">
                   Bu alan boş bırakılamaz
                 </div>
-                <div *ngIf="f['surName'].errors.minlength">
+                <div *ngIf="f['surName'].errors?.minlength">
                   Minimum 2 karakter olmalıdır.
                 </div>
-                <div *ngIf="f['surName'].errors.maxlength">
+                <div *ngIf="f['surName'].errors?.maxlength">
                   Maksimum 50 karakter olmalıdır.
                 </div>
               </div>
@@ -137,10 +137,10 @@
                 "
                 class="text-danger"
               >
-                <div *ngIf="f['email'].errors.required">
+                <div *ngIf="f['email'].errors?.required">
                   Bu alan boş bırakılamaz
                 </div>
-                <div *ngIf="f['email'].errors.pattern">
+                <div *ngIf="f['email'].errors?.pattern">
                   Düzgün format ile giriniz örn: interacademy@ex.com
                 </div>
               </div>
@@ -154,71 +154,59 @@
               >Şifre
             </label>
             <div class="col-md-6 col-sm-6">
-              <!-- <input
-                type="password"
-                id="passWord"
-                class="form-control"
-                [(ngModel)]="passWord"
-                #password="ngModel"
-              />
-              <div
-                *ngIf="
-                  password.invalid == true &&
-                  (password.dirty == true || password.touched == true)
-                "
-                class="text-danger"
-              >
-                <div *ngIf="password.value == null">
-                  Bu alan boş bırakılamaz
-                </div>
-                <div *ngIf="passWord.errors.minlength(8)">
-                  En az 8 karakter olmalıdır.
-                </div>
-                <div *ngIf="passWord.errors.maxlength(16)">
-                  En fazla 16 karakter olmalıdır.
-                </div>
-              </div> -->
+
               <input
                 type="password"
                 id="name"
                 name="name"
                 class="form-control"
-                required
-                minlength="8"
-                [(ngModel)]="passWord"
-                [ngModelOptions]="{ standalone: true }"
-                #password="ngModel"
+                formControlName="passWord"
               />
 
               <div
-                *ngIf="password.invalid && (password.dirty || password.touched)"
+                *ngIf="f['passWord'].invalid && (f['passWord'].dirty || f['passWord'].touched)"
                 class="text-danger"
               >
-                <div *ngIf="password.errors?.['required']">
+                <div *ngIf="f['passWord'].errors?.required">
                   Bu kısım boş bırakılamaz
                 </div>
-                <div *ngIf="password.errors?.['minlength']">
-                  En az 8 karakter içermelidir
+                <div *ngIf="f['passWord'].errors?.minlength">
+                  En az 8 karakter olmalıdır!
+                </div>
+                <div *ngIf="f['passWord'].hasError('passwordStrength')">
+                  {{addForm.get('passWord').errors['passwordStrength']}}
                 </div>
               </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>
-          <!-- <div class="item form-group">
+          <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
-              for="passWord"
+              for="confirmPassWord"
               >Şifre Tekrar
             </label>
             <div class="col-md-6 col-sm-6">
               <input
-                type="text"
+                type="password"
                 id="confirmPassWord"
                 class="form-control"
+                formControlName="confirmPassWord"
               />
+              <div
+                *ngIf="f['confirmPassWord'].invalid && (f['confirmPassWord'].dirty || f['confirmPassWord'].touched)"
+                class="text-danger"
+              >
+                <div *ngIf="f['confirmPassWord'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+                <div *ngIf="f['confirmPassWord'].errors?.MustMatch">
+                  Şifreler uyuşmuyor !
+                </div>
+              </div>
               <div class="invalide-feedback"></div>
             </div>
-          </div> -->
+          </div>
           <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
@@ -241,13 +229,13 @@
                 "
                 class="text-danger"
               >
-                <div *ngIf="f['phoneNumber'].errors.required">
+                <div *ngIf="f['phoneNumber'].errors?.required">
                   Bu alan boş bırakılamaz
                 </div>
-                <div *ngIf="f['phoneNumber'].errors.minlength">
+                <div *ngIf="f['phoneNumber'].errors?.minlength">
                   10 karakter olmalıdır.
                 </div>
-                <div *ngIf="f['phoneNumber'].errors.maxlength">
+                <div *ngIf="f['phoneNumber'].errors?.maxlength">
                   10 karakter olmalıdır.
                 </div>
               </div>

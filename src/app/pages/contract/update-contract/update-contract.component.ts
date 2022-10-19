@@ -187,7 +187,7 @@ export class UpdateContractComponent implements OnInit {
     if (true || this.updateForm.valid) {
       let data: Contract = Object.assign({}, this.updateForm.value);
       this.contractService
-        .updateContract(this.contractId, data, this.approvedId)
+        .updateContract(this.contractId, data)
         .subscribe(
           (res) => {
             alert('Kontrat Güncellendi');

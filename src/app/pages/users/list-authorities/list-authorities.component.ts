@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { Role } from 'src/app/models/role.interface';
-import { Subject } from 'rxjs';
-import { User } from 'src/app/models/user.interface';
-import { RoleService } from 'src/app/services/role.service';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-
+import { User } from 'src/app/models/user.interface';
+import { Subject } from 'rxjs';
+import { Role } from 'src/app/models/role.interface';
+import { RoleService } from 'src/app/services/role.service';
 @Component({
-  selector: 'app-list-user',
-  templateUrl: './list-user.component.html',
-  styleUrls: ['./list-user.component.css']
+  selector: 'app-list-authorities',
+  templateUrl: './list-authorities.component.html',
+  styleUrls: ['./list-authorities.component.css'],
+  providers: [UserService],
 })
-export class ListUserComponent implements OnInit, OnDestroy {
-
+export class ListAuthorityComponent implements OnInit, OnDestroy {
   users: User[] = [];
   roles: Role[] = [];
+  error: any;
 
-  selRoleName:string = "Student";
+  selRoleName: string = "Administrator";
 
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -37,7 +37,6 @@ export class ListUserComponent implements OnInit, OnDestroy {
       responsive: true,
       lengthMenu: [5, 15, 25],
       destroy: true,
-      
     };
     this.getAllRoles();
     this.getUsersByRole(this.selRoleName)
@@ -48,10 +47,9 @@ export class ListUserComponent implements OnInit, OnDestroy {
     this.userService.getAllUsersByRole(roleName).subscribe(
       (data) => {
         this.users = data;
-        this.dtTrigger.next(null)
-
       },
       (error) => {
+        this.error = error;
         console.log(error);
       }
     );
@@ -60,7 +58,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
   getAllRoles() {
     this.roleService.getAllRoles().subscribe(
       (res) => {
-        this.roles = res.filter(x=>x.name=="Student");
+        this.roles = res;
+        this.dtTrigger.next(null);
       },
       (err) => {
         console.log(err);

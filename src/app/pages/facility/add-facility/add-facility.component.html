@@ -20,23 +20,26 @@
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="cityId"
-              >Şehir <small>/ City</small>
+              >Şehir
             </label>
             <div class="col-md-6 col-sm-6">
               <select
                 class="form-control"
                 formControlName="cityId"
                 id="cityId"
-                [class.is-invalid]="
-                  addForm.get('cityId')?.touched &&
-                  addForm.get('cityId')?.invalid
-                "
               >
-              
                 <option *ngFor="let city of cityList" [ngValue]="city.plateCode">
                   {{ city.name }}
                 </option>
               </select>
+              <div
+                *ngIf="f['cityId'].invalid && (f['cityId'].dirty || f['cityId'].touched)"
+                class="text-danger"
+              >
+                <div *ngIf="f['cityId'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>
@@ -44,7 +47,7 @@
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="name"
-              >Tesis <small>/ Facility</small>
+              >Tesis
             </label>
             <div class="col-md-6 col-sm-6">
               <input
@@ -52,13 +55,15 @@
                 id="name"
                 class="form-control"
                 formControlName="name"
-                [class.is-invalid]="
-                  addForm.get('name')?.touched && addForm.get('name')?.invalid
-                "
               />
-              <small class="text-danger" *ngIf="form.touched && form.invalid"
-                >Bu kısım boş olamaz.</small
+              <div
+                *ngIf="f['name'].invalid && (f['name'].dirty || f['name'].touched)"
+                class="text-danger"
               >
+                <div *ngIf="f['name'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>

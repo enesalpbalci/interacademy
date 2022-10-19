@@ -13,7 +13,7 @@
                 <label
                   class="col-form-label col-md-3 col-sm-3 label-align"
                   for="cityId"
-                  >Şehir <small>/ City</small>
+                  >Şehir 
                 </label>
                 <div class="col-md-6 col-sm-6">
                   <select
@@ -42,7 +42,7 @@
                   <label
                     class="col-form-label col-md-3 col-sm-3 label-align"
                     for="facilityId"
-                    >Tesis <small>/ Facility</small>
+                    >Tesis 
                   </label>
                   <div class="col-md-6 col-sm-6">
                     <select
@@ -77,10 +77,6 @@
                       id="duration"
                       type="number"
                       [attr.disabled]="disabled ? '' : null"
-                      [class.is-invalid]="
-                        updateForm.get('duration')?.touched &&
-                        updateForm.get('duration')?.invalid
-                      "
                     >
                       <option
                         *ngFor="let duration of durations"
@@ -89,6 +85,9 @@
                         {{ duration.duration }}
                       </option>
                     </select>
+                    <div *ngIf="f['duration'].errors?.required">
+                      Bu kısım boş bırakılamaz
+                    </div>
                     <div class="invalide-feedback"></div>
                   </div>
                 </div>
@@ -96,7 +95,7 @@
                   <label
                     class="col-form-label col-md-3 col-sm-3 label-align"
                     for="price"
-                    >Fiyat(₺) <small>/ Price</small>
+                    >Fiyat(₺)
                   </label>
                   <div class="col-md-6 col-sm-6">
                     <input
@@ -104,11 +103,10 @@
                       id="price"
                       class="form-control"
                       formControlName="price"
-                      [class.is-invalid]="
-                        updateForm.get('price')?.touched &&
-                        updateForm.get('price')?.invalid
-                      "
                     />
+                    <div *ngIf="f['price'].errors?.required">
+                      Bu kısım boş bırakılamaz
+                    </div>
                     <div class="invalide-feedback"></div>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import { UpdateContractComponent } from './update-contract/update-contract.compo
 import { ViewContractComponent } from './view-contract/view-contract.component';
 
 const routes: Routes = [
-  { path: 'add', component: AddContractComponent },
+  { path: 'add/:id', component: AddContractComponent },
   { path: '', component: ListContractComponent },
   { path: 'update/:id', component: UpdateContractComponent },
   { path: 'get/:id', component: ViewContractComponent },

@@ -12,4 +12,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  loggedIn(){
+    return localStorage.getItem("token")
+  }
 }

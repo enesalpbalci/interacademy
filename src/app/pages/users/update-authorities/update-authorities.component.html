@@ -2,7 +2,7 @@
     <div class="col-md-12 col-sm-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>Kullanıcı Ekleme Formu</h2>
+          <h2>Kullanıcı Güncelleme Formu</h2>
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -14,47 +14,27 @@
             enctype="multipart/form-data"
             [formGroup]="updateForm"
             #form="ngForm"
-            (ngSubmit)="addUser()"
+            (ngSubmit)="updateAuthority()"
           >
             <div class="item form-group">
               <div class="col-md-3 col-sm-3 label-align"></div>
               <h2 class="col-md-6 col-sm-6">Kullanıcı Bilgileri</h2>
             </div>
-            <div class="item form-group">
+            <!-- <div class="item form-group">
               <label
                 class="col-form-label col-md-3 col-sm-3 label-align"
                 for="role"
                 >Rol
               </label>
               <div class="col-md-6 col-sm-6">
-                <select
-                  class="form-control"
-                  formControlName="role"
-                  id="role"
-                >
-                  <option *ngFor="let role of roles" [ngValue]="role">
+                <select class="form-control" id="role" formControlName="roleName">
+                  <option *ngFor="let role of roles" [ngValue]="role.name">
                     {{ role.name }}
                   </option>
                 </select>
                 <div class="invalide-feedback"></div>
               </div>
-            </div>
-            <div class="item form-group" hidden>
-              <label
-                class="col-form-label col-md-3 col-sm-3 label-align"
-                for="userName"
-                >Kullanıcı Adı
-              </label>
-              <div class="col-md-6 col-sm-6">
-                <input
-                  type="text"
-                  id="userName"
-                  class="form-control"
-                  formControlName="userName"
-                />
-                <div class="invalide-feedback"></div>
-              </div>
-            </div>
+            </div> -->
             <div class="item form-group">
               <label
                 class="col-form-label col-md-3 col-sm-3 label-align"

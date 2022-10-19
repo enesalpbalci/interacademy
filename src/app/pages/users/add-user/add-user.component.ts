@@ -28,10 +28,7 @@ export class AddUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private dependetDropdown: DependetDropdownService,
-    private paymentDurationService: PaymentDurationService,
-    private contratService: ContractService,
     private userService:UserService,
-    private datePipe:DatePipe
   ) {}
   addForm: FormGroup;
   users: User[] = [];
@@ -44,7 +41,6 @@ export class AddUserComponent implements OnInit {
   selFacilityId: number;
 
   passWord = 'aaaa';
-  approvedId: string;
   roleName :string;
 
   url: string;
@@ -219,12 +215,9 @@ export class AddUserComponent implements OnInit {
       let email = this.addForm.get('email').value
       this.addForm.get('userName').setValue(email)
 
-      let bDay = this.addForm.get('birthDay').value;
-      bDay = this.datePipe.transform(bDay,'yyyy-MM-dd')
-      this.addForm.get('birthDay').setValue(bDay)
 
       this.userService
-        .addStudent(this.passWord, this.roleName, this.addForm.value)
+        .addStudent(this.passWord, this.addForm.value)
         .subscribe((res) => {
           alert('Üye Eklendi');
           console.log(res);

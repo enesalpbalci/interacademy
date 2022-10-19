@@ -79,4 +79,8 @@ export class UpdateFacilityComponent implements OnInit {
       console.log(err)
     });
   }
+
+  get f(){
+    return this.updateForm.controls
+  }
 }

@@ -15,7 +15,12 @@ export class UserService {
     let claims = JSON.parse(
       this.decodeBase64(localStorage.getItem('token')?.split('.')[1])
     );
-    return this.http.get<User[]>(`${this.apiUrl}/users?role=Administrator`);
+    let role = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    return this.http.get<User[]>(`${this.apiUrl}/users?role=${role}`);
+  }
+
+  getAllUsersByRole(roleName: string) {
+    return this.http.get<User[]>(`${this.apiUrl}/users?role=${roleName}`);
   }
 
   addUser(passWord: string, roleName: string, data: User): Observable<User> {
@@ -25,7 +30,7 @@ export class UserService {
     );
   }
 
-  addStudent(passWord: string, roleName: string, data: User): Observable<User> {
+  addStudent(passWord: string, data: User): Observable<User> {
     return this.http.post<User>(
       `${this.apiUrl}/users?rolename=Student&passWord=${passWord}`,
       data
@@ -37,7 +42,7 @@ export class UserService {
   }
 
   removeUser(id: any) {
-    return this.http.delete(`${this.apiUrl}'/users/'${id}`);
+    return this.http.delete(`${this.apiUrl}/users/${id}`);
   }
 
   getUserById(id: any): Observable<User> {

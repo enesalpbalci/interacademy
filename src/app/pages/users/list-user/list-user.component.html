@@ -1,87 +1,96 @@
 <div class="row">
-  <div class="col-md-12 col-sm-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Kullanıcılar</h2>
-        <div class="clearfix"></div>
-      </div>
-      <div class="x_content">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="card-box">
-              <button routerLink="/users/add-authority" class="btn btn-success">
-                Kullanıcı Ekle
-              </button>
-              <div class="item form-group">
-                <label
-                  class="col-form-label col-md-3 col-sm-3 label-align"
-                  for="city"
-                  >Rol Adı 
-                </label>
-                <div class="col-md-6 col-sm-6">
-                  <select
-                    class="form-control"
-                    id="city"
-                    [(ngModel)]="selRoleId"
-                    (change)="getAllUsers()"
-                  >
-                    <option *ngFor="let user of users" [ngValue]="user.name">
-                      {{ user.name }}
-                    </option>
-                  </select>
-                  <div class="invalide-feedback"></div>
+    <div class="col-md-12 col-sm-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Öğrenciler</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-box">
+                <button routerLink="/users/add-user" class="btn btn-success">
+                  Öğrenci Ekle
+                </button>
+                <div class="item form-group">
+                  <label
+                    class="col-form-label col-md-3 col-sm-3 label-align"
+                    for="city"
+                    >Rol Adı 
+                  </label>
+                  <div class="col-md-6 col-sm-6">
+                    <!-- <select
+                      class="form-control"
+                      id="city"
+                      [(ngModel)]="selRoleName"
+                      (ngModelChange)="onSelectedRoleChanged($event)"
+                    >
+                      <option *ngFor="let role of roles" [ngValue]="role.name">
+                        {{ role.name }}
+                      </option>
+                    </select> -->
+                    <input type="text" class="form-control" [disabled]="true" [(ngModel)]="selRoleName">
+                    <div class="invalide-feedback"></div>
+                  </div>
                 </div>
               </div>
+              <table
+                datatable
+                [dtOptions]="dtOptions"
+                [dtTrigger]="dtTrigger"
+                class="table table-hover table-responsive"
+                
+              >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>TC Kimlik</th>
+                    <th></th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngFor="let user of users; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.surName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phoneNumber }}</td>
+                    <td>{{ user.idNumber }}</td>
+                    <td>
+                        <button class="btn btn-success" routerLink="/contracts/add/{{user.id}}">
+                            Paket Ekle
+                        </button>
+                      <button
+                        class="btn btn-primary"
+                        routerLink="/users/update/{{ user.id }}"
+                      >
+                        Güncelle
+                      </button>
+                      <button
+                        class="btn btn-light"
+                        routerLink="/users/get/{{ user.id }}"
+                      >
+                        Detay
+                      </button>
+                      <button
+                        class="btn btn-danger"
+                        (click)="removeUser(user.id)"
+                      >
+                        Sil
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <table
-              datatable
-              [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger"
-              class="table table-hover table-responsive"
-              style="width: 100%"
-            >
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Ad</th>
-                  <th>Soyad</th>
-                  <th>Email</th>
-                  <th></th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr *ngFor="let user of users; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.surName }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>
-                    <button
-                      class="btn btn-primary"
-                      routerLink="/users/update/{{ user.id }}"
-                    >
-                      Güncelle
-                    </button>
-                    <button
-                      class="btn btn-light"
-                      routerLink="/users/get/{{ user.id }}"
-                    >
-                      Detay
-                    </button>
-                    <button
-                      class="btn btn-danger"
-                      (click)="removeUser(user.id)"
-                    >
-                      Sil
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  

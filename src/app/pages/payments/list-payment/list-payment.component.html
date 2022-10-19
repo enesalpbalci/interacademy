@@ -24,10 +24,6 @@
                     id="city"
                     [(ngModel)]="selCityId"
                     (change)="fillFacility()"
-                    [class.is-invalid]="
-                      listForm.get('city')?.touched &&
-                      listForm.get('city')?.invalid
-                    "
                   >
                     <option
                       *ngFor="let city of allCities"
@@ -52,10 +48,6 @@
                     id="facility"
                     [(ngModel)]="selFacilityId"
                     (change)="fillPaymentList()"
-                    [class.is-invalid]="
-                      listForm.get('facility')?.touched &&
-                      listForm.get('facility')?.invalid
-                    "
                   >
                     <option
                       *ngFor="let facility of allFacilities"

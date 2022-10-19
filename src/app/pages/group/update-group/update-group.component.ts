@@ -98,4 +98,8 @@ export class UpdateGroupComponent implements OnInit {
       );
     }
   }
+
+  get f(){
+    return this.updateForm.controls
+  }
 }

@@ -54,4 +54,8 @@ export class AddFacilityComponent implements OnInit {
       );
     }
   }
+
+  get f(){
+    return this.addForm.controls
+  }
 }

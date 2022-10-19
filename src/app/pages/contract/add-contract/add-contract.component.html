@@ -1,1 +1,228 @@
-<p>add-contract works!</p>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Üyelik Paketi Ekleme Formu</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <form
+          id="form"
+          data-parsley-validate
+          class="form-horizontal form-label-left"
+          enctype="multipart/form-data"
+          [formGroup]="addForm"
+          #form="ngForm"
+          (ngSubmit)="addContract()"
+        >
+          <div class="item form-group">
+            <div class="col-md-3 col-sm-3 label-align"></div>
+            <h2 class="col-md-6 col-sm-6">Kayıt Olacağı Yer</h2>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="cityId"
+              >Şehir
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                id="cityId"
+                formControlName="cityId"
+                [(ngModel)]="selCityId"
+                (change)="fillFacility()"
+              >
+                <option *ngFor="let city of cities" [ngValue]="city.plateCode">
+                  {{ city.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f['cityId'].invalid &&
+                  (f['cityId'].dirty || f['cityId'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['cityId'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div *ngIf="selCityId; else hiddenFacility" class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="facility"
+              >Tesis
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                id="facilityId"
+                formControlName="facilityId"
+                [(ngModel)]="selFacilityId"
+                (change)="fillGroup(); fillPaymentDurations()"
+              >
+                <option
+                  *ngFor="let facility of facilities"
+                  [ngValue]="facility.id"
+                >
+                  {{ facility.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f['facilityId'].invalid &&
+                  (f['facilityId'].dirty || f['facilityId'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['facilityId'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <ng-template #hiddenFacility> </ng-template>
+
+          <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="groupId"
+              >Grup
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                id="groupId"
+                formControlName="groupId"
+              >
+                <option *ngFor="let group of groups" [ngValue]="group.id">
+                  {{ group.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f['groupId'].invalid &&
+                  (f['groupId'].dirty || f['groupId'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['groupId'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <ng-template #hiddenGroup> </ng-template>
+          <div *ngIf="selFacilityId" class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Başlama Tarihi
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                id="start"
+                class="date-picker form-control"
+                formControlName="start"
+                type="date"
+              />
+              <div
+                *ngIf="
+                  f['start'].invalid && (f['start'].dirty || f['start'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['start'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div *ngIf="selFacilityId" class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="duration"
+              >Ödeme Süresi(Ay)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                formControlName="paymentDurationId"
+                id="duration"
+              >
+                <option
+                  *ngFor="let duration of paymentDurations"
+                  [ngValue]="duration.id"
+                >
+                  {{ duration.duration }}
+                </option>
+              </select>
+              {{ paymentDurations | json }}
+              <div
+                *ngIf="
+                  f['duration'].invalid &&
+                  (f['duration'].dirty || f['duration'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['duration'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div *ngIf="selFacilityId" class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="price"
+              >Fiyat(₺)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                formControlName="price"
+                [(ngModel)]="addForm.controls['price']"
+                
+              >
+                <option
+                  *ngFor="let duration of paymentDurations"
+                  [ngValue]="duration.id"
+                >
+                  {{ duration.price }}
+                </option>
+              </select>
+              {{ paymentDurations | json }}
+              <div
+                *ngIf="
+                  f['price'].invalid &&
+                  (f['price'].dirty || f['price'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['price'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          
+          <ng-template #hidden></ng-template>
+          <div class="ln_solid"></div>
+          <div class="item form-group">
+            <div class="col-md-6 col-sm-6 offset-md-3">
+              <button type="submit" class="btn btn-success">Ekle</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

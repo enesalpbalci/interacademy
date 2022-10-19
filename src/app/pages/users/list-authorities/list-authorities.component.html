@@ -2,81 +2,78 @@
   <div class="col-md-12 col-sm-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Tesisler</h2>
+        <h2>Kullanıcılar</h2>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">
-              <button routerLink="/facilities/add" class="btn btn-success">
-                Tesis Ekle
+              <button routerLink="/users/add-authority" class="btn btn-success">
+                Kullanıcı Ekle
               </button>
               <div class="item form-group">
                 <label
                   class="col-form-label col-md-3 col-sm-3 label-align"
                   for="city"
-                  >Şehir 
+                  >Rol Adı 
                 </label>
                 <div class="col-md-6 col-sm-6">
                   <select
                     class="form-control"
                     id="city"
-                    [(ngModel)]="selCityId"
-                    (ngModelChange)="fillFacility()"
-                    [class.is-invalid]="
-                      listForm.get('city')?.touched &&
-                      listForm.get('city')?.invalid
-                    "
+                    [(ngModel)]="selRoleName"
+                    (ngModelChange)="onSelectedRoleChanged($event)"
                   >
-                    <option
-                      *ngFor="let city of allCities"
-                      [ngValue]="city.plateCode"
-                    >
-                      {{ city.name }}
+                    <option *ngFor="let role of roles" [ngValue]="role.name">
+                      {{ role.name }}
                     </option>
                   </select>
                   <div class="invalide-feedback"></div>
                 </div>
               </div>
             </div>
-
             <table
               datatable
               [dtOptions]="dtOptions"
               [dtTrigger]="dtTrigger"
               class="table table-hover table-responsive"
               style="width: 100%"
-              *ngIf="selCityId; else hide"
             >
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Tesis Adı</th>
+                  <th>Ad</th>
+                  <th>Soyad</th>
+                  <th>Email</th>
+                  <th>Telefon</th>
                   <th></th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr *ngFor="let facility of allFacilities; let i = index">
+                <tr *ngFor="let user of users; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ facility.name }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.surName }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.phoneNumber }}</td>
                   <td>
                     <button
                       class="btn btn-primary"
-                      routerLink="/facilities/update/{{ facility.id }}"
+                      routerLink="/users/update/{{ user.id }}"
                     >
                       Güncelle
                     </button>
                     <button
                       class="btn btn-light"
-                      routerLink="/facilities/get/{{ facility.id }}"
+                      routerLink="/users/get/{{ user.id }}"
                     >
                       Detay
                     </button>
                     <button
                       class="btn btn-danger"
-                      (click)="removeFacility(facility.id)"
+                      (click)="removeUser(user.id)"
                     >
                       Sil
                     </button>
@@ -84,11 +81,6 @@
                 </tr>
               </tbody>
             </table>
-            <ng-template #hide>
-              <div class="text-center">
-                Listelenecek tesisler için lütfen şehir seçiniz!
-              </div>
-            </ng-template>
           </div>
         </div>
       </div>

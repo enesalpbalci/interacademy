@@ -11,7 +11,7 @@
           <label
             class="col-form-label col-md-3 col-sm-3 label-align"
             for="city"
-            >Şehir <small>/ City</small>
+            >Şehir 
           </label>
           <div class="col-md-6 col-sm-6">
             <select
@@ -19,10 +19,6 @@
               id="cityId"
               [(ngModel)]="selCityId"
               (change)="fillFacility()"
-              [class.is-invalid]="
-                city.get('cityId')?.touched &&
-                city.get('cityId')?.invalid
-              "
             >
               <option
                 *ngFor="let city of allCity "
@@ -46,7 +42,7 @@
           <label
             class="col-form-label col-md-3 col-sm-3 label-align"
             for="facility"
-            >Tesis <small>/ Facility</small>
+            >Tesis
           </label>
           <div class="col-md-6 col-sm-6">
             <select
@@ -55,10 +51,6 @@
               formControlName="facilityId"
               [(ngModel)]="selFacilityId"
               (change)="fillGroup()"
-              [class.is-invalid]="
-                addForm.get('facilityId')?.touched &&
-                addForm.get('facilityId')?.invalid
-              "
             >
               <option
                 *ngFor="let facility of allFacility
@@ -68,6 +60,14 @@
                 {{ facility.name }}
               </option>
             </select>
+            <div
+                *ngIf="f['facilityId'].invalid && (f['facilityId'].dirty || f['facilityId'].touched)"
+                class="text-danger"
+              >
+                <div *ngIf="f['facilityId'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
             
             <div class="invalide-feedback"></div>
           </div>
@@ -76,7 +76,7 @@
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="name"
-              >Grup <small>/ Group</small>
+              >Grup
             </label>
             <div class="col-md-6 col-sm-6">
               <input
@@ -84,10 +84,15 @@
                 id="name"
                 class="form-control"
                 formControlName="name"
-                [class.is-invalid]="
-                  addForm.get('name')?.touched && addForm.get('name')?.invalid
-                "
               />
+              <div
+                *ngIf="f['name'].invalid && (f['name'].dirty || f['name'].touched)"
+                class="text-danger"
+              >
+                <div *ngIf="f['name'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>

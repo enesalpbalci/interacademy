@@ -1,40 +1,75 @@
 <div class="row">
-    <div class="col-md-12 col-sm-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Tesis Güncelleme</h2>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="card-box">
-                <form [formGroup]="updateForm">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Tesis Adı <small>/Facility Name</small></label>
-                        <input appInputTrim type="text" formControlName="name" class="form-control" id="name" name="name">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Tesis Güncelleme</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box">
+              <form [formGroup]="updateForm">
+                <div class="mb-3">
+                  <select
+                    class="form-control"
+                    formControlName="cityId"
+                    id="city"
+                  >
+                    <option
+                      *ngFor="let city of cityList"
+                      [ngValue]="city.plateCode"
+                    >
+                      {{ city.name }}
+                    </option>
+                  </select>
+                  <div
+                    *ngIf="
+                      f['cityId'].invalid &&
+                      (f['cityId'].dirty || f['cityId'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div *ngIf="f['cityId'].errors?.required">
+                      Bu kısım boş bırakılamaz
                     </div>
-                    <div class="mb-3">
-                      <select
-                        class="form-control"
-                        formControlName="cityId"
-                        id="city"
-                        [class.is-invalid]="
-                          updateForm.get('city')?.touched &&
-                          updateForm.get('city')?.invalid
-                        "
-                      >
-                        <option *ngFor="let city of cityList" [ngValue]="city.plateCode">
-                          {{ city.name }}
-                        </option>
-                      </select>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="name" class="form-label">Tesis Adı </label>
+                  <input
+                    appInputTrim
+                    type="text"
+                    formControlName="name"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                  />
+                  <div
+                    *ngIf="
+                      f['name'].invalid &&
+                      (f['name'].dirty || f['name'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div *ngIf="f['name'].errors?.required">
+                      Bu kısım boş bırakılamaz
                     </div>
-                    <button type="submit" (click)="updateFacility()" class="btn btn-primary">Güncelle</button>
-                </form>
-              </div>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  (click)="updateFacility()"
+                  class="btn btn-primary"
+                >
+                  Güncelle
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

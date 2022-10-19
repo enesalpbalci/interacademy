@@ -12,6 +12,7 @@ import { PaymentDurationService } from 'src/app/services/payment-duration.servic
 import { RoleService } from 'src/app/services/role.service';
 import { UserRoleService } from 'src/app/services/user-role.service';
 import { UserService } from 'src/app/services/user.service';
+import { PasswordStrengthValidator } from 'src/app/validators/password.validators';
 @Component({
   selector: 'app-add-authorities',
   templateUrl: './add-authorities.component.html',
@@ -23,19 +24,20 @@ export class AddAuthoritiesComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private roleService: RoleService,
-    private userRoleService: UserRoleService,
+    private userRoleService: UserRoleService
   ) {}
+
   addForm: FormGroup;
   users: User[] = [];
   roles: Role[] = [];
 
-  passWord : any;
   approvedId: string;
   roleName: string;
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group(
       {
+        roleName: ['', Validators.required],
         userName: [
           '',
           [
@@ -52,6 +54,15 @@ export class AddAuthoritiesComponent implements OnInit {
             Validators.maxLength(50),
           ],
         ],
+        passWord: [
+          '',
+          [
+            Validators.required,
+            PasswordStrengthValidator,
+            Validators.minLength(8),
+          ],
+        ],
+        confirmPassWord: ['', [Validators.required, PasswordStrengthValidator]],
         email: [
           'aaaa@asd.ca',
           [
@@ -77,10 +88,10 @@ export class AddAuthoritiesComponent implements OnInit {
             Validators.maxLength(50),
           ],
         ],
+      },
+      {
+        validators: this.MustMatch('passWord', 'confirmPassWord'),
       }
-      // {
-      //   validators: this.MustMuch('passWord', 'confirmPassword'),
-      // }
     );
     console.log(this.addForm);
     this.fillRoles();
@@ -99,15 +110,20 @@ export class AddAuthoritiesComponent implements OnInit {
     );
   }
 
-  MustMuch(controlName: string, matchingControlName: string) {
+  MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
-      if (matchingControl.errors && !matchingControl.errors.MustMuch) {
+
+      if (
+        typeof matchingControl === 'undefined' ||
+        matchingControl.errors?.MustMatch
+      ) {
         return;
       }
+
       if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ MustMuch: true });
+        matchingControl.setErrors({ MustMatch: true });
       } else {
         matchingControl.setErrors(null);
       }
@@ -120,10 +136,14 @@ export class AddAuthoritiesComponent implements OnInit {
       let email = this.addForm.get('email').value;
       this.addForm.get('userName').setValue(email);
 
+      let passWord = this.addForm.get('passWord').value;
+
+      let userRole = this.addForm.get('roleName').value;
+
       console.log(email);
       // this.userRoleService.addUserRole().subscribe()
       this.userService
-        .addUser(this.passWord, this.roleName, this.addForm.value)
+        .addUser(passWord, userRole, this.addForm.value)
         .subscribe(
           (res) => {
             alert('Kullanıcı Eklendi');

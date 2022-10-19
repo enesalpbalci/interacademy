@@ -20,14 +20,12 @@
               id="cityId"
               [(ngModel)]="selCityId"
               (change)="fillFacility()"
-              [class.is-invalid]="
-                addForm.get('cityId')?.touched && addForm.get('cityId')?.invalid
-              "
             >
               <option *ngFor="let city of allCity" [value]="city.plateCode">
                 {{ city.name }}
               </option>
             </select>
+            
             <div class="invalide-feedback"></div>
           </div>
         </div>
@@ -50,10 +48,6 @@
                 class="form-control"
                 formControlName="facilityId"
                 id="facilityId"
-                [class.is-invalid]="
-                  addForm.get('facilityId')?.touched &&
-                  addForm.get('facilityId')?.invalid
-                "
               >
                 <option
                   *ngFor="let facility of allFacility"
@@ -76,11 +70,16 @@
                 class="form-control"
                 formControlName="duration"
                 type="number"
-                id="duration" [class.is-invalid]="
-                addForm.get('duration')?.touched &&
-                addForm.get('duration')?.invalid
-              "
+                id="duration"
               />
+              <div
+                *ngIf="f['duration'].invalid && (f['duration'].dirty || f['duration'].touched)"
+                class="text-danger"
+              >
+                <div *ngIf="f['duration'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>
@@ -96,10 +95,15 @@
                 id="price"
                 class="form-control"
                 formControlName="price"
-                [class.is-invalid]="
-                  addForm.get('price')?.touched && addForm.get('price')?.invalid
-                "
               />
+              <div
+              *ngIf="f['price'].invalid && (f['price'].dirty || f['price'].touched)"
+              class="text-danger"
+            >
+              <div *ngIf="f['price'].errors?.required">
+                Bu kısım boş bırakılamaz
+              </div>
+            </div>
               <div class="invalide-feedback"></div>
             </div>
           </div>

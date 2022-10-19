@@ -15,17 +15,17 @@ export class ContractService {
     return this.http.get<Contract[]>(`${this.apiUrl}/Contracts`);
   }
 
-  addContract(data: Contract, approvedId:string): Observable<Contract[]> {
-    return this.http.post<Contract[]>(`${this.apiUrl}/Contracts?=${approvedId}`, data);
+  addContract(data: Contract): Observable<Contract[]> {
+    return this.http.post<Contract[]>(`${this.apiUrl}/Contracts`, data);
   }
 
   getContractById(id: any): Observable<Contract> {
     return this.http.get<Contract>(`${this.apiUrl}/Contracts/${id}`);
   }
 
-  updateContract(id: any, updateContract: Contract, approvedId:string): Observable<Contract[]> {
+  updateContract(id: any, updateContract: Contract): Observable<Contract[]> {
     return this.http.put<Contract[]>(
-      `${this.apiUrl}/Contracts/${id}?=${approvedId}`,
+      `${this.apiUrl}/Contracts/${id}`,
       updateContract
     );
   }

@@ -10,34 +10,69 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-update-authorities',
   templateUrl: './update-authorities.component.html',
-  styleUrls: ['./update-authorities.component.css']
+  styleUrls: ['./update-authorities.component.css'],
 })
 export class UpdateAuthoritiesComponent implements OnInit {
-
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService:UserService,
-    private roleService:RoleService,
-    private userRoleService:UserRoleService,
-    private activatedRoute:ActivatedRoute
+    private userService: UserService,
+    private roleService: RoleService,
+    private activatedRoute: ActivatedRoute
   ) {}
+
   updateForm: FormGroup;
   users: User[] = [];
   roles: Role[] = [];
 
   userId: string;
-  passWord = 'aaaa';
   approvedId: string;
-  roleName :string;
 
   ngOnInit(): void {
     this.updateForm = this.formBuilder.group({
-      id: [0],
-      duration: [0, Validators.required],
-      price: [0, Validators.required],
-      facilityId: [0, Validators.required],
+      // roleName: ['', Validators.required],
+      id:[],
+      userName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
+      name: [
+        'aaa',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
+      email: [
+        'aaaa@asd.ca',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ],
+      ],
+      phoneNumber: [
+        '22222222222',
+        [
+          Validators.required,
+          Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ],
+      ],
+      surName: [
+        'ss',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
     });
     this.activatedRoute.paramMap.subscribe((params) => {
       let id = params.get('id');
@@ -52,7 +87,7 @@ export class UpdateAuthoritiesComponent implements OnInit {
             this.updateForm.controls['phoneNumber'].setValue(res.phoneNumber);
           },
           (error) => {
-            console.log(error)
+            console.log(error);
           }
         );
       }
@@ -61,50 +96,52 @@ export class UpdateAuthoritiesComponent implements OnInit {
     this.fillRoles();
   }
 
-  fillRoles(){
-    this.roleService.getAllRoles().subscribe((res)=>{
-      this.roles = res
-    },
-    (err)=>{
-      console.log(err)
-    })
-  }
-
-  MustMuch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-      if (matchingControl.errors && !matchingControl.errors.MustMuch) {
-        return;
-      }
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ MustMuch: true });
-      } else {
-        matchingControl.setErrors(null);
-      }
-    };
-  }
-
-   addUser() {
+  updateAuthority() {
     if (true || this.updateForm.valid) {
       // await this.setDurationToForm();
-      let email = this.updateForm.get('email').value
-      this.updateForm.get('userName').setValue(email)
-      console.log(email)
+      let data: User = Object.assign({}, this.updateForm.value);
+      let email = this.updateForm.get('email').value;
+      this.updateForm.get('userName').setValue(email);
+
       // this.userRoleService.addUserRole().subscribe()
-      this.userService
-        .addStudent(this.passWord, this.roleName, this.updateForm.value)
-        .subscribe((res) => {
-          alert('Kullanıcı Eklendi');
-          console.log(res);
+      this.userService.updateUser(data, this.updateForm.value).subscribe(
+        (res) => {
+          alert('Kullanıcı Güncellendi');
         },
-        (err)=>{
-          alert('Kullanıcı eklenirken bir hata oluştu!')
-        });
+        (err) => {
+          alert('Kullanıcı güncellenirdek bir hata oluştu!');
+        }
+      );
       this.updateForm.reset();
       this.router.navigate(['/users']);
     }
     console.log(this.updateForm.value);
+  }
+
+  fillRoles() {
+    this.roleService.getAllRoles().subscribe(
+      (res) => {
+        this.roles = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  MustMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors && !matchingControl.errors.MustMatch) {
+        return;
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ MustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 
   // onFileChanged(e: any) {

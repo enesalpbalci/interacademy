@@ -19,13 +19,6 @@ export class AddGroupComponent implements OnInit {
   allFacility: Facility[] = [];
   allGroup: Group[] = [];
 
-  facilityList: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
-
   selCityId: number = 0;
   selFacilityId: number = 0;
 
@@ -99,5 +92,9 @@ export class AddGroupComponent implements OnInit {
         }
       );
     }
+  }
+
+  get f(){
+    return this.addForm.controls
   }
 }

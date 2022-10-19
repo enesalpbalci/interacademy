@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router:Router, private activatedRoute:ActivatedRoute, private userService:UserService) {}
+  constructor(private router:Router, private activatedRoute:ActivatedRoute, private userService:UserService, private authService:AuthService) {}
 
   user:User
 

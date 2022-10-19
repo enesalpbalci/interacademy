@@ -1,32 +1,48 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { FacilityService } from 'src/app/services/facility.service';
 import { Subject } from 'rxjs';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-list-facility',
   templateUrl: './list-facility.component.html',
   styleUrls: ['./list-facility.component.css'],
 })
-export class ListFacilityComponent implements OnInit, OnDestroy {
+export class ListFacilityComponent implements AfterViewInit, OnInit, OnDestroy {
+
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+	dtOptions: DataTables.Settings = {};
+	dtInstance:DataTables.Api;
+	dtTrigger = new Subject();
+
   allCities: City[] = [];
   allFacilities: Facility[] = [];
 
   selCityId: number = 0;
 
   listForm: FormGroup;
-
-  dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
-
+  
   constructor(
     private dependetDropdown: DependetDropdownService,
     private facilityService: FacilityService,
     private formBuilder: FormBuilder
   ) {}
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(null);
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next(null);
+    });
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -36,7 +52,6 @@ export class ListFacilityComponent implements OnInit, OnDestroy {
         url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json',
       },
       dom: 'Bfrtip',
-      buttons:['excel', 'pdf', 'print'],
       responsive: true,
       lengthMenu: [5, 15, 25],
       destroy:true
@@ -63,7 +78,7 @@ export class ListFacilityComponent implements OnInit, OnDestroy {
     this.dependetDropdown.getAllFacilities(this.selCityId).subscribe(
       (res) => {
         this.allFacilities = res;
-        this.dtTrigger.next(null);
+        this.rerender()
       },
       (err) => {
         console.log(err);
