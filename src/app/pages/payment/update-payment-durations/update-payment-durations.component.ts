@@ -24,6 +24,7 @@ export class UpdatePaymentDurationsComponent implements OnInit {
     private dependetDropdown: DependetDropdownService,
     private router: Router
   ) {}
+
   durations: PaymentDuration[] = [];
   allCity: City[] = [];
   allFacility: Facility[];
@@ -63,7 +64,13 @@ export class UpdatePaymentDurationsComponent implements OnInit {
       duration: [0, Validators.required],
       price: [0, Validators.required],
       facilityId: [0, Validators.required],
+      cityId:[]
     });
+    this.getPaymentDuration();
+    this.fillCity();
+  }
+
+  private getPaymentDuration() {
     this.activatedRoute.paramMap.subscribe((params) => {
       let id = params.get('id');
       if (id) {
@@ -81,7 +88,6 @@ export class UpdatePaymentDurationsComponent implements OnInit {
         );
       }
     });
-    this.fillCity();
   }
 
   updatePaymentDuration() {

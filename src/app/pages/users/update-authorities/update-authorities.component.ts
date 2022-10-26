@@ -113,7 +113,7 @@ export class UpdateAuthoritiesComponent implements OnInit {
         }
       );
       this.updateForm.reset();
-      this.router.navigate(['/users']);
+      this.router.navigate(['/users/authorities']);
     }
     console.log(this.updateForm.value);
   }

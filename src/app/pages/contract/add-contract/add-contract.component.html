@@ -2,11 +2,55 @@
   <div class="col-md-12 col-sm-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Üyelik Paketi Ekleme Formu</h2>
+        <h2>Üyelik Paketi Satış Formu</h2>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
         <br />
+        <div class="item form-group">
+          <div class="col-md-3 col-sm-3 label-align"></div>
+          <h2 class="col-md-6 col-sm-6">Öğrenci Bilgileri</h2>
+        </div>
+        <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align">
+            Tc No:
+          </label>
+          <div class="col-md-6 col-sm-6">
+            <input type="text" class="form-control" readonly [(ngModel)]="userDetails &&  userDetails.idNumber">
+          </div>
+        </div>
+        <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align">
+            Ad:
+          </label>
+          <div class="col-md-6 col-sm-6">
+            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.name">
+          </div>
+        </div>
+        <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align">
+            Soyad:
+          </label>
+          <div class="col-md-6 col-sm-6">
+            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.surName">
+          </div>
+        </div>
+        <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align">
+            Telefon:
+          </label>
+          <div class="col-md-6 col-sm-6">
+            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.phoneNumber">
+          </div>
+        </div>
+        <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align">
+            E-Mail:
+          </label>
+          <div class="col-md-6 col-sm-6">
+            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.email">
+          </div>
+        </div>
         <form
           id="form"
           data-parsley-validate
@@ -20,6 +64,7 @@
             <div class="col-md-3 col-sm-3 label-align"></div>
             <h2 class="col-md-6 col-sm-6">Kayıt Olacağı Yer</h2>
           </div>
+
           <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
@@ -64,7 +109,7 @@
                 id="facilityId"
                 formControlName="facilityId"
                 [(ngModel)]="selFacilityId"
-                (change)="fillGroup(); fillPaymentDurations()"
+                (change)="fillPaymentDurations()"
               >
                 <option
                   *ngFor="let facility of facilities"
@@ -89,7 +134,7 @@
           </div>
           <ng-template #hiddenFacility> </ng-template>
 
-          <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
+          <!-- <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="groupId"
@@ -118,8 +163,38 @@
               </div>
               <div class="invalide-feedback"></div>
             </div>
-          </div>
+          </div> -->
           <ng-template #hiddenGroup> </ng-template>
+          <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              >Ödeme Süresi(Ay) 
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                id="groupId"
+                formControlName="paymentDurationId"
+                (change)="calculatePrice()"
+              >
+                <option *ngFor="let paymentDuration of paymentDurations" [ngValue]="paymentDuration.id">
+                  {{ paymentDuration.duration }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f['paymentDurationId'].invalid &&
+                  (f['paymentDurationId'].dirty || f['paymentDurationId'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['paymentDurationId'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
           <div *ngIf="selFacilityId" class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align"
               >Başlama Tarihi
@@ -148,22 +223,16 @@
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="duration"
-              >Ödeme Süresi(Ay)
+              >Kontrat Süresi(Ay)
             </label>
             <div class="col-md-6 col-sm-6">
-              <select
+              <input
                 class="form-control"
-                formControlName="paymentDurationId"
+                formControlName="duration"
+                type="number"
                 id="duration"
-              >
-                <option
-                  *ngFor="let duration of paymentDurations"
-                  [ngValue]="duration.id"
-                >
-                  {{ duration.duration }}
-                </option>
-              </select>
-              {{ paymentDurations | json }}
+                (change)="calculatePrice()"
+              />
               <div
                 *ngIf="
                   f['duration'].invalid &&
@@ -171,8 +240,8 @@
                 "
                 class="text-danger"
               >
-                <div *ngIf="f['duration'].errors.required">
-                  Bu alan boş bırakılamaz
+                <div *ngIf="f['duration'].errors?.required">
+                  Bu kısım boş bırakılamaz
                 </div>
               </div>
               <div class="invalide-feedback"></div>
@@ -185,35 +254,17 @@
               >Fiyat(₺)
             </label>
             <div class="col-md-6 col-sm-6">
-              <select
+              <input
                 class="form-control"
                 formControlName="price"
-                [(ngModel)]="addForm.controls['price']"
-                
-              >
-                <option
-                  *ngFor="let duration of paymentDurations"
-                  [ngValue]="duration.id"
-                >
-                  {{ duration.price }}
-                </option>
-              </select>
-              {{ paymentDurations | json }}
-              <div
-                *ngIf="
-                  f['price'].invalid &&
-                  (f['price'].dirty || f['price'].touched)
-                "
-                class="text-danger"
-              >
-                <div *ngIf="f['price'].errors.required">
-                  Bu alan boş bırakılamaz
-                </div>
-              </div>
+                type="number"
+                id="price"
+                readonly
+              />
               <div class="invalide-feedback"></div>
             </div>
           </div>
-          
+
           <ng-template #hidden></ng-template>
           <div class="ln_solid"></div>
           <div class="item form-group">

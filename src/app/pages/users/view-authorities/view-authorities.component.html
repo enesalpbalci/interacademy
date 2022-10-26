@@ -1,0 +1,31 @@
+<div *ngIf="user; else no_user">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Kullanıcı Detay</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card-box">
+                  <p> Ad: <b>{{ user?.name }}</b></p>
+                  <p> Soyad: <b>{{ user?.surName }}</b></p>
+                  <p> E-Mail: <b>{{ user?.email }}</b></p>
+                  <p> Telefon: <b>{{ user?.phoneNumber }}</b></p>
+                  <button class="btn btn-danger" (click)="removeUser(user.id)">
+                    Sil
+                  </button>
+                  <button class="btn btn-primary" routerLink="/users/authority/update/{{user.id}}">Güncelle</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #no_user> üye bulunamadı </ng-template>
+  

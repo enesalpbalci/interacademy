@@ -8,8 +8,8 @@ export interface Contract {
   id: number
   studentId: string
   approverId:string
-  start: string
-  end: string
+  start: Date
+  end: Date
   duration: number
   paymentDurationId: number
   userId: string

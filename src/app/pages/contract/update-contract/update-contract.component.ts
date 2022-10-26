@@ -1,6 +1,8 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { UserIdHelper } from 'src/app/helper/user-id.helper';
 import { City } from 'src/app/models/city.interface';
 import { Contract } from 'src/app/models/contract.interface';
 import { Facility } from 'src/app/models/facility.interface';
@@ -10,6 +12,7 @@ import { User } from 'src/app/models/user.interface';
 import { ContractService } from 'src/app/services/contract.service';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { PaymentDurationService } from 'src/app/services/payment-duration.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-update-contract',
@@ -18,7 +21,11 @@ import { PaymentDurationService } from 'src/app/services/payment-duration.servic
 })
 export class UpdateContractComponent implements OnInit {
   updateForm: FormGroup;
+
   users: User[] = [];
+  userDetails: User | undefined;
+  contract: Contract;
+  userId: string;
   cities: City[] = [];
   facilities: Facility[] = [];
   groups: Group[] = [];
@@ -26,233 +33,132 @@ export class UpdateContractComponent implements OnInit {
   selectedDuration: PaymentDuration;
   selCityId: number;
   selFacilityId: number;
-  url: string;
-  contractId: string;
 
-  passWord = 'aaaa';
-  approvedId: string;
+  approved: boolean = true;
+
   constructor(
-    private dependetDropdown: DependetDropdownService,
-    private paymentDurationService: PaymentDurationService,
     private contractService: ContractService,
+    private paymentDurationService: PaymentDurationService,
+    private dependetDropdown: DependetDropdownService,
     private formBuilder: FormBuilder,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.updateForm = this.formBuilder.group({
-      id: [''],
-      userId: ['0'],
-      studentId: ['0'],
-      start: ['2022-10-05T17:34:03.594Z', Validators.required],
-      end: ['2022-11-05T17:34:03.594Z'],
-      paymentDurationId: [0],
-      duration: [0],
-      price: [0],
-      approverId: [''],
-      student: this.formBuilder.group({
-        id: [''],
-        image: [''],
-        userName: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(50),
-          ],
-        ],
-        name: [
-          'aaa',
-          [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(50),
-          ],
-        ],
-        email: [
-          'aaaa@asd.ca',
-          [
-            Validators.required,
-            Validators.email,
-            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-          ],
-        ],
-        phoneNumber: [
-          '22222222222',
-          [
-            Validators.required,
-            Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
-            Validators.minLength(10),
-            Validators.maxLength(10),
-          ],
-        ],
-        surName: [
-          'ss',
-          [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(50),
-          ],
-        ],
-        idNumber: [
-          '22222222222',
-          [
-            Validators.required,
-            Validators.maxLength(11),
-            Validators.minLength(11),
-            Validators.pattern(/\-?\d*\.?\d{1,2}/),
-          ],
-        ],
-        gender: [true, Validators.required],
-        birthDay: ['2022-10-05T17:34:03.594Z', [Validators.required]],
-        bloodGroup: [null, Validators.required],
-        scholl: ['aaa', Validators.required],
-        height: [222, Validators.required],
-        weight: [222, Validators.required],
-        groupId: [0],
-        cityId: [],
-        facilityId: [],
-        duration: [0, Validators.required],
-        address: [
-          'aaaaaaaaaaaaaaaaaaaaaa',
-          [
-            Validators.maxLength(256),
-            Validators.required,
-            Validators.minLength(16),
-          ],
-        ],
-        emergencyPerson: ['asdas', Validators.required],
-        diseases: [''],
-        allergies: [''],
-        foodRestrictions: [''],
-        mother: this.formBuilder.group({
-          userName: ['mother1@test.com'],
-          email: ['mother1@test.com'],
-          phoneNumber: ['1234567890'],
-          name: ['Mother1'],
-          surName: ['MotherSurName'],
-          gender: false,
-          profession: ['Anne meslek'],
-          address: ['Anne adres'],
-        }),
-        father: this.formBuilder.group({
-          userName: ['father@test.com'],
-          email: ['father1@test.com'],
-          phoneNumber: ['1234567890'],
-          name: ['Father1'],
-          surName: ['FatherSurName'],
-          gender: true,
-          profession: ['Baba meslek'],
-          address: ['Baba adres'],
-        }),
-      }),
-    });
-    this.activatedRoute.paramMap.subscribe((params) => {
-      let id = params.get('id');
-      if (id) {
-        this.contractId = id;
-        this.contractService.getContractById(id).subscribe(
-          (res) => {
-            this.updateForm.controls['id'].setValue(res.id);
-            this.updateForm.controls['duration'].setValue(res.duration);
-            this.updateForm.controls['price'].setValue(res.price);
-            this.updateForm.controls['start'].setValue(res.start);
-            this.updateForm.controls['end'].setValue(res.end);
-            this.updateForm.controls['price'].setValue(res.price);
-            this.updateForm.controls['studentId'].setValue(res.studentId);
-            this.updateForm.controls['paymentDurationId'].setValue(
-              res.paymentDurationId
-            );
-            this.updateForm.controls['approverId'].setValue(res.approverId);
-            this.updateForm.controls['userId'].setValue(res.userId);
-            this.updateForm.controls['user'].setValue(res.user);
-            this.updateForm.controls['student'].setValue(res.student);
-            this.updateForm.controls['paymentDuration'].setValue(res.paymentDuration);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
-    });
-    this.fillCity();
+    this.userId = UserIdHelper();
+    console.log(UserIdHelper());
+    this.createForm();
+    this.loadForm();
   }
 
-  get f() {
-    return this.updateForm.controls;
+  getByContractId() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.contractService.getContractById(params['id']).subscribe((data) => {
+        this.contract = data;
+        this.updateForm.get('studentId').setValue(data.student.id);
+        this.updateForm.controls['id'].setValue(data.id);
+        this.updateForm.controls['name'].setValue(data.student.name);
+        this.updateForm.controls['surName'].setValue(data.student.surName);
+        this.updateForm.controls['email'].setValue(data.student.email);
+        this.updateForm.controls['phoneNumber'].setValue(
+          data.student.phoneNumber
+        );
+        this.updateForm.controls['userId'].setValue(data.userId)
+
+        console.log(this.facilities);
+        let facility = this.facilities.filter(
+          (e) => e.id == data.paymentDuration.facilityId
+        )[0];
+        this.updateForm.controls['cityId'].setValue(facility.cityId);
+        this.fillPaymentDurations(facility.id);
+        this.updateForm.controls['facilityId'].setValue(
+          data.paymentDuration.facilityId
+        );
+        this.updateForm.controls['paymentDurationId'].setValue(
+          data.paymentDurationId
+        );
+        this.updateForm.controls['duration'].setValue(data.duration);
+        this.updateForm.controls['start'].setValue(formatDate(data.start.toString(),'dd.MM.yyyy','en'));
+        this.updateForm.controls['price'].setValue(data.price);
+        setTimeout(() => {
+          this.calculatePrice();
+        }, 150);
+      });
+    });
+  }
+
+  createForm() {
+    this.updateForm = this.formBuilder.group({
+      id: [],
+      cityId: [''],
+      facilityId: [''],
+      studentId: ['', Validators.required],
+      start: ['', [Validators.required]],
+      userId: ['', Validators.required],
+      paymentDurationId: [null],
+      price: [null, Validators.required],
+      approverId: ['0', Validators.required],
+      duration: [null, Validators.required],
+      name: [],
+      surName: [],
+      email: [],
+      phoneNumber: [],
+      approved: [],
+    });
+  }
+  checkValue(event: any) {
+    console.log(event);
   }
 
   updateContract() {
-    if (true || this.updateForm.valid) {
+    if (this.updateForm.valid) {
+      // await this.setDurationToForm();
       let data: Contract = Object.assign({}, this.updateForm.value);
       this.contractService
-        .updateContract(this.contractId, data)
+        .updateContract(data.id, this.updateForm.value, this.approved)
         .subscribe(
           (res) => {
             alert('Kontrat Güncellendi');
-            this.updateForm.reset();
-            this.router.navigate(['/contracts']);
+            console.log(res);
           },
           (err) => {
-            alert('Kontrat güncellenirken bir hata oluştu');
+            alert('Kontrat güncellenirken bir hata oluştu!');
           }
         );
+      this.updateForm.reset();
+      this.router.navigate(['/contracts']);
     }
-  }
-
-  onFileChanged(e: any) {
-    let files = e.target.files;
-    if (files[0]) {
-      this.readAsByteArray(files[0]);
-      this.readAsDataURL(files[0]);
-    }
-  }
-
-  readAsByteArray(file: any) {
-    var reader = new FileReader();
-    var fileByteArray: number[] = [];
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = (evt) => {
-      if (evt.target.readyState == FileReader.DONE) {
-        this.url = evt.target.result as string;
-        let arrayBuffer = evt.target.result as ArrayBuffer;
-        let array = new Uint8Array(arrayBuffer);
-        for (let i = 0; i < array.length; i++) {
-          fileByteArray.push(array[i]);
-        }
-        this.updateForm.controls['student.image'].setValue(fileByteArray);
-      }
-    };
-  }
-
-  readAsDataURL(file: any) {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = (event: any) => {
-      this.url = event.target.result;
-    };
+    console.log(this.updateForm.value);
   }
 
   fillCity() {
     this.dependetDropdown.getAllCities().subscribe(
       (res) => {
         this.cities = res;
+        return res;
       },
       (err) => {
         console.log(err);
+        return null;
       }
     );
   }
-  fillFacility() {
-    this.dependetDropdown.getAllFacilities(this.selCityId).subscribe(
+  fillFacility(cityId: number) {
+    this.dependetDropdown.getAllFacilities(cityId).subscribe(
       (res) => {
         this.facilities = res;
+        return res;
       },
       (err) => {
         console.log(err);
+        return null;
       }
     );
+  }
+  fillFacilitySelected() {
+    this.fillFacility(this.selCityId);
   }
 
   fillGroup() {
@@ -268,44 +174,72 @@ export class UpdateContractComponent implements OnInit {
       );
   }
 
-  fillPaymentDurations() {
-    this.paymentDurationService
-      .getAllPaymentDurations(this.selFacilityId)
-      .subscribe(
-        (res) => {
-          this.paymentDurations = res;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+  fillPaymentDurations(facilityId: number) {
+    this.paymentDurationService.getAllPaymentDurations(facilityId).subscribe(
+      (res) => {
+        console.log(res);
+        this.paymentDurations = res;
+        return res;
+      },
+      (err) => {
+        console.log(err);
+        return null;
+      }
+    );
+  }
+  fillPaymentDurationSelected() {
+    this.fillPaymentDurations(this.selFacilityId);
   }
 
-  keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
-    let inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && !pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  async setDurationToForm(): Promise<boolean> {
-    const paymentDurationId = this.updateForm.get('paymentDurationId').value;
-
-    console.log(paymentDurationId, this.paymentDurations);
-    const duration: PaymentDuration = this.paymentDurations.find(
+  getPaymentDurationById(id: number): undefined | PaymentDuration {
+    const paymentDuration: PaymentDuration[] = this.paymentDurations.filter(
       (paymentDuration) => {
-        if (paymentDuration.id == paymentDurationId) {
-          return paymentDuration;
-        }
+        return paymentDuration.id === id;
       }
     );
 
-    if (typeof duration !== 'undefined') {
-      this.updateForm.get('duration').setValue(duration.duration);
-      this.updateForm.get('price').setValue(duration.price);
+    return paymentDuration[0];
+  }
+
+  calculatePrice() {
+    const contractDuration = parseInt(
+      this.updateForm.get('duration').value || 0
+    );
+    const paymentDurationId = parseInt(
+      this.updateForm.get('paymentDurationId').value || 0
+    );
+
+    if (contractDuration === 0 || paymentDurationId === 0) {
+      return;
     }
 
-    return true;
+    const paymentDuration = this.getPaymentDurationById(paymentDurationId);
+    const paymentCount = contractDuration / paymentDuration.duration;
+
+    this.updateForm.get('price').setValue(paymentCount * paymentDuration.price);
+  }
+
+  get f() {
+    return this.updateForm.controls;
+  }
+  loadForm(){
+    
+    this.dependetDropdown.getAllCities().subscribe(
+      (cRes) => {
+        this.cities = cRes;
+        this.dependetDropdown.getAllFacilities(null).subscribe(
+          (fRes) => {
+            this.facilities = fRes;
+            this.getByContractId();
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

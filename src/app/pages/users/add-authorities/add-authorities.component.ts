@@ -154,7 +154,7 @@ export class AddAuthoritiesComponent implements OnInit {
           }
         );
       this.addForm.reset();
-      this.router.navigate(['/users']);
+      this.router.navigate(['/users/authorities']);
     }
     console.log(this.addForm.value);
   }

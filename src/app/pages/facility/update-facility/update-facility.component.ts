@@ -20,14 +20,14 @@ export class UpdateFacilityComponent implements OnInit {
     private router: Router
   ) {}
 
-  cityList: City[]=[];
+  allCities: City[]=[];
 
   facilityId: string;
   updateForm: FormGroup;
 
   ngOnInit(): void {
     this.updateForm = this.formBuilder.group({
-      id: [this.facilityId],
+      id: [''],
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       cityId: [''],
     });
@@ -41,11 +41,6 @@ export class UpdateFacilityComponent implements OnInit {
             this.updateForm.controls['id'].setValue(res.id);
             this.updateForm.controls['name'].setValue(res.name);
             this.updateForm.controls['cityId'].setValue(res.cityId);
-            // this.updateForm.controls['city'].setValue(
-            //   res.city.plateCode,
-            //   res.city.name
-            // );
-            // this.updateForm.controls['deleted'].setValue(res.deleted);
           },
           (err) => {
             console.log(err)
@@ -73,7 +68,7 @@ export class UpdateFacilityComponent implements OnInit {
   }
   getAllCities() {
     this.cityService.getAllCities().subscribe((data: any) => {
-      this.cityList = data;
+      this.allCities = data;
     },
     (err)=>{
       console.log(err)

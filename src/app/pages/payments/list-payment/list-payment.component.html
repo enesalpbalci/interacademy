@@ -66,13 +66,17 @@
               [dtTrigger]="dtTrigger"
               class="table table-hover table-responsive"
               style="width: 100%"
-              *ngIf="showTable|| selFacilityId; else hide"
+              *ngIf="showTable || selFacilityId; else hide"
             >
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Süre</th>
+                  <th>Üye</th>
+                  <th>Ödeme Tarihi</th>
+                  <th>Bitiş Tarihi</th>
                   <th>Fiyat</th>
+                  <th>Ödeme Tipi</th>
+                  <th>Not</th>
                   <th></th>
                 </tr>
               </thead>
@@ -80,21 +84,25 @@
               <tbody>
                 <tr *ngFor="let payment of allPayments; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ payment.paymentDate }}</td>
-                  <td>{{ payment.user }}</td>
+                  <td></td>
+                  <td>{{ payment.paymentDate | date }}</td>
+                  <td>{{ payment.dueDate | date }}</td>
+                  <td>{{payment.amount | currency : "₺"}}</td>
+                  <td>{{payment.type}}</td>
+                  <td>{{payment.note}}</td>
                   <td>
                     <button
                       class="btn btn-primary"
-                      routerLink="/payments/update/{{ payment.id }}"
+                      routerLink="/payments/get/{{ payment.id }}"
                     >
                       Güncelle
                     </button>
-                    <button
+                    <!-- <button
                       class="btn btn-light"
                       routerLink="/payments/get/{{ payment.id }}"
                     >
                       Detay
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>

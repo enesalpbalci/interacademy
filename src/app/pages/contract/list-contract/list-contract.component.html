@@ -96,7 +96,8 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Kişi Adı</th>
+                  <th>Tc No</th>
+                  <th>Ad Soyad</th>
                   <th>Telefonu</th>
                   <th>Başlama Tarihi</th>
                   <th>Bitiş Tarihi</th>
@@ -109,25 +110,26 @@
               <tbody>
                 <tr *ngFor="let contract of allContracts; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td>{{ contract.student.name }}</td>
+                  <td>{{ contract.student.idNumber }} </td>
+                  <td>{{ contract.student.name }} {{contract.student.surName}}</td>
                   <td>{{ contract.student.phoneNumber }}</td>
                   <td>{{ contract.start | date: "longDate":"mmm" }}</td>
                   <td>{{ contract.end | date: "longDate" }}</td>
-                  <td>{{ contract.duration }}</td>
+                  <td>{{ contract.duration }} Ay</td>
                   <td>{{ contract.price | currency: "₺" }}</td>
                   <td>
                     <button
                       class="btn btn-primary"
-                      routerLink="/contracts/update/{{ contract.id }}"
+                      routerLink="/contracts/get/{{ contract.id }}"
                     >
                       Güncelle
                     </button>
-                    <button
+                    <!-- <button
                       class="btn btn-light"
                       routerLink="/contracts/get/{{ contract.id }}"
                     >
                       Detay
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>

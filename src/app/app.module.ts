@@ -42,7 +42,7 @@ import { LoginGuard } from './guards/login.guard';
     MatInputModule,
   ],
   providers: [
-    { provide: 'apiUrl', useValue: 'http://localhost:5000/api' },
+    { provide: 'apiUrl', useValue: 'http://185.95.164.188/api' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     LoginGuard
   ],

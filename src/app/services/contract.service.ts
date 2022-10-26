@@ -23,9 +23,9 @@ export class ContractService {
     return this.http.get<Contract>(`${this.apiUrl}/Contracts/${id}`);
   }
 
-  updateContract(id: any, updateContract: Contract): Observable<Contract[]> {
+  updateContract(id: any, updateContract: Contract, approved:boolean): Observable<Contract[]> {
     return this.http.put<Contract[]>(
-      `${this.apiUrl}/Contracts/${id}`,
+      `${this.apiUrl}/Contracts/${id}?approved=${approved}`,
       updateContract
     );
   }

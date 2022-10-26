@@ -10,9 +10,21 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="card-box">
-                <p>Ad: {{ user.name }}</p>
-                <p>Soyad: {{ user.surName }}</p>
-                <p>E-Mail: {{ user.email }}</p>
+                <p> Ad: <b>{{ user?.name }}</b></p>
+                <p> Soyad: <b>{{ user?.surName }}</b></p>
+                <p> E-Mail: <b>{{ user?.email }}</b></p>
+                <p> Telefon: <b>{{ user?.phoneNumber }}</b></p>
+                <p> Tc No: <b>{{ user?.idNumber }}</b></p>
+                <p> Boy: <b>{{ user?.height }}</b></p>
+                <p> Kilo: <b>{{ user?.weight }}</b></p>
+                <p> Doğum Günü: <b>{{ user?.birthDay | date:"dd-MM-yyyy" }}</b></p>
+                <p> Okul: <b>{{ user?.school }}</b></p>
+                <p> Adres: <b>{{ user?.address }}</b></p>
+                <p> Hastalıklar: <b>{{ user?.diseases }}</b></p>
+                <p> Alerjiler: <b>{{ user?.allergies }}</b></p>
+                <p> Gıda Reaksiyonları: <b>{{ user?.foodRestrictions }}</b></p>
+
+
                 <button class="btn btn-danger" (click)="removeUser(user.id)">
                   Sil
                 </button>

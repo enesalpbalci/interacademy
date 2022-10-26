@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+} from '@angular/core';
 import { FacilityService } from 'src/app/services/facility.service';
 import { Subject } from 'rxjs';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
@@ -6,19 +12,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { DataTableDirective } from 'angular-datatables';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-facility',
   templateUrl: './list-facility.component.html',
   styleUrls: ['./list-facility.component.css'],
 })
-export class ListFacilityComponent implements AfterViewInit, OnInit, OnDestroy {
-
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
-	dtOptions: DataTables.Settings = {};
-	dtInstance:DataTables.Api;
-	dtTrigger = new Subject();
+export class ListFacilityComponent implements OnInit, OnDestroy {
+  dtOptions: any = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   allCities: City[] = [];
   allFacilities: Facility[] = [];
@@ -26,22 +29,16 @@ export class ListFacilityComponent implements AfterViewInit, OnInit, OnDestroy {
   selCityId: number = 0;
 
   listForm: FormGroup;
-  
+
   constructor(
     private dependetDropdown: DependetDropdownService,
     private facilityService: FacilityService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router:Router
   ) {}
 
   ngAfterViewInit(): void {
     this.dtTrigger.next(null);
-  }
-
-  rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next(null);
-    });
   }
 
   ngOnInit(): void {
@@ -52,9 +49,20 @@ export class ListFacilityComponent implements AfterViewInit, OnInit, OnDestroy {
         url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json',
       },
       dom: 'Bfrtip',
+      buttons: [
+        {
+          text: 'Tesis Ekle',
+          action: (): void => {
+            this.router.navigate(['/facilities/add']);
+          },
+          className: 'btn btn-info',
+        },
+        'excel',
+        'pdfHtml5',
+        'print',
+      ],
       responsive: true,
       lengthMenu: [5, 15, 25],
-      destroy:true
     };
     this.listForm = this.formBuilder.group({
       city: [],
@@ -73,12 +81,12 @@ export class ListFacilityComponent implements AfterViewInit, OnInit, OnDestroy {
       }
     );
   }
-  
+
   fillFacility() {
     this.dependetDropdown.getAllFacilities(this.selCityId).subscribe(
       (res) => {
         this.allFacilities = res;
-        this.rerender()
+        this.dtTrigger.next(null);
       },
       (err) => {
         console.log(err);

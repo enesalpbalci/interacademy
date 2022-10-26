@@ -149,10 +149,9 @@ export class AddUserComponent implements OnInit {
         gender: [true, Validators.required],
         birthDay: ['', [Validators.required]],
         bloodGroup: [null, Validators.required],
-        scholl: ['aaa', Validators.required],
+        school: ['', Validators.required],
         height: [222, Validators.required],
         weight: [222, Validators.required],
-        duration: [0, Validators.required],
         address: [
           'aaaaaaaaaaaaaaaaaaaaaa',
           [
@@ -161,7 +160,7 @@ export class AddUserComponent implements OnInit {
             Validators.minLength(16),
           ],
         ],
-        emergencyPerson: ['asdas', Validators.required],
+        emergencyPerson: ['', Validators.required],
         diseases: [''],
         allergies: [''],
         foodRestrictions: [''],
@@ -185,12 +184,16 @@ export class AddUserComponent implements OnInit {
           profession: ['Baba meslek'],
           address: ['Baba adres'],
         }),
+        cityId:[],
+        facilityId:[],
+        groupId:[],
       }
       // {
       //   validators: this.MustMuch('passWord', 'confirmPassword'),
       // }
     );
     console.log(this.addForm);
+
     this.fillCity();
   }
 
@@ -215,9 +218,14 @@ export class AddUserComponent implements OnInit {
       let email = this.addForm.get('email').value
       this.addForm.get('userName').setValue(email)
 
+      let motherEmail = this.addForm.get('mother.email').value
+      this.addForm.get('mother.userName').setValue(motherEmail)
+      
+      let fatherEmail = this.addForm.get('father.email').value
+      this.addForm.get('father.userName').setValue(fatherEmail)
 
       this.userService
-        .addStudent(this.passWord, this.addForm.value)
+        .addStudent(this.passWord,this.roleName, this.addForm.value)
         .subscribe((res) => {
           alert('Üye Eklendi');
           console.log(res);
@@ -226,7 +234,7 @@ export class AddUserComponent implements OnInit {
           alert('Üye eklenirken bir hata oluştu!')
         });
       this.addForm.reset();
-      this.router.navigate(['/contracts']);
+      this.router.navigate(['users/students']);
     }
     console.log(this.addForm.value);
   }

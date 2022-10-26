@@ -9,15 +9,15 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="card-box">
-                <button routerLink="/users/add-user" class="btn btn-success">
+                <!-- <button routerLink="/users/add-user" class="btn btn-success">
                   Öğrenci Ekle
-                </button>
+                </button> -->
                 <div class="item form-group">
-                  <label
+                  <!-- <label
                     class="col-form-label col-md-3 col-sm-3 label-align"
                     for="city"
                     >Rol Adı 
-                  </label>
+                  </label> -->
                   <div class="col-md-6 col-sm-6">
                     <!-- <select
                       class="form-control"
@@ -29,7 +29,7 @@
                         {{ role.name }}
                       </option>
                     </select> -->
-                    <input type="text" class="form-control" [disabled]="true" [(ngModel)]="selRoleName">
+                    <input type="text" class="form-control" readonly hidden [(ngModel)]="selRoleName">
                     <div class="invalide-feedback"></div>
                   </div>
                 </div>
@@ -63,20 +63,20 @@
                     <td>{{ user.idNumber }}</td>
                     <td>
                         <button class="btn btn-success" routerLink="/contracts/add/{{user.id}}">
-                            Paket Ekle
+                            Paket Sat
                         </button>
                       <button
                         class="btn btn-primary"
-                        routerLink="/users/update/{{ user.id }}"
+                        routerLink="/users/get/{{ user.id }}"
                       >
                         Güncelle
                       </button>
-                      <button
+                      <!-- <button
                         class="btn btn-light"
                         routerLink="/users/get/{{ user.id }}"
                       >
                         Detay
-                      </button>
+                      </button> -->
                       <button
                         class="btn btn-danger"
                         (click)="removeUser(user.id)"

@@ -22,7 +22,6 @@ export class ViewFacilityComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.facilityService.getFacilityById(params['id']).subscribe((data) => {
         this.facility = data;
-        // this.facility.city = { id: data.cityId, name: this.cityId.name };
       });
     });
   }

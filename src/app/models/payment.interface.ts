@@ -8,6 +8,9 @@ export interface Payment {
   paymentDate: string
   amount: number
   userId: string
+  type: string
+  note: string
+  path: string
   dueDate: string
   user: User
 }

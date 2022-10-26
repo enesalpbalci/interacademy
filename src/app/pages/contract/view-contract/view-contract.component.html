@@ -3,26 +3,42 @@
     <div class="col-md-12 col-sm-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>{{ contract.student.name }} Kontrat Detayı</h2>
+          <h2>{{ contract.student.idNumber }} Tc Nolu Kişinin Kontrat Detayı</h2>
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
           <div class="row">
             <div class="col-sm-12">
               <div class="card-box">
-                <img [src]="imageUrl" alt="aaa" />
+                <!-- <img [src]="imageUrl" alt="aaa" /> -->
                 <p>
                   Ad:
-                  {{ contract.student.name + " " + contract.student.surName }}
+                  <b
+                    >{{
+                      contract.student.name + " " + contract.student.surName
+                        | uppercase
+                    }}
+                  </b>
                 </p>
-                <p>Başlangıç: {{ contract.start | date: "longDate" }}</p>
-                <p>Bitiş: {{ contract.end | date: "longDate" }}</p>
-                <p>Toplam Fiyat: {{ contract.price }}</p>
-                <p>Taksit: {{ contract.duration }}</p>
-                <p>E-Mail: {{ contract.student.email }}</p>
-                <p>Telefon: {{ contract.student.phoneNumber }}</p>
+                <p>
+                  Başlangıç: <b>{{ contract.start | date: "longDate" }}</b>
+                </p>
+                <p>
+                  Bitiş: <b>{{ contract.end | date: "longDate" }}</b>
+                </p>
+                <p>
+                  Toplam Fiyat: <b>{{ contract.price | currency: "₺" }}</b>
+                </p>
+                <p>
+                  Taksit: <b>{{ contract.duration }}</b>
+                </p>
+                <p>
+                  E-Mail: <b>{{ contract.student.email }}</b>
+                </p>
+                <p>
+                  Telefon: <b>{{ contract.student.phoneNumber }}</b>
+                </p>
 
-                <!-- <p>Durum: {{ role.concurrencyStamp }}</p> -->
                 <button
                   class="btn btn-primary"
                   routerLink="/contracts/update/{{ contract.id }}"

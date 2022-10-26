@@ -12,6 +12,7 @@ import { AddAuthoritiesComponent } from './add-authorities/add-authorities.compo
 import { UpdateAuthoritiesComponent } from './update-authorities/update-authorities.component';
 import { DatePipe } from '@angular/common';
 import { ListUserComponent } from './list-user/list-user.component';
+import { ViewAuthoritiesComponent } from './view-authorities/view-authorities.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ListUserComponent } from './list-user/list-user.component';
     UpdateUserComponent,
     AddAuthoritiesComponent,
     UpdateAuthoritiesComponent,
+    ViewAuthoritiesComponent,
   ],
   imports: [
     CommonModule,

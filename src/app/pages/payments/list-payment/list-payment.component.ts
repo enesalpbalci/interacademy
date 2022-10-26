@@ -49,12 +49,12 @@ export class ListPaymentComponent implements OnInit, OnDestroy {
       destroy:true
     };
     this.listForm = this.formBuilder.group({
-      contractId: [],
-      paymentDat: [],
+      paymentDate: [],
       amount: [],
-      userId: [],
-      dueDate: [],
-      user: [],
+      type: [],
+      note: [],
+      path: [],
+      dueDate: []
     });
     this.fillCity();
   }
@@ -63,7 +63,7 @@ export class ListPaymentComponent implements OnInit, OnDestroy {
     this.paymentService.getAllPayments().subscribe(
       (res) => {
         this.allPayments = res;
-        this.dtTrigger.next(null);
+        this.dtTrigger.next(this.dtOptions);
       },
       (err) => {
         console.log(err);

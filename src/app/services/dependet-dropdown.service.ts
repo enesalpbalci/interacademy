@@ -20,7 +20,7 @@ export class DependetDropdownService {
   }
 
   getAllFacilities(cityId:number): Observable<Facility[]> {
-    return this.http.get<Facility[]>(`${this.apiUrl}/Facilities?cityId=${cityId}`);
+    return this.http.get<Facility[]>(`${this.apiUrl}/Facilities`+(cityId==null?'':`?cityId=${cityId}`));
   }
   
   getAllGroups(facilityId:number, cityId:number): Observable<Group[]> {

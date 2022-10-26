@@ -9,9 +9,9 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">
-              <button routerLink="/groups/add" class="btn btn-success">
+              <!-- <button routerLink="/groups/add" class="btn btn-success">
                 Grup Ekle
-              </button>
+              </button> -->
               <div class="item form-group">
                 <label
                   class="col-form-label col-md-3 col-sm-3 label-align"
@@ -92,16 +92,16 @@
                   <td>
                     <button
                       class="btn btn-primary"
-                      routerLink="/groups/update/{{ group.id }}"
+                      routerLink="/groups/get/{{ group.id }}"
                     >
                       Güncelle
                     </button>
-                    <button
+                    <!-- <button
                       class="btn btn-light"
                       routerLink="/groups/get/{{ group.id }}"
                     >
                       Detay
-                    </button>
+                    </button> -->
                     <button
                       class="btn btn-danger"
                       (click)="removeGroup(group.id)"

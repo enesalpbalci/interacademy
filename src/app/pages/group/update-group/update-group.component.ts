@@ -23,32 +23,22 @@ export class UpdateGroupComponent implements OnInit {
     private router: Router
   ) {}
 
-  allCity: City[] = [];
-  allFacility: Facility[] = [];
-  allGroup: Group[] = [];
+  allCities: City[] = [];
+  allFacilities: Facility[] = [];
+  allGroups: Group[] = [];
 
-  selCityId: number;
-
-  groupId: string;
+  selectedCity: number;
+  selectedGroup: string;
   updateForm: FormGroup;
 
   ngOnInit(): void {
-    this.updateForm = this.formBuilder.group({
-      id: [''],
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
-        ],
-      ],
-      facilityId: [''],
-    });
+
+    this.createForm();
+
     this.activatedRoute.paramMap.subscribe((params) => {
       let id = params.get('id');
       if (id) {
-        this.groupId = id;
+        this.selectedGroup = id
         this.groupService.getGroupById(id).subscribe(
           (res) => {
             this.updateForm.controls['id'].setValue(res.id);
@@ -63,11 +53,25 @@ export class UpdateGroupComponent implements OnInit {
     });
     this.fillCity();
   }
+  createForm() {
+    this.updateForm = this.formBuilder.group({
+      id: [''],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
+      facilityId: [''],
+    });
+  }
 
   fillCity() {
     this.dependetDropdown.getAllCities().subscribe(
       (res) => {
-        this.allCity = res;
+        this.allCities = res;
       },
       (err) => {
         console.log(err);
@@ -75,18 +79,22 @@ export class UpdateGroupComponent implements OnInit {
     );
   }
   fillFacility() {
-    this.dependetDropdown.getAllFacilities(this.selCityId).subscribe((res)=>{
-      this.allFacility=res
-    },
-    (err)=>{
-      console.log(err)
-    });
+    this.dependetDropdown
+      .getAllFacilities(this.selectedCity)
+      .subscribe(
+        (res) => {
+          this.allFacilities = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   updateGroup() {
     if (this.updateForm.valid) {
       let data: Group = Object.assign({}, this.updateForm.value);
-      this.groupService.updateGroup(this.groupId, data).subscribe(
+      this.groupService.updateGroup(this.selectedGroup, data).subscribe(
         (res) => {
           alert('Grup Güncellendi');
           this.updateForm.reset();
@@ -98,8 +106,14 @@ export class UpdateGroupComponent implements OnInit {
       );
     }
   }
-
-  get f(){
-    return this.updateForm.controls
+  checkFormByPropertyName(name: string) {
+    if (
+      this.updateForm.controls[name].invalid &&
+      this.updateForm.controls[name].errors?.required &&
+      (this.updateForm.controls[name].dirty ||
+        this.updateForm.controls[name].touched)
+    ) {
+      return true;
+    }
   }
 }

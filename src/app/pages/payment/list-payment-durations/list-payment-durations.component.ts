@@ -6,6 +6,7 @@ import { Facility } from 'src/app/models/facility.interface';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-payment-durations',
@@ -30,7 +31,8 @@ export class ListPaymentDurationsComponent implements OnInit, OnDestroy {
   constructor(
     private paymentDurationService: PaymentDurationService,
     private dependetDropdown: DependetDropdownService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -41,10 +43,21 @@ export class ListPaymentDurationsComponent implements OnInit, OnDestroy {
         url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json',
       },
       dom: 'Bfrtip',
-      buttons: ['excel', 'pdfHtml5', 'print'],
+      buttons: [
+        {
+          text: 'Üyelik Paketi Ekle',
+          action: (): void => {
+            this.router.navigate(['/paymentdurations/add']);
+          },
+          className: 'btn btn-info',
+        },
+        'excel',
+        'pdfHtml5',
+        'print',
+      ],
       responsive: true,
       lengthMenu: [5, 15, 25],
-      destroy:true
+      destroy: true,
     };
     this.listForm = this.formBuilder.group({
       city: [],
@@ -80,7 +93,7 @@ export class ListPaymentDurationsComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.allPaymentDurations = res;
-          this.dtTrigger.next(null);
+          this.dtTrigger.next(this.dtOptions);
         },
         (err) => {
           console.log(err);

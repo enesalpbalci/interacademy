@@ -7,6 +7,7 @@ import { Observable, Subject } from 'rxjs';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-group',
@@ -32,7 +33,8 @@ export class ListGroupComponent implements OnInit, OnDestroy{
   constructor(
     private groupService: GroupService,
     private dependetDropdown: DependetDropdownService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +45,13 @@ export class ListGroupComponent implements OnInit, OnDestroy{
         url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json',
       },
       dom: 'Bfrtip',
-      buttons:['excel', 'pdfHtml5', 'print'],
+      buttons:[{
+        text: 'Grup Ekle',
+        action: (): void => {
+          this.router.navigate(['/groups/add']);
+        },
+        className: 'btn btn-info',
+      },'excel', 'pdfHtml5', 'print'],
       responsive: true,
       lengthMenu: [5, 15, 25],
       destroy:true

@@ -6,6 +6,7 @@ import { ListAuthorityComponent } from './list-authorities/list-authorities.comp
 import { ListUserComponent } from './list-user/list-user.component';
 import { UpdateAuthoritiesComponent } from './update-authorities/update-authorities.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { ViewAuthoritiesComponent } from './view-authorities/view-authorities.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 
 const routes: Routes = [
@@ -13,9 +14,10 @@ const routes: Routes = [
   { path: 'add-user', component: AddUserComponent },
   { path: 'students', component: ListUserComponent },
   { path: 'authorities', component: ListAuthorityComponent},
-  { path: 'update/:id', component: UpdateAuthoritiesComponent },
-  // { path: 'authority/update/:id', component: UpdateAuthoritiesComponent },
+  { path: 'update/:id', component: UpdateUserComponent },
+  { path: 'authority/update/:id', component: UpdateAuthoritiesComponent },
   { path: 'get/:id', component: ViewUserComponent },
+  { path: 'authority/get/:id', component: ViewAuthoritiesComponent },
 ];
 
 @NgModule({

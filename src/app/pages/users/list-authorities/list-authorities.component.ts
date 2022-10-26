@@ -1,28 +1,39 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+} from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.interface';
 import { Subject } from 'rxjs';
 import { Role } from 'src/app/models/role.interface';
 import { RoleService } from 'src/app/services/role.service';
+import { DataTablesModule } from 'angular-datatables';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-list-authorities',
   templateUrl: './list-authorities.component.html',
   styleUrls: ['./list-authorities.component.css'],
   providers: [UserService],
 })
-export class ListAuthorityComponent implements OnInit, OnDestroy {
+export class ListAuthorityComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   users: User[] = [];
   roles: Role[] = [];
-  error: any;
 
-  selRoleName: string = "Administrator";
+  selRoleName: string;
 
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
     private userService: UserService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -33,15 +44,32 @@ export class ListAuthorityComponent implements OnInit, OnDestroy {
         url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json',
       },
       dom: 'Bfrtip',
-      buttons: ['excel', 'pdf', 'print'],
+      buttons: [
+        {
+          text: 'Kullanıcı Ekle',
+          action: (): void => {
+            this.router.navigate(['/users/add-authority'])
+          },
+          className: "btn btn-info",
+        },
+        'pdf',
+        'excel',
+        'print',
+      ],
       responsive: true,
+      paging: true,
+      searching: true,
       lengthMenu: [5, 15, 25],
       destroy: true,
     };
-    this.getAllRoles();
-    this.getUsersByRole(this.selRoleName)
   }
-
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.dtTrigger.next(this.dtOptions);
+    }, 300);
+    this.getAllRoles();
+    this.getUsersByRole(this.selRoleName);
+  }
 
   getUsersByRole(roleName: string) {
     this.userService.getAllUsersByRole(roleName).subscribe(
@@ -49,7 +77,6 @@ export class ListAuthorityComponent implements OnInit, OnDestroy {
         this.users = data;
       },
       (error) => {
-        this.error = error;
         console.log(error);
       }
     );
@@ -58,8 +85,9 @@ export class ListAuthorityComponent implements OnInit, OnDestroy {
   getAllRoles() {
     this.roleService.getAllRoles().subscribe(
       (res) => {
-        this.roles = res;
-        this.dtTrigger.next(null);
+        this.roles = res.filter(
+          (r) => r.name != 'Student' && r.name != 'Parent'
+        );
       },
       (err) => {
         console.log(err);
@@ -68,7 +96,8 @@ export class ListAuthorityComponent implements OnInit, OnDestroy {
   }
 
   onSelectedRoleChanged(event: any) {
-    this.getUsersByRole(this.selRoleName)
+    this.getUsersByRole(this.selRoleName);
+    this.dtTrigger.next(this.dtOptions);
   }
 
   removeUser(id: any) {
@@ -85,6 +114,6 @@ export class ListAuthorityComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
+     this.dtTrigger.unsubscribe();
   }
 }

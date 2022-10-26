@@ -9,14 +9,14 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">
-              <button routerLink="/users/add-authority" class="btn btn-success">
+              <!-- <button routerLink="/users/add-authority" class="btn btn-success">
                 Kullanıcı Ekle
-              </button>
+              </button> -->
               <div class="item form-group">
                 <label
                   class="col-form-label col-md-3 col-sm-3 label-align"
                   for="city"
-                  >Rol Adı 
+                  >Rol Adı
                 </label>
                 <div class="col-md-6 col-sm-6">
                   <select
@@ -61,16 +61,16 @@
                   <td>
                     <button
                       class="btn btn-primary"
-                      routerLink="/users/update/{{ user.id }}"
+                      routerLink="/users/authority/get/{{ user.id }}"
                     >
                       Güncelle
                     </button>
-                    <button
+                    <!-- <button
                       class="btn btn-light"
                       routerLink="/users/get/{{ user.id }}"
                     >
                       Detay
-                    </button>
+                    </button> -->
                     <button
                       class="btn btn-danger"
                       (click)="removeUser(user.id)"

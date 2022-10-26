@@ -8,11 +8,11 @@
       <div class="x_content">
         <div class="row">
           <div class="col-sm-12">
-            <div class="card-box">
+            <!-- <div class="card-box">
               <button routerLink="/roles/add" class="btn btn-success">
                 Rol Ekle
               </button>
-            </div>
+            </div> -->
             <table
               datatable
               [dtOptions]="dtOptions"
@@ -24,8 +24,6 @@
                 <tr>
                   <th>#</th>
                   <th>Rol Adı</th>
-                  <!-- <th>Normalleştirilmiş Ad</th> -->
-                  <!-- <th>Durum</th> -->
                   <th></th>
                 </tr>
               </thead>
@@ -34,21 +32,20 @@
                 <tr *ngFor="let role of roles; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>{{ role.name }}</td>
-                  <!-- <td>{{ role.normalizedName }}</td> -->
-                  <!-- <td>{{ role.concurrencyStamp }}</td> -->
                   <td>
                     <button
                       class="btn btn-primary"
-                      routerLink="/roles/update/{{ role.id }}"
+                      routerLink="/roles/get/{{ role.id }}"
+
                     >
                       Güncelle
                     </button>
-                    <button
+                    <!-- <button
                       class="btn btn-light"
                       routerLink="/roles/get/{{ role.id }}"
                     >
                       Detay
-                    </button>
+                    </button> -->
                     <button
                       class="btn btn-danger"
                       (click)="removeRole(role.id)"

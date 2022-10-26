@@ -6,3 +6,13 @@ table th:first-child {
     white-space: nowrap;
     width: 1%;
 }
+
+.addNewRecord {
+    background-color: #033C73 ;
+    color: #ffffff ;
+    padding: 2rem !important;
+}
+.dt-button{
+    padding: 2rem !important;
+
+}

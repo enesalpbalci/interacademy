@@ -1,1 +1,35 @@
-<p>view-payment-duration works!</p>
+<div *ngIf="paymentDurations; else no_paymentDurations">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Ödeme Süresi Detayı</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card-box">
+                  <p>Tesis: {{ paymentDurations.facilityId }}</p>
+                  <p>Süre(Ay): {{ paymentDurations.duration }}</p>
+                  <p>Fiyat(₺): {{ paymentDurations.price }}</p>
+                  <button class="btn btn-danger" (click)="removePaymentDuration(paymentDurations.id)">
+                    Sil
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    routerLink="/paymentdurations/update/{{ paymentDurations.id }}"
+                  >
+                    Güncelle
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #no_paymentDurations> Rol bulunamadı </ng-template>
+  

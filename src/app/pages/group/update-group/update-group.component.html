@@ -9,33 +9,25 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">
-              <div class="mb-3">
-                <label class="form-label" for="facilityId']">Şehir </label>
-                <select
-                  class="form-control"
-                  name="cityId"
-                  id="cityId"
-                  [(ngModel)]="selCityId"
-                  (change)="fillFacility()"
-                >
-                  <option *ngFor="let city of allCity" [value]="city.plateCode">
-                    {{ city.name }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="
-                    f['cityId'].invalid &&
-                    (f['cityId'].dirty || f['cityId'].touched)
-                  "
-                  class="text-danger"
-                >
-                  <div *ngIf="f['cityId'].errors?.required">
-                    Bu kısım boş bırakılamaz
-                  </div>
-                </div>
-                <div class="invalide-feedback"></div>
-              </div>
               <form [formGroup]="updateForm">
+                <div class="mb-3">
+                  <label class="form-label">Şehir </label>
+                  <select
+                    class="form-control"
+                    id="cityId"
+                    [(ngModel)]="selectedCity"
+                    [ngModelOptions]="{standalone: true}"
+                    (change)="fillFacility()"
+                  >
+                    <option *ngFor="let city of allCities" [value]="city.plateCode">
+                      {{ city.name }}
+                    </option>
+                  </select>
+                  <!-- <div class="text-danger">
+                    <div>Bu kısım boş bırakılamaz</div>
+                  </div> -->
+                  <div class="invalide-feedback"></div>
+                </div>
                 <div class="mb-3">
                   <label for="name" class="form-label">Tesis Adı </label>
                   <select
@@ -45,20 +37,14 @@
                     ngPreserveWhitespaces
                   >
                     <option
-                      *ngFor="let facility of allFacility"
+                      *ngFor="let facility of allFacilities"
                       [ngValue]="facility.id"
                     >
                       {{ facility.name }}
                     </option>
                   </select>
-                  <div
-                    *ngIf="
-                      f['facilityId'].invalid &&
-                      (f['facilityId'].dirty || f['facilityId'].touched)
-                    "
-                    class="text-danger"
-                  >
-                    <div *ngIf="f['facilityId'].errors?.required">
+                  <div *ngIf="" class="text-danger">
+                    <div *ngIf="checkFormByPropertyName('facilityId')">
                       Bu kısım boş bırakılamaz
                     </div>
                   </div>
@@ -72,7 +58,7 @@
                     id="name"
                     name="name"
                   />
-                  <div *ngIf="f['name'].errors?.required">
+                  <div *ngIf="checkFormByPropertyName('name')">
                     Bu kısım boş bırakılamaz
                   </div>
                 </div>

@@ -9,50 +9,42 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">
-              <!-- <div class="item form-group">
-                <label
-                  class="col-form-label col-md-3 col-sm-3 label-align"
-                  for="cityId"
-                  >Şehir 
-                </label>
-                <div class="col-md-6 col-sm-6">
-                  <select
-                    class="form-control"
-                    name="cityId"
-                    id="cityId"
-                    [(ngModel)]="selCityId"
-                    (change)="fillFacility()"
-                    [class.is-invalid]="
-                      updateForm.get('cityId')?.touched &&
-                      updateForm.get('cityId')?.invalid
-                    "
-                  >
-                    <option
-                      *ngFor="let city of allCity"
-                      [value]="city.plateCode"
-                    >
-                      {{ city.name }}
-                    </option>
-                  </select>
-                  <div class="invalide-feedback"></div>
-                </div>
-              </div> -->
               <form [formGroup]="updateForm">
                 <!-- <div class="item form-group">
                   <label
                     class="col-form-label col-md-3 col-sm-3 label-align"
+                    for="cityId"
+                    >Şehir
+                  </label>
+                  <div class="col-md-6 col-sm-6">
+                    <select
+                      class="form-control"
+                      formControlName="cityId"
+                      id="cityId"
+                      [(ngModel)]="selCityId"
+                      (change)="fillFacility()"
+                    >
+                      <option
+                        *ngFor="let city of allCity"
+                        [value]="city.plateCode"
+                      >
+                        {{ city.name }}
+                      </option>
+                    </select>
+                    <div class="invalide-feedback"></div>
+                  </div>
+                </div>
+                <div class="item form-group">
+                  <label
+                    class="col-form-label col-md-3 col-sm-3 label-align"
                     for="facilityId"
-                    >Tesis 
+                    >Tesis
                   </label>
                   <div class="col-md-6 col-sm-6">
                     <select
                       class="form-control"
                       formControlName="facilityId"
                       id="facilityId"
-                      [class.is-invalid]="
-                        updateForm.get('facilityId')?.touched &&
-                        updateForm.get('facilityId')?.invalid
-                      "
                     >
                       <option
                         *ngFor="let facility of allFacility"
@@ -68,23 +60,15 @@
                   <label
                     class="col-form-label col-md-3 col-sm-3 label-align"
                     for="duration"
-                    >Süre(Ay) 
+                    >Süre(Ay)
                   </label>
                   <div class="col-md-6 col-sm-6">
-                    <select
+                    <input
+                      type="number"
+                      id="price"
                       class="form-control"
                       formControlName="duration"
-                      id="duration"
-                      type="number"
-                      [attr.disabled]="disabled ? '' : null"
-                    >
-                      <option
-                        *ngFor="let duration of durations"
-                        [ngValue]="duration.id"
-                      >
-                        {{ duration.duration }}
-                      </option>
-                    </select>
+                    />
                     <div *ngIf="f['duration'].errors?.required">
                       Bu kısım boş bırakılamaz
                     </div>
