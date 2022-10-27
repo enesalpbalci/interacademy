@@ -10,25 +10,74 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="card-box">
-                <p> Ad: <b>{{ user?.name }}</b></p>
-                <p> Soyad: <b>{{ user?.surName }}</b></p>
-                <p> E-Mail: <b>{{ user?.email }}</b></p>
-                <p> Telefon: <b>{{ user?.phoneNumber }}</b></p>
-                <p> Tc No: <b>{{ user?.idNumber }}</b></p>
-                <p> Boy: <b>{{ user?.height }}</b></p>
-                <p> Kilo: <b>{{ user?.weight }}</b></p>
-                <p> Doğum Günü: <b>{{ user?.birthDay | date:"dd-MM-yyyy" }}</b></p>
-                <p> Okul: <b>{{ user?.school }}</b></p>
-                <p> Adres: <b>{{ user?.address }}</b></p>
-                <p> Hastalıklar: <b>{{ user?.diseases }}</b></p>
-                <p> Alerjiler: <b>{{ user?.allergies }}</b></p>
-                <p> Gıda Reaksiyonları: <b>{{ user?.foodRestrictions }}</b></p>
-
+                <p>
+                  Ad: <b>{{ user?.name }}</b>
+                </p>
+                <p>
+                  Soyad: <b>{{ user?.surName }}</b>
+                </p>
+                <p>
+                  E-Mail: <b>{{ user?.email }}</b>
+                </p>
+                <p>
+                  Telefon: <b>{{ user?.phoneNumber }}</b>
+                </p>
+                <p>
+                  Tc No: <b>{{ user?.idNumber }}</b>
+                </p>
+                <p>
+                  Boy: <b>{{ user?.height }}</b>
+                </p>
+                <p>
+                  Kilo: <b>{{ user?.weight }}</b>
+                </p>
+                <p>
+                  Doğum Günü: <b>{{ user?.birthDay | date: "dd-MM-yyyy" }}</b>
+                </p>
+                <p>
+                  Okul: <b>{{ user?.school }}</b>
+                </p>
+                <p>
+                  Adres: <b>{{ user?.address }}</b>
+                </p>
+                <p>
+                  Hastalıklar: <b>{{ user?.diseases }}</b>
+                </p>
+                <p>
+                  Alerjiler: <b>{{ user?.allergies }}</b>
+                </p>
+                <p>
+                  Gıda Reaksiyonları: <b>{{ user?.foodRestrictions }}</b>
+                </p>
+                <p>
+                  Aile Harici Veli: <b>{{ user?.emergencyPerson }}</b>
+                </p>
+                <p>
+                  Şehir: <b>{{ user?.cityId }}</b>
+                </p>
+                <p>
+                  Tesis: <b>{{ user?.facilityId }}</b>
+                </p>
+                <p>
+                  Grup: <b>{{ user?.groupId }}</b>
+                </p>
 
                 <button class="btn btn-danger" (click)="removeUser(user.id)">
                   Sil
                 </button>
-                <button class="btn btn-primary" routerLink="/users/update/{{user.id}}">Güncelle</button>
+                <button
+                  class="btn btn-primary"
+                  routerLink="/users/update/{{ user.id }}"
+                >
+                  Güncelle
+                </button>
+
+                <!-- <button
+                  class="btn btn-primary"
+                  routerLink="/payments/get/{{ user.id }}"
+                >
+                  Ödeme Yap
+                </button> -->
               </div>
             </div>
           </div>

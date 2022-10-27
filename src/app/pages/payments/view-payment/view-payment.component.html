@@ -1,25 +1,27 @@
 <div *ngIf="payments; else no_payments">
-    <div class="row">
-      <div class="col-md-12 col-sm-12">
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>{{payments.userId}} Ödeme Detayları</h2>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="card-box">
-                  <p>Grup Adı: {{ payments}}</p>
-                  <p>Bulunduğu Tesisin Adı: {{ payments }}</p>
-                  <!-- <p>Durum: {{ role.concurrencyStamp }}</p> -->
-                  <button
-                    class="btn btn-primary"
-                    routerLink="/payments/update/{{ payments.id }}"
-                  >
-                    Güncelle
-                  </button>
-                </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Ödeme Detayı</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-box">
+                <p>Ödendiği Tarih: <b>{{ payments.dueDate | date: "longDate" }}</b></p>
+                <p>Ödenen Fiyat: <b>{{ payments.amount }}</b></p>
+                <p>Ödeme Tipi: <b>{{ payments.type }}</b></p>
+                <p>Not: <b>{{ payments.note }}</b></p>
+                <!-- <p>Dosya Eki: <b>{{ payments?.path }}</b></p> -->
+                <!-- <p>Durum: {{ role.concurrencyStamp }}</p> -->
+                <button
+                  class="btn btn-primary"
+                  routerLink="/payments/update/{{ payments.id }}"
+                >
+                  Güncelle
+                </button>
               </div>
             </div>
           </div>
@@ -27,5 +29,6 @@
       </div>
     </div>
   </div>
-  
-  <ng-template #no_payments> Grup bulunamadı </ng-template>
+</div>
+
+<ng-template #no_payments> Ödeme bulunamadı </ng-template>

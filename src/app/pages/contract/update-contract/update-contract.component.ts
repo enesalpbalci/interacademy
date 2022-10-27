@@ -67,7 +67,6 @@ export class UpdateContractComponent implements OnInit {
         );
         this.updateForm.controls['userId'].setValue(data.userId)
 
-        console.log(this.facilities);
         let facility = this.facilities.filter(
           (e) => e.id == data.paymentDuration.facilityId
         )[0];
@@ -197,7 +196,6 @@ export class UpdateContractComponent implements OnInit {
         return paymentDuration.id === id;
       }
     );
-
     return paymentDuration[0];
   }
 
@@ -222,8 +220,8 @@ export class UpdateContractComponent implements OnInit {
   get f() {
     return this.updateForm.controls;
   }
-  loadForm(){
-    
+
+  loadForm(){  
     this.dependetDropdown.getAllCities().subscribe(
       (cRes) => {
         this.cities = cRes;

@@ -18,13 +18,4 @@ export class AppComponent {
       return this.token = true;
     }
   }
-
-  getMargin(token:any) { (2)
-    switch (token) {
-      case localStorage.getItem('token'):
-        return '0';
-      case localStorage.getItem(null):
-        return '0';
-    }
-  }
 }

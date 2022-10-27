@@ -1,1 +1,140 @@
-<p>update-payment works!</p>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Ödeme Güncelleme</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box">
+              <form [formGroup]="updateForm">
+                <div class="item form-group">
+                  <label
+                    class="col-form-label col-md-3 col-sm-3 label-align"
+                    for="type"
+                    >Ödeme Tipi
+                  </label>
+
+                  <div class="col-md-6 col-sm-6">
+                    <select class="form-control" formControlName="type">
+                      <option value="" disabled>Seçiniz...</option>
+                      <option value="Nakit">Nakit</option>
+                      <option value="Kredi Kartı">Kredi Kartı</option>
+                      <option value="Havale/EFT">Havale/EFT</option>
+                    </select>
+                    <div
+                      *ngIf="
+                        f['type'].invalid &&
+                        (f['type'].dirty || f['type'].touched)
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="f['type'].errors.required">
+                        Bu alan boş bırakılamaz
+                      </div>
+                    </div>
+                    <div class="invalide-feedback"></div>
+                  </div>
+                </div>
+                <div class="item form-group">
+                  <label
+                    class="col-form-label col-md-3 col-sm-3 label-align"
+                    for="note"
+                    >Not
+                  </label>
+                  <div class="col-md-6 col-sm-6">
+                    <input
+                      type="text"
+                      id="note"
+                      class="form-control"
+                      formControlName="note"
+                    />
+                    <div
+                      *ngIf="
+                        f['note'].invalid &&
+                        (f['note'].dirty || f['note'].touched)
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="f['note'].errors.required">
+                        Bu alan boş bırakılamaz
+                      </div>
+                    </div>
+                    <div class="invalide-feedback"></div>
+                  </div>
+                </div>
+                <div class="item form-group">
+                  <label
+                    class="col-form-label col-md-3 col-sm-3 label-align"
+                    for="amount"
+                    >Fiyat(₺)
+                  </label>
+                  <div class="col-md-6 col-sm-6">
+                    <input
+                      type="number"
+                      id="amount"
+                      class="form-control"
+                      formControlName="amount"
+                      readonly
+                    />
+                    <div
+                      *ngIf="
+                        f['amount'].invalid &&
+                        (f['amount'].dirty || f['amount'].touched)
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="f['amount'].errors?.required">
+                        Bu kısım boş bırakılamaz
+                      </div>
+                    </div>
+                    <div class="invalide-feedback"></div>
+                  </div>
+                </div>
+                <!-- <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="path">Dosya</label>
+                  
+                  <div class="col-md-6 col-sm-6">
+                    <input
+                      formControlName="path"
+                      id="path"
+                      type="file"
+                      class="form-control"
+                      (change)="onFileChange($event)"
+                    />
+                    <div
+                      *ngIf="
+                        f['path'].invalid &&
+                        (f['path'].dirty || f['path'].touched)
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="f['path'].errors?.required">
+                        Bu kısım boş bırakılamaz
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="item form-group">
+                  <div class="col-md-3 col-sm-3"></div>
+
+                  <div class="col-md-6 col-sm-6">
+                    <button
+                      type="submit"
+                      (click)="updatePayment()"
+                      class="btn btn-primary"
+                    >
+                      Güncelle
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

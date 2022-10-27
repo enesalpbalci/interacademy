@@ -1,0 +1,43 @@
+<div *ngIf="product; else no_products">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Kontrat Paketi Detayı</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-box">
+                <p>Ad: {{ product.name }}</p>
+                <p>Süre: {{ product.duration }} Ay</p>
+                <p>Peşin Fiyat: {{ product.advancePrice | currency: "₺" }}</p>
+                <p>
+                  Peşin Fiyat: {{ product.installmentPrice | currency: "₺" }}
+                </p>
+                <p>
+                  Peşin Fiyat: {{ product.installmentTotal | currency: "₺" }}
+                </p>
+                <button
+                  class="btn btn-danger"
+                  (click)="removeProduct(product.id)"
+                >
+                  Sil
+                </button>
+                <button
+                  class="btn btn-primary"
+                  routerLink="/products/update/{{ product.id }}"
+                >
+                  Güncelle
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #no_products> Rol bulunamadı </ng-template>

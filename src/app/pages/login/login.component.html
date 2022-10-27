@@ -1,89 +1,94 @@
-
-    <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
-
-      <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="login_content">
-            <form [formGroup]="loginForm" >
-              <h1>Giriş</h1>
-              <div>
-                <input type="text" formControlName="userName" class="form-control" placeholder="Username" />
-              </div>
-              <div>
-                <input type="password" formControlName="passWord" class="form-control" placeholder="Password" />
-              </div>
-              <div>
-                <button class="btn btn-default submit" (click)="login()">Giriş Yap</button>
-                <button class="btn btn-default" href="#">Şifremi unuttum?</button>
-              </div>
-
-              <div class="clearfix"></div>
-
-              <div class="separator">
-                  <a href="#signup" class="to_register"> Kayıt Ol </a>
-                
-                <div class="clearfix"></div>
-              </div>
-            </form>
-          </section>
+<div class="login_wrapper">
+  <div class="animate form login_form">
+    <section class="login_content">
+      <form [formGroup]="loginForm">
+        <h1>Giriş</h1>
+        <div>
+          <input
+            type="text"
+            formControlName="userName"
+            class="form-control"
+            placeholder="Username"
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            formControlName="passWord"
+            class="form-control"
+            placeholder="Password"
+          />
+        </div>
+        <div>
+          <button class="btn btn-default submit" (click)="login()">
+            Giriş Yap
+          </button>
+          <button class="btn btn-default" href="#">Şifremi unuttum?</button>
         </div>
 
-        <div id="register" class="animate form registration_form">
-          <section class="login_content">
-            <form>
-              <h1>Create Account</h1>
-              <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
-              </div>
-              <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
-              </div>
-              <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
-              </div>
-              <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
-              </div>
+        <div class="clearfix"></div>
 
-              <div class="clearfix"></div>
+        <div class="separator">
+          <a href="#signup" class="to_register"> Kayıt Ol </a>
 
-              <div class="separator">
-                <p class="change_link">Already a member ?
-                  <a href="#signin" class="to_register"> Log in </a>
-                </p>
-
-                <div class="clearfix"></div>
-                <br />
-
-                <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 4 template. Privacy and Terms</p>
-                </div>
-              </div>
-            </form>
-          </section>
+          <div class="clearfix"></div>
         </div>
-      </div>
-    </div>
+      </form>
+    </section>
+  </div>
 
-    <script>
-      const togglePassword = document.querySelector("#togglePassword");
-        const password = document.querySelector("#password");
+  <div id="register" class="animate form registration_form">
+    <section class="login_content">
+      <form>
+        <h1>Create Account</h1>
+        <div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Username"
+            required=""
+          />
+        </div>
+        <div>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email"
+            required=""
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            required=""
+          />
+        </div>
+        <div>
+          <a class="btn btn-default submit" href="index.html">Submit</a>
+        </div>
 
-        this.togglePassword.addEventListener("click", function () {
-            // toggle the type attribute
-            const type = this.password.getAttribute("type") === "password" ? "text" : "password";
-            password.setAttribute("type", type);
-            
-            // toggle the icon
-            this.classList.toggle("bi-eye");
-        });
+        <div class="clearfix"></div>
 
-        // prevent form submit
-        const form = document.querySelector("form");
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-        });
-    </script>
+        <div class="separator">
+          <p class="change_link">
+            Already a member ?
+            <a href="#signin" class="to_register"> Log in </a>
+          </p>
+
+          <div class="clearfix"></div>
+          <br />
+
+          <div>
+            <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+            <p>
+              ©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 4
+              template. Privacy and Terms
+            </p>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

@@ -28,7 +28,7 @@ export class AddUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private dependetDropdown: DependetDropdownService,
-    private userService:UserService,
+    private userService: UserService
   ) {}
   addForm: FormGroup;
   users: User[] = [];
@@ -41,7 +41,7 @@ export class AddUserComponent implements OnInit {
   selFacilityId: number;
 
   passWord = 'aaaa';
-  roleName :string;
+  roleName: string;
 
   url: string;
 
@@ -105,7 +105,7 @@ export class AddUserComponent implements OnInit {
           ],
         ],
         name: [
-          'aaa',
+          '',
           [
             Validators.required,
             Validators.minLength(2),
@@ -113,7 +113,7 @@ export class AddUserComponent implements OnInit {
           ],
         ],
         email: [
-          'aaaa@asd.ca',
+          '',
           [
             Validators.required,
             Validators.email,
@@ -121,7 +121,7 @@ export class AddUserComponent implements OnInit {
           ],
         ],
         phoneNumber: [
-          '22222222222',
+          '',
           [
             Validators.required,
             Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
@@ -130,7 +130,7 @@ export class AddUserComponent implements OnInit {
           ],
         ],
         surName: [
-          'ss',
+          '',
           [
             Validators.required,
             Validators.minLength(2),
@@ -138,7 +138,7 @@ export class AddUserComponent implements OnInit {
           ],
         ],
         idNumber: [
-          '22222222222',
+          '',
           [
             Validators.required,
             Validators.maxLength(11),
@@ -146,14 +146,14 @@ export class AddUserComponent implements OnInit {
             Validators.pattern(/\-?\d*\.?\d{1,2}/),
           ],
         ],
-        gender: [true, Validators.required],
+        gender: [false, Validators.required],
         birthDay: ['', [Validators.required]],
         bloodGroup: [null, Validators.required],
         school: ['', Validators.required],
-        height: [222, Validators.required],
-        weight: [222, Validators.required],
+        height: [null, Validators.required],
+        weight: [null, Validators.required],
         address: [
-          'aaaaaaaaaaaaaaaaaaaaaa',
+          '',
           [
             Validators.maxLength(256),
             Validators.required,
@@ -165,28 +165,54 @@ export class AddUserComponent implements OnInit {
         allergies: [''],
         foodRestrictions: [''],
         mother: this.formBuilder.group({
-          userName: ['mother1@test.com'],
-          email: ['mother1@test.com'],
-          phoneNumber: ['1234567890'],
-          name: ['Mother1'],
-          surName: ['MotherSurName'],
-          gender: false,
-          profession: ['Anne meslek'],
-          address: ['Anne adres'],
+          userName: [''],
+          email: [
+            '',
+            [
+              Validators.email,
+              Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+            ],
+          ],
+          phoneNumber: [
+            '',
+            [
+              Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+              Validators.minLength(10),
+              Validators.maxLength(10),
+            ],
+          ],
+          name: [''],
+          surName: [''],
+          gender: [true],
+          profession: [''],
+          address: [''],
         }),
         father: this.formBuilder.group({
-          userName: ['father@test.com'],
-          email: ['father1@test.com'],
-          phoneNumber: ['1234567890'],
-          name: ['Father1'],
-          surName: ['FatherSurName'],
-          gender: true,
-          profession: ['Baba meslek'],
-          address: ['Baba adres'],
+          userName: [''],
+          email: [
+            '',
+            [
+              Validators.email,
+              Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+            ],
+          ],
+          phoneNumber: [
+            '',
+            [
+              Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+              Validators.minLength(10),
+              Validators.maxLength(10),
+            ],
+          ],
+          name: [''],
+          surName: [''],
+          gender: [true],
+          profession: [''],
+          address: [''],
         }),
-        cityId:[],
-        facilityId:[],
-        groupId:[],
+        cityId: [],
+        facilityId: [],
+        groupId: [],
       }
       // {
       //   validators: this.MustMuch('passWord', 'confirmPassword'),
@@ -212,27 +238,29 @@ export class AddUserComponent implements OnInit {
     };
   }
 
-   addStudent() {
+  addStudent() {
     if (true || this.addForm.valid) {
       // await this.setDurationToForm();
-      let email = this.addForm.get('email').value
-      this.addForm.get('userName').setValue(email)
+      let email = this.addForm.get('email').value;
+      this.addForm.get('userName').setValue(email);
 
-      let motherEmail = this.addForm.get('mother.email').value
-      this.addForm.get('mother.userName').setValue(motherEmail)
-      
-      let fatherEmail = this.addForm.get('father.email').value
-      this.addForm.get('father.userName').setValue(fatherEmail)
+      let motherEmail = this.addForm.get('mother.email').value;
+      this.addForm.get('mother.userName').setValue(motherEmail);
+
+      let fatherEmail = this.addForm.get('father.email').value;
+      this.addForm.get('father.userName').setValue(fatherEmail);
 
       this.userService
-        .addStudent(this.passWord,this.roleName, this.addForm.value)
-        .subscribe((res) => {
-          alert('Üye Eklendi');
-          console.log(res);
-        },
-        (err)=>{
-          alert('Üye eklenirken bir hata oluştu!')
-        });
+        .addStudent(this.passWord, this.roleName, this.addForm.value)
+        .subscribe(
+          (res) => {
+            alert('Üye Eklendi');
+            console.log(res);
+          },
+          (err) => {
+            alert('Üye eklenirken bir hata oluştu!');
+          }
+        );
       this.addForm.reset();
       this.router.navigate(['users/students']);
     }

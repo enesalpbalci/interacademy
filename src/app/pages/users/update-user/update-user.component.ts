@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { City } from 'src/app/models/city.interface';
+import { Facility } from 'src/app/models/facility.interface';
+import { Group } from 'src/app/models/group.interface';
 import { User } from 'src/app/models/user.interface';
+import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { UserService } from 'src/app/services/user.service';
 import { FacilityModule } from '../../facility/facility.module';
 
@@ -15,21 +19,27 @@ export class UpdateUserComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dependetDropDownService:DependetDropdownService
   ) {}
 
   url: string;
 
+  cities: City[] = [];
+  facilities: Facility[] = [];
+  groups: Group[] = [];
   selectedUserId: string;
+
+  selCityId: number;
+  selFacilityId: number;
 
   updateForm: FormGroup;
 
   ngOnInit(): void {
-
     this.activatedRoute.paramMap.subscribe((params) => {
       let id = params.get('id');
       if (id) {
-        this.selectedUserId = id
+        this.selectedUserId = id;
         this.userService.getUserById(id).subscribe(
           (res) => {
             this.updateForm.controls['id'].setValue(res.id);
@@ -40,16 +50,23 @@ export class UpdateUserComponent implements OnInit {
             this.updateForm.controls['phoneNumber'].setValue(res.phoneNumber);
             this.updateForm.controls['idNumber'].setValue(res.idNumber);
             this.updateForm.controls['gender'].setValue(res.gender);
-            this.updateForm.controls['birthDay'].setValue(res.birthDay);
+            this.updateForm.controls['birthDay'].setValue(this.formatDate(res.birthDay));
             this.updateForm.controls['bloodGroup'].setValue(res.bloodGroup);
             this.updateForm.controls['school'].setValue(res.school);
             this.updateForm.controls['height'].setValue(res.height);
             this.updateForm.controls['weight'].setValue(res.weight);
             this.updateForm.controls['address'].setValue(res.address);
-            this.updateForm.controls['emergencyPerson'].setValue(res.emergencyPerson);
+            this.updateForm.controls['emergencyPerson'].setValue(
+              res.emergencyPerson
+            );
             this.updateForm.controls['diseases'].setValue(res.diseases);
             this.updateForm.controls['allergies'].setValue(res.allergies);
-            this.updateForm.controls['foodRestrictions'].setValue(res.foodRestrictions);
+            this.updateForm.controls['foodRestrictions'].setValue(
+              res.foodRestrictions
+            );
+            this.updateForm.controls['cityId'].setValue(res.cityId);
+            this.updateForm.controls['facilityId'].setValue(res.facilityId);
+            this.updateForm.controls['groupId'].setValue(res.groupId);
           },
           (err) => {
             console.log(err);
@@ -57,22 +74,48 @@ export class UpdateUserComponent implements OnInit {
         );
       }
     });
-
+    this.fillCity()
     this.createForm();
+  }
+  fillCity() {
+    this.dependetDropDownService.getAllCities().subscribe(
+      (res) => {
+        this.cities = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  fillFacility() {
+    this.dependetDropDownService.getAllFacilities(this.selCityId).subscribe(
+      (res) => {
+        this.facilities = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  fillGroup() {
+    this.dependetDropDownService
+      .getAllGroups(this.selFacilityId, this.selCityId)
+      .subscribe(
+        (res) => {
+          this.groups = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   createForm() {
     this.updateForm = this.formBuilder.group({
       id: [''],
       image: [''],
-      userName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
-        ],
-      ],
+      userName: [''],
       name: [
         '',
         [
@@ -133,6 +176,9 @@ export class UpdateUserComponent implements OnInit {
       diseases: [''],
       allergies: [''],
       foodRestrictions: [''],
+      cityId:[],
+      facilityId:[],
+      groupId:[]
     });
   }
 
@@ -142,15 +188,18 @@ export class UpdateUserComponent implements OnInit {
     //   .subscribe((user) => {
     //     this.router.navigate(['users/']);
     //   });
-    if (true || this.updateForm.valid) {
-      let email = this.updateForm.get('email').value
-      this.updateForm.get('userName').setValue(email)
+    if (this.updateForm.valid) {
+      let email = this.updateForm.get('email').value;
+      this.updateForm.get('userName').setValue(email);
 
-      // let motherEmail = this.updateForm.get('mother.email').value
-      // this.updateForm.get('mother.userName').setValue(motherEmail)
+      // let motherEmail = this.updateForm.get('mother.email').value;
+      // this.updateForm.get('mother.userName').setValue(motherEmail);
+
+      // let fatherEmail = this.updateForm.get('father.email').value;
+      // this.updateForm.get('father.userName').setValue(fatherEmail);
+
       
-      // let fatherEmail = this.updateForm.get('father.email').value
-      // this.updateForm.get('father.userName').setValue(fatherEmail)
+
 
       let data: User = Object.assign({}, this.updateForm.value);
       this.userService.updateUser(this.selectedUserId, data).subscribe(
@@ -165,6 +214,17 @@ export class UpdateUserComponent implements OnInit {
       );
     }
   }
+
+  private formatDate(date:any) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+  }
+
   onFileChanged(e: any) {
     let files = e.target.files;
     if (files[0]) {
@@ -204,5 +264,9 @@ export class UpdateUserComponent implements OnInit {
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+
+  get f() {
+    return this.updateForm.controls;
   }
 }

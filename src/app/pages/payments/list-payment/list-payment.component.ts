@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, zip } from 'rxjs';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { PaymentDuration } from 'src/app/models/payment-duration.interface';
@@ -62,7 +62,7 @@ export class ListPaymentComponent implements OnInit, OnDestroy {
   fillPaymentList() {
     this.paymentService.getAllPayments().subscribe(
       (res) => {
-        this.allPayments = res;
+        this.allPayments = res.filter(x=>x.contractId);
         this.dtTrigger.next(this.dtOptions);
       },
       (err) => {

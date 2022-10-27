@@ -1,0 +1,196 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Kontrat Paketi Güncelleme Formu</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+
+        <form
+          id="form"
+          data-parsley-validate
+          class="form-horizontal form-label-left"
+          [formGroup]="updateForm"
+          #form="ngForm"
+          (ngSubmit)="updateProduct()"
+        >
+          <div class="item form-group" hidden>
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="cityId"
+              >Şehir
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                formControlName="cityId"
+                id="cityId"
+                [(ngModel)]="selCityId"
+                (change)="fillFacilitySelected()"
+              >
+                <option *ngFor="let city of allCity" [value]="city.plateCode">
+                  {{ city.name }}
+                </option>
+              </select>
+
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group" hidden>
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="facilityId"
+              >Tesis
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                formControlName="facilityId"
+                id="facilityId"
+              >
+                <option
+                  *ngFor="let facility of allFacility"
+                  [ngValue]="facility.id"
+                >
+                  {{ facility.name }}
+                </option>
+              </select>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="name"
+              >Paket Adı
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                class="form-control"
+                formControlName="name"
+                type="text"
+                id="name"
+              />
+              <div
+                *ngIf="
+                  f['name'].invalid && (f['name'].dirty || f['name'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['name'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="duration"
+              >Kontrat Süresi(Ay)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                class="form-control"
+                formControlName="duration"
+                (change)="calculatePrice()"
+                type="number"
+                id="duration"
+              />
+              <div
+                *ngIf="
+                  f['duration'].invalid &&
+                  (f['duration'].dirty || f['duration'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['duration'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="advancePrice"
+              >Peşin Fiyat(₺)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="number"
+                id="advancePrice"
+                class="form-control"
+                formControlName="advancePrice"
+              />
+              <div
+                *ngIf="
+                  f['advancePrice'].invalid &&
+                  (f['advancePrice'].dirty || f['advancePrice'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['advancePrice'].errors?.required">
+                  Bu kısım boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="installmentPrice"
+              >Aylık Taksit Fiyatı(₺)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="number"
+                id="installmentPrice"
+                class="form-control"
+                formControlName="installmentPrice"
+                (change)="calculatePrice()"
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label
+              class="col-form-label col-md-3 col-sm-3 label-align"
+              for="installmentTotal"
+              >Toplam Taksit Fiyatı(₺)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="number"
+                id="installmentTotal"
+                class="form-control"
+                formControlName="installmentTotal"
+                readonly
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <div class="item form-group">
+            <div class="col-md-6 col-sm-6 offset-md-3">
+              <button class="btn btn-primary" type="reset">Temizle</button>
+              <button
+                type="submit"
+                [disabled]="!form.valid"
+                class="btn btn-success"
+              >
+                Ekle
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

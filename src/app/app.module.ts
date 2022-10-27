@@ -11,35 +11,19 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsersModule } from './pages/users/users.module';
 import { LoginComponent } from './pages/login/login.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { RoleModule } from './pages/role/role.module';
-import { GroupModule } from './pages/group/group.module';
-import { PaymentDurationModule } from './pages/payment/payment-duration.module';
-import { ContractModule } from './pages/contract/contract.module';
-import { PaymentsModule } from './pages/payments/payments.module';
 import { LoginGuard } from './guards/login.guard';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent, LoginComponent],
+  declarations: [AppComponent, NotFoundComponent, LoginComponent, DashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LayoutModule,
-    UsersModule,
-    RoleModule,
-    GroupModule,
-    ContractModule,
-    PaymentDurationModule,
-    ReactiveFormsModule,
     FormsModule,
-    PaymentsModule,
+    ReactiveFormsModule,
+    LayoutModule,
     HttpClientModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
   ],
   providers: [
     { provide: 'apiUrl', useValue: 'http://185.95.164.188/api' },

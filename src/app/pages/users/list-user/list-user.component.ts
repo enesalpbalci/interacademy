@@ -4,7 +4,9 @@ import { Subject } from 'rxjs';
 import { User } from 'src/app/models/user.interface';
 import { RoleService } from 'src/app/services/role.service';
 import { UserService } from 'src/app/services/user.service';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Payment } from 'src/app/models/payment.interface';
+import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
   selector: 'app-list-user',
@@ -14,6 +16,7 @@ import { Route, Router } from '@angular/router';
 export class ListUserComponent implements OnInit, OnDestroy {
   users: User[] = [];
   roles: Role[] = [];
+  payments:Payment[]=[]
 
   selRoleName: string = 'Student';
 
@@ -23,7 +26,9 @@ export class ListUserComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private roleService: RoleService,
-    private router: Router
+    private router: Router,
+    private activatedRoute:ActivatedRoute,
+    private paymentService: PaymentService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +55,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
       lengthMenu: [5, 15, 25],
       destroy: true,
     };
+    
     this.getAllRoles();
     this.getUsersByRole(this.selRoleName);
   }

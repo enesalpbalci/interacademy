@@ -39,6 +39,53 @@
                   Telefon: <b>{{ contract.student.phoneNumber }}</b>
                 </p>
 
+                <div>
+                  <table
+                    datatable
+                    [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger"
+                    class="table table-hover table-responsive"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Ödeme Tarihi</th>
+                        <th>Bitiş Tarihi</th>
+                        <th>Fiyat</th>
+                        <th>Ödeme Tipi</th>
+                        <th>Not</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr *ngFor="let payment of contract.payments; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ payment.paymentDate | date }}</td>
+                        <td>{{ payment.dueDate | date }}</td>
+                        <td>{{ payment.amount | currency: "₺" }}</td>
+                        <td>{{ payment.type }}</td>
+                        <td>{{ payment.note }}</td>
+                        <td>
+                          <button
+                            class="btn btn-primary"
+                            routerLink="/payments/update/{{ payment.id }}"
+                          >
+                            Ödeme Yap
+                          </button>
+                          <!-- <button
+                      class="btn btn-light"
+                      routerLink="/payments/get/{{ payment.id }}"
+                    >
+                      Detay
+                    </button> -->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
                 <button
                   class="btn btn-primary"
                   routerLink="/contracts/update/{{ contract.id }}"

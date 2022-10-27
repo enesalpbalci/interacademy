@@ -55,10 +55,6 @@
                     id="facility"
                     [(ngModel)]="selFacilityId"
                     (change)="fillListPaymentDuration()"
-                    [class.is-invalid]="
-                      listForm.get('facility')?.touched &&
-                      listForm.get('facility')?.invalid
-                    "
                   >
                     <option
                       *ngFor="let facility of allFacilities"

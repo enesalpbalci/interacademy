@@ -1,17 +1,16 @@
-import { User } from "./user.interface"
+import { User } from './user.interface';
 
-export type Root = Payment[]
+export type Root = Payment[];
 
 export interface Payment {
-  id: number
-  contractId: number
-  paymentDate: string
-  amount: number
-  userId: string
-  type: string
-  note: string
-  path: string
-  dueDate: string
-  user: User
+  id: number;
+  contractId: number;
+  paymentDate: string;
+  amount: number;
+  amountStr: string;
+  userId: string;
+  type: string;
+  note: string;
+  dueDate: string;
+  user: User;
 }
-

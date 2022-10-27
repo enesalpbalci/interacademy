@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Kontrat Paketleri</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box">
+              <!-- <button
+                  routerLink="/products/add"
+                  class="btn btn-success"
+                >
+                  Üyelik Fiyatı Ekle
+                </button> -->
+              <div class="item form-group" >
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="city"
+                  >Şehir
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="city"
+                    [(ngModel)]="selCityId"
+                    (change)="fillFacility()"
+                  >
+                    <option
+                      *ngFor="let city of allCities"
+                      [ngValue]="city.plateCode"
+                    >
+                      {{ city.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+
+              <div class="item form-group" *ngIf="selCityId">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="facility"
+                  >Tesis
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="facility"
+                    [(ngModel)]="selFacilityId"
+                    (change)="fillListProducts()"
+                  >
+                    <option
+                      *ngFor="let facility of allFacilities"
+                      [ngValue]="facility.id"
+                    >
+                      {{ facility.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+
+              <ng-template #hide>
+                <div class="text-center">
+                  Listelencek paket fiyatları için lütfen tesis seçiniz
+                </div>
+              </ng-template>
+            </div>
+            <table
+              datatable
+              [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger"
+              class="table table-hover table-responsive"
+              style="width: 100%"
+              *ngIf="selFacilityId; else hide"
+            >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Ad</th>
+                  <th>Süre</th>
+                  <th>Peşin Fiyat</th>
+                  <th>Aylık Taksit Fiyatı</th>
+                  <th>Toplam Taksit Fiyatı</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let product of allProducts; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ product?.name }}</td>
+                  <td>{{ product?.duration + " Ay" }}</td>
+                  <td>{{ product?.advancePrice | currency: "₺" }}</td>
+                  <td>{{ product?.installmentPrice | currency: "₺" }}</td>
+                  <td>{{ product?.installmentTotal | currency: "₺" }}</td>
+                  <td>
+                    <button
+                      class="btn btn-primary"
+                      routerLink="/products/get/{{ product.id }}"
+                    >
+                      Güncelle
+                    </button>
+                    <!-- <button
+                      class="btn btn-light"
+                      routerLink="/products/get/{{product.id}}"
+                    >
+                      Detay
+                    </button> -->
+                    <button
+                      class="btn btn-danger"
+                      (click)="removeProduct(product.id)"
+                    >
+                      Sil
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
