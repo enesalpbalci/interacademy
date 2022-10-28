@@ -8,10 +8,12 @@ import { Contract } from 'src/app/models/contract.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { Group } from 'src/app/models/group.interface';
 import { PaymentDuration } from 'src/app/models/payment-duration.interface';
+import { Product } from 'src/app/models/product.interface';
 import { User } from 'src/app/models/user.interface';
 import { ContractService } from 'src/app/services/contract.service';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { PaymentDurationService } from 'src/app/services/payment-duration.service';
+import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -29,16 +31,22 @@ export class UpdateContractComponent implements OnInit {
   cities: City[] = [];
   facilities: Facility[] = [];
   groups: Group[] = [];
-  paymentDurations: PaymentDuration[] = [];
-  selectedDuration: PaymentDuration;
+  products: Product[] = [];
+  // selectedDuration: PaymentDuration;
   selCityId: number;
   selFacilityId: number;
+
+  paymentTypes: {
+    duration: number,
+    price: number,
+    text: string
+  }[]
 
   approved: boolean = true;
 
   constructor(
     private contractService: ContractService,
-    private paymentDurationService: PaymentDurationService,
+    private productService:ProductService,
     private dependetDropdown: DependetDropdownService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -67,23 +75,20 @@ export class UpdateContractComponent implements OnInit {
         );
         this.updateForm.controls['userId'].setValue(data.userId)
 
-        // let facility = this.facilities.filter(
-        //   (e) => e.id == data.paymentDuration.facilityId
-        // )[0];
-        // this.updateForm.controls['cityId'].setValue(facility.cityId);
-        // this.fillPaymentDurations(facility.id);
-        // this.updateForm.controls['facilityId'].setValue(
-        //   data.paymentDuration.facilityId
-        // );
-        // this.updateForm.controls['paymentDurationId'].setValue(
-        //   data.paymentDurationId
-        // );
-        // this.updateForm.controls['duration'].setValue(data.duration);
-        this.updateForm.controls['start'].setValue(formatDate(data.start.toString(),'dd.MM.yyyy','en'));
+        let facility = this.facilities.filter(
+          (e) => e.id == data.product.facilityId
+        )[0];
+        this.updateForm.controls['cityId'].setValue(facility.cityId);
+         this.fillProducts(facility.id);
+        this.updateForm.controls['facilityId'].setValue(
+          data.product.facilityId
+        );
+        this.updateForm.controls['productId'].setValue(
+          data.productId
+        );
+        this.updateForm.controls['installments'].setValue(data.installments);
+        this.updateForm.controls['start'].setValue(this.formatDate(data.start));
         this.updateForm.controls['price'].setValue(data.price);
-        setTimeout(() => {
-          this.calculatePrice();
-        }, 150);
       });
     });
   }
@@ -96,10 +101,10 @@ export class UpdateContractComponent implements OnInit {
       studentId: ['', Validators.required],
       start: ['', [Validators.required]],
       userId: ['', Validators.required],
-      paymentDurationId: [null],
+      productId: [null],
       price: [null, Validators.required],
       approverId: ['0', Validators.required],
-      duration: [null, Validators.required],
+      installments: [null, Validators.required],
       name: [],
       surName: [],
       email: [],
@@ -130,6 +135,42 @@ export class UpdateContractComponent implements OnInit {
       this.router.navigate(['/contracts']);
     }
     console.log(this.updateForm.value);
+  }
+
+  setPaymentType() {
+    if (this.products.length > 0) {
+      const productId = this.updateForm.get('productId').value
+
+      const product = this.products.find((p) => {
+        return p.id == productId
+      })
+
+      this.paymentTypes = []
+
+      this.paymentTypes.push({
+        duration: 1,
+        price: product.advancePrice,
+        text: `Peşin ${product.advancePriceStr}`
+      })
+
+      if (product.duration > 1 && product.installmentPrice > 0) {
+        this.paymentTypes.push({
+          duration: product.duration,
+          price: product.installmentPrice,
+          text: `Taksit ${product.duration} Ay ${product.installmentPriceStr}`
+        })
+      }
+    }
+  }
+
+  private formatDate(date:any) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
   }
 
   fillCity() {
@@ -173,11 +214,11 @@ export class UpdateContractComponent implements OnInit {
       );
   }
 
-  fillPaymentDurations(facilityId: number) {
-    this.paymentDurationService.getAllPaymentDurations(facilityId).subscribe(
+  fillProducts(facilityId: number) {
+    this.productService.getAllProducts(facilityId).subscribe(
       (res) => {
         console.log(res);
-        this.paymentDurations = res;
+        this.products = res;
         return res;
       },
       (err) => {
@@ -186,8 +227,8 @@ export class UpdateContractComponent implements OnInit {
       }
     );
   }
-  fillPaymentDurationSelected() {
-    this.fillPaymentDurations(this.selFacilityId);
+  fillProductSelected() {
+    this.fillProducts(this.selFacilityId);
   }
 
   // getPaymentDurationById(id: number): undefined | PaymentDuration {

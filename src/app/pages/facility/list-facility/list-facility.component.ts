@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 })
 export class ListFacilityComponent implements OnInit, OnDestroy {
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   allCities: City[] = [];
   allFacilities: Facility[] = [];
@@ -36,10 +36,6 @@ export class ListFacilityComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router:Router
   ) {}
-
-  ngAfterViewInit(): void {
-    this.dtTrigger.next(null);
-  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -86,7 +82,9 @@ export class ListFacilityComponent implements OnInit, OnDestroy {
     this.dependetDropdown.getAllFacilities(this.selCityId).subscribe(
       (res) => {
         this.allFacilities = res;
-        this.dtTrigger.next(null);
+        setTimeout(()=>{
+          this.dtTrigger.next()
+        },1500)
       },
       (err) => {
         console.log(err);
@@ -109,4 +107,6 @@ export class ListFacilityComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
+
+
 }

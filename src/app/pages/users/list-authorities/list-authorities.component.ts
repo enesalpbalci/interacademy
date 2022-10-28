@@ -28,7 +28,7 @@ export class ListAuthorityComponent
   selRoleName: string;
 
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   constructor(
     private userService: UserService,
@@ -65,7 +65,7 @@ export class ListAuthorityComponent
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.dtTrigger.next(this.dtOptions);
+     
     }, 300);
     this.getAllRoles();
     this.getUsersByRole(this.selRoleName);
@@ -75,6 +75,7 @@ export class ListAuthorityComponent
     this.userService.getAllUsersByRole(roleName).subscribe(
       (data) => {
         this.users = data;
+        this.dtTrigger.next();
       },
       (error) => {
         console.log(error);

@@ -26,7 +26,7 @@ export class ListPaymentComponent implements OnInit, OnDestroy {
   selFacilityId: number;
 
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   constructor(
     private dependetDropdown: DependetDropdownService,
@@ -63,7 +63,7 @@ export class ListPaymentComponent implements OnInit, OnDestroy {
     this.paymentService.getAllPayments().subscribe(
       (res) => {
         this.allPayments = res.filter(x=>x.contractId);
-        this.dtTrigger.next(this.dtOptions);
+        this.dtTrigger.next();
       },
       (err) => {
         console.log(err);

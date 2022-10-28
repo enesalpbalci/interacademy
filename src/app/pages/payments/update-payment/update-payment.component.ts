@@ -19,7 +19,7 @@ export class UpdatePaymentComponent implements OnInit {
 
   payments: Payment[] = [];
 
-  paymentId: string;
+  payment: Payment;
 
   updateForm: FormGroup;
 
@@ -43,9 +43,9 @@ export class UpdatePaymentComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       let id = params.get('id');
       if (id) {
-        this.paymentId = id;
         this.paymentService.getPaymentClaimById(id).subscribe(
           (res) => {
+            this.payment=res
             this.updateForm.controls['id'].setValue(res.id);
             this.updateForm.controls['contractId'].setValue(res.contractId);
             this.updateForm.controls['amount'].setValue(res.amount);
@@ -65,7 +65,7 @@ export class UpdatePaymentComponent implements OnInit {
     if (this.updateForm.valid) {
       let data: Payment = Object.assign({}, this.updateForm.value);
      
-      this.paymentService.updatePayment(this.paymentId, data, this.file).subscribe(
+      this.paymentService.updatePayment(this.payment.id, data, this.file).subscribe(
         (res) => {
           alert('Ödeme Güncellendi');
           this.updateForm.reset();

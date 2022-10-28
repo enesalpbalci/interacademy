@@ -63,7 +63,6 @@
             <table
               datatable
               [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger"
               class="table table-hover table-responsive"
               style="width: 100%"
               *ngIf="showTable || selFacilityId; else hide"
@@ -71,7 +70,7 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Üye</th>
+                  <!-- <th>Üye</th> -->
                   <th>Ödeme Tarihi</th>
                   <th>Bitiş Tarihi</th>
                   <th>Fiyat</th>
@@ -84,7 +83,7 @@
               <tbody>
                 <tr *ngFor="let payment of allPayments; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <td></td>
+                  <!-- <td></td> -->
                   <td>{{ payment.paymentDate | date }}</td>
                   <td>{{ payment.dueDate | date }}</td>
                   <td>{{payment.amount | currency : "₺"}}</td>

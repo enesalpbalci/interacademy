@@ -21,7 +21,7 @@ export class ViewContractComponent implements OnInit {
   payments:Payment
   
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -39,8 +39,10 @@ export class ViewContractComponent implements OnInit {
     this.activatedRoute.params.subscribe(params=>{
       this.contractService.getContractById(params["id"]).subscribe(data => {
         this.contract = data;
-        this.paymentService.getPaymentClaimById(data.studentId).subscribe(data=>{
-          this.payments= data
+        data.payments.forEach(e=>{
+          this.paymentService.getPaymentClaimById(e.id).subscribe(data=>{
+            this.allPayments[this.allPayments.length]=data
+          })
         })
       })
     })

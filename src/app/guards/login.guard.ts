@@ -24,13 +24,16 @@ export class LoginGuard implements CanActivate {
     | boolean
     | UrlTree {
 
-    let logged = localStorage.getItem('token')
-    if(logged){
-    return true;
-    }
-    this.router.navigate(['/login'])
-    alert('Sayfaya erişim için giriş yapmalasınız');
-    return false
+    var result=this.authService.isAuthenticated();
+    result.subscribe(res=>{
+      return true
+    },error=>{
+      this.router.navigate(['/login'])
+      alert('Sayfaya erişim için giriş yapmalasınız');
+      return false
+    })
+    console.log(result);
+    return result!=undefined;
     
   }
 }

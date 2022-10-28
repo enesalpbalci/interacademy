@@ -19,10 +19,9 @@
 
                   <div class="col-md-6 col-sm-6">
                     <select class="form-control" formControlName="type">
-                      <option value="" disabled>Seçiniz...</option>
-                      <option value="Nakit">Nakit</option>
-                      <option value="Kredi Kartı">Kredi Kartı</option>
-                      <option value="Havale/EFT">Havale/EFT</option>
+                      <option value="Nakit" [selected]="payment?.type.trim()=='Nakit'">Nakit</option>
+                      <option value="Kredi Kartı" [selected]="payment?.type.trim()=='Kredi Kartı'">Kredi Kartı</option>
+                      <option value="Havale/EFT" [selected]="payment?.type.trim()=='Havale/EFT'">Havale/EFT</option>
                     </select>
                     <div
                       *ngIf="

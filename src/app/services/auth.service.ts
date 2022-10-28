@@ -19,11 +19,8 @@ export class AuthService {
     return this.http.post<TokenDto>(`${this.apiUrl}/users/login?userName=${userForLoginDto.userName}&passWord=${userForLoginDto.passWord}`,{})
   }
 
-  isLoggedIn() {
-    if (localStorage.getItem('token')) {
-      return true;
-    }
-    return false;
+  isAuthenticated():Observable<any>{
+    return this.http.get<any>(this.apiUrl+"/Facilities");
   }
 
    logout(): void {

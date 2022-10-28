@@ -26,7 +26,7 @@ export class ListProductComponent implements OnInit {
   selFacilityId: number;
 
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   constructor(
     private productService: ProductService,
@@ -96,7 +96,7 @@ export class ListProductComponent implements OnInit {
     this.productService.getAllProducts(this.selFacilityId).subscribe(
       (res) => {
         this.allProducts = res;
-        this.dtTrigger.next(this.dtOptions);
+        this.dtTrigger.next();
       },
       (err) => {
         console.log(err);

@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
   constructor(private router:Router) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    document.querySelector('body').classList.add('nav-md');
+    document.querySelector('body').classList.remove('login');
+  }
   loggedIn() {
     return localStorage.getItem('token');
   }

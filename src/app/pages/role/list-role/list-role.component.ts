@@ -13,7 +13,7 @@ export class ListRoleComponent implements OnInit, OnDestroy {
   roles: Role[] = [];
 
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   constructor(private roleService: RoleService, private router: Router) {}
 
@@ -47,7 +47,7 @@ export class ListRoleComponent implements OnInit, OnDestroy {
     this.roleService.getAllRoles().subscribe(
       (data) => {
         this.roles = data;
-        this.dtTrigger.next(null);
+        this.dtTrigger.next();
       },
       (error) => {
         console.log(error);

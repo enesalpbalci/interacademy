@@ -16,7 +16,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 export class ListUserComponent implements OnInit, OnDestroy {
   users: User[] = [];
   roles: Role[] = [];
-  payments:Payment[]=[]
+  payments: Payment[] = [];
 
   selRoleName: string = 'Student';
 
@@ -26,9 +26,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private roleService: RoleService,
-    private router: Router,
-    private activatedRoute:ActivatedRoute,
-    private paymentService: PaymentService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +53,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
       lengthMenu: [5, 15, 25],
       destroy: true,
     };
-    
+
     this.getAllRoles();
     this.getUsersByRole(this.selRoleName);
   }

@@ -30,7 +30,7 @@ export class ListContractComponent implements  OnInit,OnDestroy {
   selGroupId: number;
 
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   constructor(
     private contractService: ContractService,
@@ -56,7 +56,7 @@ export class ListContractComponent implements  OnInit,OnDestroy {
   fillContract() {
     this.contractService.getAllContract().subscribe((res) => {
       this.allContracts = res;
-      this.dtTrigger.next(null);
+      this.dtTrigger.next();
     });
   }
   

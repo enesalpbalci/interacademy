@@ -207,17 +207,7 @@ export class AddContractComponent implements OnInit {
   //   return true;
   // }
 
-  // checkPrice(duration: PaymentDuration) {
-  //   this.addForm
-  //     .get('price')
-  //     .setValue(this.checkDuration(duration) * duration.price);
-  // }
 
-  // checkDuration(duration: PaymentDuration): any {
-  //   this.addForm
-  //     .get('duration')
-  //     .setValue(+this.addForm.get('duration').value / duration.duration);
-  // }
 
   setPaymentType() {
     if (this.products.length > 0) {

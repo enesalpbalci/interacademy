@@ -134,7 +134,7 @@
                 id="facilityId"
                 formControlName="facilityId"
                 [(ngModel)]="selFacilityId"
-                (change)="fillPaymentDurationSelected()"
+                (change)="fillProductSelected()"
               >
                 <option
                   *ngFor="let facility of facilities"
@@ -151,6 +151,65 @@
                 class="text-danger"
               >
                 <div *ngIf="f['facilityId'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div *ngIf="selFacilityId" class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Paket Adı
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                id="groupId"
+                formControlName="productId"
+                (change)="setPaymentType()"
+              >
+                <option *ngFor="let product of products" [ngValue]="product.id">
+                  {{ product.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f['productId'].invalid &&
+                  (f['productId'].dirty || f['productId'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['productId'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+
+          <div *ngIf="selFacilityId" class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Ödeme Şekli
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                id="groupId"
+                formControlName="installments"
+              >
+                <option *ngFor="let paymentType of paymentTypes" [ngValue]="paymentType.duration">
+                  {{  paymentType.text  }}
+                </option>
+             
+              </select>
+              <div
+                *ngIf="
+                  f['installments'].invalid &&
+                  (f['installments'].dirty || f['installments'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['installments'].errors.required">
                   Bu alan boş bırakılamaz
                 </div>
               </div>
@@ -188,7 +247,7 @@
               <div class="invalide-feedback"></div>
             </div>
           </div> -->
-          <div class="item form-group">
+          <!-- <div class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align"
               >Ödeme Süresi(Ay)
             </label>
@@ -199,12 +258,12 @@
                 formControlName="paymentDurationId"
                 (change)="calculatePrice()"
               >
-                <!-- <option
+                <option
                   *ngFor="let paymentDuration of paymentDurations"
                   [ngValue]="paymentDuration.id"
                 >
                   {{ paymentDuration.duration }}
-                </option> -->
+                </option>
               </select>
               <div
                 *ngIf="
@@ -220,7 +279,7 @@
               </div>
               <div class="invalide-feedback"></div>
             </div>
-          </div>
+          </div> -->
           <div *ngIf="selFacilityId" class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align"
               >Başlama Tarihi
@@ -245,7 +304,7 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
-          <div *ngIf="selFacilityId" class="item form-group">
+          <!-- <div *ngIf="selFacilityId" class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="duration"
@@ -272,8 +331,8 @@
               </div>
               <div class="invalide-feedback"></div>
             </div>
-          </div>
-          <div *ngIf="selFacilityId" class="item form-group">
+          </div> -->
+          <!-- <div *ngIf="selFacilityId" class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="price"
@@ -289,7 +348,7 @@
               />
               <div class="invalide-feedback"></div>
             </div>
-          </div>
+          </div> -->
           <div *ngIf="selFacilityId" class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
@@ -304,7 +363,6 @@
                   formControlName="approved"
                   [(ngModel)]="approved"
                   (change)="checkValue(approved ? true : false)"
-                  id="flexCheckDefault"
                 />
                 <label class="form-check-label" for="flexCheckDefault">
                   Kontratı Onayla

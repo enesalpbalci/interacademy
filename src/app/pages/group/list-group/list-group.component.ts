@@ -28,7 +28,7 @@ export class ListGroupComponent implements OnInit, OnDestroy{
 
   
   dtOptions: any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger: Subject<void> = new Subject<void>();
 
   constructor(
     private groupService: GroupService,
@@ -90,7 +90,7 @@ export class ListGroupComponent implements OnInit, OnDestroy{
       .subscribe(
         (res) => {
           this.allGroups = res;
-          this.dtTrigger.next(null);
+          this.dtTrigger.next();
         },
         (err) => {
           console.log(err);

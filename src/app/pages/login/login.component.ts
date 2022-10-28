@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.querySelector('body').classList.remove('nav-md');
+    document.querySelector('body').classList.add('login');
     this.loginForm = this.formBuilder.group({
       userName: this.formBuilder.control('', Validators.required),
       passWord: this.formBuilder.control('', Validators.required),
