@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">
-              <form [formGroup]="updateForm">
+              <form [formGroup]="updateForm" enctype="multipart/form-data">
                 <div class="item form-group">
                   <label
                     class="col-form-label col-md-3 col-sm-3 label-align"
@@ -93,30 +93,30 @@
                     <div class="invalide-feedback"></div>
                   </div>
                 </div>
-                <!-- <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="path">Dosya</label>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="fileSource">Dosya</label>
                   
                   <div class="col-md-6 col-sm-6">
                     <input
-                      formControlName="path"
-                      id="path"
+                      formControlName="fileSource"
+                      id="fileSource"
                       type="file"
                       class="form-control"
                       (change)="onFileChange($event)"
                     />
                     <div
                       *ngIf="
-                        f['path'].invalid &&
-                        (f['path'].dirty || f['path'].touched)
+                        f['fileSource'].invalid &&
+                        (f['fileSource'].dirty || f['fileSource'].touched)
                       "
                       class="text-danger"
                     >
-                      <div *ngIf="f['path'].errors?.required">
+                      <div *ngIf="f['fileSource'].errors?.required">
                         Bu kısım boş bırakılamaz
                       </div>
                     </div>
                   </div>
-                </div> -->
+                </div>
                 <div class="item form-group">
                   <div class="col-md-3 col-sm-3"></div>
 

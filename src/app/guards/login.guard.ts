@@ -23,6 +23,7 @@ export class LoginGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+
     let logged = localStorage.getItem('token')
     if(logged){
     return true;
@@ -30,5 +31,6 @@ export class LoginGuard implements CanActivate {
     this.router.navigate(['/login'])
     alert('Sayfaya erişim için giriş yapmalasınız');
     return false
+    
   }
 }

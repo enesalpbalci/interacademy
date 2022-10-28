@@ -66,29 +66,29 @@ export class UpdatePaymentDurationsComponent implements OnInit {
       facilityId: [0, Validators.required],
       cityId:[]
     });
-    this.getPaymentDuration();
+    // this.getPaymentDuration();
     this.fillCity();
   }
 
-  private getPaymentDuration() {
-    this.activatedRoute.paramMap.subscribe((params) => {
-      let id = params.get('id');
-      if (id) {
-        this.paymentDurationId = id;
-        this.paymentDurationService.getPaymentDurationById(id).subscribe(
-          (res) => {
-            this.updateForm.controls['id'].setValue(res.id);
-            this.updateForm.controls['duration'].setValue(res.duration);
-            this.updateForm.controls['price'].setValue(res.price);
-            this.updateForm.controls['facilityId'].setValue(res.facilityId);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
-    });
-  }
+  // private getPaymentDuration() {
+  //   this.activatedRoute.paramMap.subscribe((params) => {
+  //     let id = params.get('id');
+  //     if (id) {
+  //       this.paymentDurationId = id;
+  //       this.paymentDurationService.getPaymentDurationById(id).subscribe(
+  //         (res) => {
+  //           this.updateForm.controls['id'].setValue(res.id);
+  //           this.updateForm.controls['duration'].setValue(res.duration);
+  //           this.updateForm.controls['price'].setValue(res.price);
+  //           this.updateForm.controls['facilityId'].setValue(res.facilityId);
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
 
   updatePaymentDuration() {
     if (this.updateForm.valid) {

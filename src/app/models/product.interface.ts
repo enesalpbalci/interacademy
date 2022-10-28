@@ -1,6 +1,5 @@
 import { Contract } from "./contract.interface"
 import { Facility } from "./facility.interface"
-import { PaymentDuration } from "./payment-duration.interface"
 
 export type Root = Product[]
 
@@ -18,6 +17,6 @@ export interface Product {
   installmentTotalStr: string
   facility: Facility
   contracts: Contract
-  paymentDurations: PaymentDuration
+  
 }
 

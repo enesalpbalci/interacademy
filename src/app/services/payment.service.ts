@@ -19,8 +19,13 @@ export class PaymentService {
     return this.http.get<Payment>(`${this.apiUrl}/Payments/${id}`)
   }
 
-  updatePayment(id: any, updatePayment: Payment): Observable<Payment> {
-    return this.http.put<Payment>(`${this.apiUrl}/Payments/${id}`, updatePayment);
+  updatePayment(id: any, updatePayment: Payment, file: null|File = null): Observable<Payment> {
+    const { note, type } = updatePayment;
+
+    const formData = new FormData()
+    formData.append('path', file)
+
+    return this.http.put<Payment>(`${this.apiUrl}/Payments/?id=${id}&type=${type}&note=${note}`, formData);
   }
 
   private handleError(error: HttpErrorResponse) {

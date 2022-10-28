@@ -1,5 +1,5 @@
-import { PaymentDuration } from "./payment-duration.interface"
 import { Payment } from "./payment.interface"
+import { Product } from "./product.interface"
 import { User } from "./user.interface"
 
 export type Root = Contract[]
@@ -7,15 +7,17 @@ export type Root = Contract[]
 export interface Contract {
   id: number
   studentId: string
-  approverId:string
-  start: Date
-  end: Date
-  duration: number
-  paymentDurationId: number
+  start: string
+  end: string
+  installments: number
   userId: string
   price: number
+  priceStr: string
+  approverId: string
+  productId: number
+  cancelled: boolean
   student: User
-  paymentDuration: PaymentDuration
+  product: Product
   user: User
   payments: Payment[]
 }

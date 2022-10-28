@@ -67,18 +67,18 @@ export class UpdateContractComponent implements OnInit {
         );
         this.updateForm.controls['userId'].setValue(data.userId)
 
-        let facility = this.facilities.filter(
-          (e) => e.id == data.paymentDuration.facilityId
-        )[0];
-        this.updateForm.controls['cityId'].setValue(facility.cityId);
-        this.fillPaymentDurations(facility.id);
-        this.updateForm.controls['facilityId'].setValue(
-          data.paymentDuration.facilityId
-        );
-        this.updateForm.controls['paymentDurationId'].setValue(
-          data.paymentDurationId
-        );
-        this.updateForm.controls['duration'].setValue(data.duration);
+        // let facility = this.facilities.filter(
+        //   (e) => e.id == data.paymentDuration.facilityId
+        // )[0];
+        // this.updateForm.controls['cityId'].setValue(facility.cityId);
+        // this.fillPaymentDurations(facility.id);
+        // this.updateForm.controls['facilityId'].setValue(
+        //   data.paymentDuration.facilityId
+        // );
+        // this.updateForm.controls['paymentDurationId'].setValue(
+        //   data.paymentDurationId
+        // );
+        // this.updateForm.controls['duration'].setValue(data.duration);
         this.updateForm.controls['start'].setValue(formatDate(data.start.toString(),'dd.MM.yyyy','en'));
         this.updateForm.controls['price'].setValue(data.price);
         setTimeout(() => {
@@ -190,31 +190,31 @@ export class UpdateContractComponent implements OnInit {
     this.fillPaymentDurations(this.selFacilityId);
   }
 
-  getPaymentDurationById(id: number): undefined | PaymentDuration {
-    const paymentDuration: PaymentDuration[] = this.paymentDurations.filter(
-      (paymentDuration) => {
-        return paymentDuration.id === id;
-      }
-    );
-    return paymentDuration[0];
-  }
+  // getPaymentDurationById(id: number): undefined | PaymentDuration {
+  //   // const paymentDuration: PaymentDuration[] = this.paymentDurations.filter(
+  //   //   (paymentDuration) => {
+  //   //     return paymentDuration.id === id;
+  //   //   }
+  //   // );
+  //   // return paymentDuration[0];
+  //}
 
   calculatePrice() {
-    const contractDuration = parseInt(
-      this.updateForm.get('duration').value || 0
-    );
-    const paymentDurationId = parseInt(
-      this.updateForm.get('paymentDurationId').value || 0
-    );
+    // const contractDuration = parseInt(
+    //   this.updateForm.get('duration').value || 0
+    // );
+    // const paymentDurationId = parseInt(
+    //   this.updateForm.get('paymentDurationId').value || 0
+    // );
 
-    if (contractDuration === 0 || paymentDurationId === 0) {
-      return;
-    }
+    // if (contractDuration === 0 || paymentDurationId === 0) {
+    //   return;
+    // }
 
-    const paymentDuration = this.getPaymentDurationById(paymentDurationId);
-    const paymentCount = contractDuration / paymentDuration.duration;
+    // const paymentDuration = this.getPaymentDurationById(paymentDurationId);
+    // const paymentCount = contractDuration / paymentDuration.duration;
 
-    this.updateForm.get('price').setValue(paymentCount * paymentDuration.price);
+    // this.updateForm.get('price').setValue(paymentCount * paymentDuration.price);
   }
 
   get f() {

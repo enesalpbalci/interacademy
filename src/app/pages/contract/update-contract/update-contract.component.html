@@ -199,12 +199,12 @@
                 formControlName="paymentDurationId"
                 (change)="calculatePrice()"
               >
-                <option
+                <!-- <option
                   *ngFor="let paymentDuration of paymentDurations"
                   [ngValue]="paymentDuration.id"
                 >
                   {{ paymentDuration.duration }}
-                </option>
+                </option> -->
               </select>
               <div
                 *ngIf="

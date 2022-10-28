@@ -16,7 +16,12 @@
             Tc No:
           </label>
           <div class="col-md-6 col-sm-6">
-            <input type="text" class="form-control" readonly [(ngModel)]="userDetails &&  userDetails.idNumber">
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              [(ngModel)]="userDetails && userDetails.idNumber"
+            />
           </div>
         </div>
         <div class="item form-group">
@@ -24,7 +29,12 @@
             Ad:
           </label>
           <div class="col-md-6 col-sm-6">
-            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.name">
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              [(ngModel)]="userDetails && userDetails.name"
+            />
           </div>
         </div>
         <div class="item form-group">
@@ -32,7 +42,12 @@
             Soyad:
           </label>
           <div class="col-md-6 col-sm-6">
-            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.surName">
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              [(ngModel)]="userDetails && userDetails.surName"
+            />
           </div>
         </div>
         <div class="item form-group">
@@ -40,7 +55,12 @@
             Telefon:
           </label>
           <div class="col-md-6 col-sm-6">
-            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.phoneNumber">
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              [(ngModel)]="userDetails && userDetails.phoneNumber"
+            />
           </div>
         </div>
         <div class="item form-group">
@@ -48,7 +68,12 @@
             E-Mail:
           </label>
           <div class="col-md-6 col-sm-6">
-            <input type="text" class="form-control" readonly [(ngModel)]="userDetails && userDetails.email">
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              [(ngModel)]="userDetails && userDetails.email"
+            />
           </div>
         </div>
         <form
@@ -109,7 +134,7 @@
                 id="facilityId"
                 formControlName="facilityId"
                 [(ngModel)]="selFacilityId"
-                (change)="fillPaymentDurations()"
+                (change)="fillProducts()"
               >
                 <option
                   *ngFor="let facility of facilities"
@@ -164,7 +189,7 @@
               <div class="invalide-feedback"></div>
             </div>
           </div> -->
-          <div *ngIf="selFacilityId" class="item form-group">
+          <!-- <div *ngIf="selFacilityId" class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="duration"
@@ -176,7 +201,6 @@
                 formControlName="duration"
                 type="number"
                 id="duration"
-                (change)="calculatePrice()"
               />
               <div
                 *ngIf="
@@ -191,32 +215,61 @@
               </div>
               <div class="invalide-feedback"></div>
             </div>
-          </div>
+          </div> -->
+          {{addForm.get("productId").value}}
           <ng-template #hiddenGroup> </ng-template>
           <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
-            <label
-              class="col-form-label col-md-3 col-sm-3 label-align"
-              >Ödeme Tipi
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Paket Adı
             </label>
             <div class="col-md-6 col-sm-6">
               <select
                 class="form-control"
                 id="groupId"
-                formControlName="paymentDurationId"
-                (change)="calculatePrice()"
+                formControlName="productId"
+                (change)="setPaymentType()"
               >
-                <option *ngFor="let paymentDuration of paymentDurations" [ngValue]="paymentDuration.id">
-                  {{ paymentDuration.duration }} Ay {{paymentDuration.price}} ₺
+                <option *ngFor="let product of products" [ngValue]="product.id">
+                  {{ product.name }}
                 </option>
               </select>
               <div
                 *ngIf="
-                  f['paymentDurationId'].invalid &&
-                  (f['paymentDurationId'].dirty || f['paymentDurationId'].touched)
+                  f['productId'].invalid &&
+                  (f['productId'].dirty || f['productId'].touched)
                 "
                 class="text-danger"
               >
-                <div *ngIf="f['paymentDurationId'].errors.required">
+                <div *ngIf="f['productId'].errors.required">
+                  Bu alan boş bırakılamaz
+                </div>
+              </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Ödeme Şekli
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <select
+                class="form-control"
+                id="groupId"
+                formControlName="installments"
+              >
+                <option *ngFor="let paymentType of paymentTypes" [ngValue]="paymentType.duration">
+                  {{  paymentType.text  }}
+                </option>
+             
+              </select>
+              <div
+                *ngIf="
+                  f['installments'].invalid &&
+                  (f['installments'].dirty || f['installments'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="f['installments'].errors.required">
                   Bu alan boş bırakılamaz
                 </div>
               </div>
@@ -247,8 +300,8 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
-        
-          <div *ngIf="selFacilityId" class="item form-group">
+
+          <!-- <div *ngIf="selFacilityId" class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="price"
@@ -264,7 +317,7 @@
               />
               <div class="invalide-feedback"></div>
             </div>
-          </div>
+          </div> -->
 
           <ng-template #hidden></ng-template>
           <div class="ln_solid"></div>

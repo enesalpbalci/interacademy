@@ -23,6 +23,8 @@ export class UpdatePaymentComponent implements OnInit {
 
   updateForm: FormGroup;
 
+  file: File;
+
   ngOnInit(): void {
     this.updateForm = this.formBuilder.group({
       id: [0],
@@ -31,9 +33,8 @@ export class UpdatePaymentComponent implements OnInit {
       type: ['', Validators.required],
       userId: ['0'],
       note: [''],
-      path: [''],
       dueDate: ['', Validators.required],
-      fileSource: new FormControl('')
+      fileSource: [null]
     });
     this.getPayment();
   }
@@ -51,7 +52,6 @@ export class UpdatePaymentComponent implements OnInit {
             this.updateForm.controls['type'].setValue(res.type);
             this.updateForm.controls['dueDate'].setValue(res.dueDate);
             this.updateForm.controls['note'].setValue(res.note);
-            // this.updateForm.controls['path'].setValue(res.path);
           },
           (error) => {
             console.log(error);
@@ -64,10 +64,8 @@ export class UpdatePaymentComponent implements OnInit {
   updatePayment() {
     if (this.updateForm.valid) {
       let data: Payment = Object.assign({}, this.updateForm.value);
-      const formData = new FormData();
-      formData.append('path', this.updateForm.get('fileSource').value);
-      
-      this.paymentService.updatePayment(this.paymentId, data).subscribe(
+     
+      this.paymentService.updatePayment(this.paymentId, data, this.file).subscribe(
         (res) => {
           alert('Ödeme Güncellendi');
           this.updateForm.reset();
@@ -85,10 +83,7 @@ export class UpdatePaymentComponent implements OnInit {
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.updateForm.patchValue({
-        fileSource: file,
-      });
+     this.file = event.target.files[0];
     }
   }
 }

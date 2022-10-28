@@ -12,10 +12,10 @@ import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: [
-    AddPaymentDurationComponent,
-    UpdatePaymentDurationsComponent,
-    ListPaymentDurationsComponent,
-    ViewPaymentDurationComponent
+    // AddPaymentDurationComponent,
+    // UpdatePaymentDurationsComponent,
+    // ListPaymentDurationsComponent,
+    // ViewPaymentDurationComponent
   ],
   imports: [
     CommonModule,

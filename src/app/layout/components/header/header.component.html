@@ -15,13 +15,12 @@
             data-toggle="dropdown"
             aria-expanded="false"
           >
-            User Name
           </a>
           <div
             class="dropdown-menu dropdown-usermenu pull-right"
             aria-labelledby="navbarDropdown"
           >
-            <a class="dropdown-item" href="javascript:;"> Profile</a>
+            <!-- <a class="dropdown-item" href="javascript:;"> Profile</a>
             <a class="dropdown-item" href="javascript:;">
               <span class="badge bg-red pull-right">50%</span>
               <span>Settings</span>
@@ -31,7 +30,7 @@
               <a class="dropdown-item" routerLink="/login"
                 ><i class="fa fa-sign-out pull-right"></i> Login</a
               >
-            </div>
+            </div> -->
             <div *ngIf="loggedIn()">
               <a class="dropdown-item" (click)="onLogOut()"
                 ><i class="fa fa-sign-out pull-right"></i> Logout</a

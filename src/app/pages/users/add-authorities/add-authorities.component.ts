@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { City } from 'src/app/models/city.interface';
-import { Facility } from 'src/app/models/facility.interface';
-import { Group } from 'src/app/models/group.interface';
 import { Role } from 'src/app/models/role.interface';
 import { User } from 'src/app/models/user.interface';
-import { ContractService } from 'src/app/services/contract.service';
-import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
-import { PaymentDurationService } from 'src/app/services/payment-duration.service';
 import { RoleService } from 'src/app/services/role.service';
 import { UserRoleService } from 'src/app/services/user-role.service';
 import { UserService } from 'src/app/services/user.service';
@@ -24,7 +18,6 @@ export class AddAuthoritiesComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private roleService: RoleService,
-    private userRoleService: UserRoleService
   ) {}
 
   addForm: FormGroup;
@@ -204,20 +197,20 @@ export class AddAuthoritiesComponent implements OnInit {
     }
   }
 
-  async setRole(): Promise<boolean> {
-    const paymentDurationId = this.addForm.get('paymentDurationId').value;
+  // async setRole(): Promise<boolean> {
+  //   const paymentDurationId = this.addForm.get('paymentDurationId').value;
 
-    console.log(paymentDurationId, this.roles);
-    const duration: Role = this.roles.find((paymentDuration) => {
-      if (paymentDuration.id == paymentDurationId) {
-        return paymentDuration;
-      }
-    });
+  //   console.log(paymentDurationId, this.roles);
+  //   const duration: Role = this.roles.find((paymentDuration) => {
+  //     if (paymentDuration.id == paymentDurationId) {
+  //       return paymentDuration;
+  //     }
+  //   });
 
-    if (typeof duration !== 'undefined') {
-      this.addForm.get('userId').setValue(duration.id);
-    }
+  //   if (typeof duration !== 'undefined') {
+  //     this.addForm.get('userId').setValue(duration.id);
+  //   }
 
-    return true;
-  }
+  //   return true;
+  // }
 }
