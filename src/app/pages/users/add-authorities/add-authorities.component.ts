@@ -40,7 +40,7 @@ export class AddAuthoritiesComponent implements OnInit {
           ],
         ],
         name: [
-          'aaa',
+          '',
           [
             Validators.required,
             Validators.minLength(2),
@@ -57,7 +57,7 @@ export class AddAuthoritiesComponent implements OnInit {
         ],
         confirmPassWord: ['', [Validators.required, PasswordStrengthValidator]],
         email: [
-          'aaaa@asd.ca',
+          '',
           [
             Validators.required,
             Validators.email,
@@ -65,7 +65,7 @@ export class AddAuthoritiesComponent implements OnInit {
           ],
         ],
         phoneNumber: [
-          '22222222222',
+          '',
           [
             Validators.required,
             Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
@@ -74,7 +74,7 @@ export class AddAuthoritiesComponent implements OnInit {
           ],
         ],
         surName: [
-          'ss',
+          '',
           [
             Validators.required,
             Validators.minLength(2),
@@ -124,7 +124,7 @@ export class AddAuthoritiesComponent implements OnInit {
   }
 
   addUser() {
-    if (true || this.addForm.valid) {
+    if (this.addForm.valid) {
       // await this.setDurationToForm();
       let email = this.addForm.get('email').value;
       this.addForm.get('userName').setValue(email);

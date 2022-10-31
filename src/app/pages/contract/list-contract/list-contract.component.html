@@ -9,11 +9,11 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box table-responsive">
-              <button routerLink="/users/students" class="btn btn-success">
+              <button routerLink="/users/students" class="btn btn-info">
                 Kontrat Ekle
               </button>
               <button (click)="toggleShowTable()" class="btn btn-primary">
-                Kontratları Listele
+               Tüm Kontratları Listele
               </button>
               <div class="item form-group mt-3">
                 <label
@@ -39,7 +39,7 @@
                 </div>
               </div>
 
-              <div class="item form-group">
+              <div *ngIf="selCityId" class="item form-group">
                 <label
                   class="col-form-label col-md-3 col-sm-3 label-align"
                   for="facility"
@@ -62,7 +62,7 @@
                   <div class="invalide-feedback"></div>
                 </div>
               </div>
-              <div class="item form-group">
+              <div *ngIf="selFacilityId" class="item form-group">
                 <label
                   class="col-form-label col-md-3 col-sm-3 label-align"
                   for="group"

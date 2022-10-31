@@ -9,33 +9,79 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">
-              <!-- <button routerLink="/users/add-user" class="btn btn-success">
-                  Öğrenci Ekle
-                </button> -->
-              <div class="item form-group">
-                <!-- <label
-                    class="col-form-label col-md-3 col-sm-3 label-align"
-                    for="city"
-                    >Rol Adı 
-                  </label> -->
+              <button routerLink="/users/add-user" class="btn btn-info">
+                Öğrenci Ekle
+              </button>
+              <button (click)="toggleShowTable()" class="btn btn-primary">
+                Tüm Öğrencileri Listele
+              </button>
+              <div class="item form-group mt-3">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="city"
+                  >Şehir
+                </label>
                 <div class="col-md-6 col-sm-6">
-                  <!-- <select
-                      class="form-control"
-                      id="city"
-                      [(ngModel)]="selRoleName"
-                      (ngModelChange)="onSelectedRoleChanged($event)"
-                    >
-                      <option *ngFor="let role of roles" [ngValue]="role.name">
-                        {{ role.name }}
-                      </option>
-                    </select> -->
-                  <input
-                    type="text"
+                  <select
                     class="form-control"
-                    readonly
-                    hidden
-                    [(ngModel)]="selRoleName"
-                  />
+                    id="city"
+                    [(ngModel)]="selCityId"
+                    (change)="fillFacility(); getUsersByRole(selRoleName)"
+                  >
+                    <option
+                      *ngFor="let city of allCities"
+                      [ngValue]="city.plateCode"
+                    >
+                      {{ city.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+
+              <div *ngIf="selCityId" class="item form-group">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="facility"
+                  >Tesis
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="facility"
+                    [(ngModel)]="selFacilityId"
+                    (change)="fillGroup(); getUsersByRole(selRoleName)"
+                  >
+                    <option
+                      *ngFor="let facility of allFacilities"
+                      [ngValue]="facility.id"
+                    >
+                      {{ facility.name }}
+                    </option>
+                  </select>
+                  <div class="invalide-feedback"></div>
+                </div>
+              </div>
+              <div *ngIf="selFacilityId" class="item form-group">
+                <label
+                  class="col-form-label col-md-3 col-sm-3 label-align"
+                  for="group"
+                  >Grup
+                </label>
+                <div class="col-md-6 col-sm-6">
+                  <select
+                    class="form-control"
+                    id="group"
+                    [(ngModel)]="selGroupId"
+                    (change)="getUsersByRole(selRoleName)"
+                  >
+                    <option
+                      *ngFor="let group of allGroups"
+                      [ngValue]="group.id"
+                    >
+                      {{ group.name }}
+                    </option>
+                  </select>
                   <div class="invalide-feedback"></div>
                 </div>
               </div>
@@ -44,6 +90,7 @@
               datatable
               [dtOptions]="dtOptions"
               class="table table-hover table-responsive"
+              *ngIf="selCityId || selFacilityId || selGroupId || showTable"
             >
               <thead>
                 <tr>
@@ -67,10 +114,16 @@
                   <td>{{ user.idNumber }}</td>
                   <td>
                     <button
+                      class="btn btn-light"
+                      routerLink="/contracts/user-contracts/{{ user.id }}"
+                    >
+                      Paketler
+                    </button>
+                    <button
                       class="btn btn-success"
                       routerLink="/contracts/add/{{ user.id }}"
                     >
-                      Paket Sat
+                      Paket Ekle
                     </button>
                     <button
                       class="btn btn-primary"
@@ -78,12 +131,7 @@
                     >
                       Güncelle
                     </button>
-                    <!-- <button
-                        class="btn btn-light"
-                        routerLink="/users/get/{{ user.id }}"
-                      >
-                        Detay
-                      </button> -->
+
                     <button
                       class="btn btn-danger"
                       (click)="removeUser(user.id)"

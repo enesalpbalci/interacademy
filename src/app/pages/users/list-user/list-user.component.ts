@@ -7,6 +7,10 @@ import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Payment } from 'src/app/models/payment.interface';
 import { PaymentService } from 'src/app/services/payment.service';
+import { Group } from 'src/app/models/group.interface';
+import { Facility } from 'src/app/models/facility.interface';
+import { City } from 'src/app/models/city.interface';
+import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 
 @Component({
   selector: 'app-list-user',
@@ -18,6 +22,15 @@ export class ListUserComponent implements OnInit, OnDestroy {
   roles: Role[] = [];
   payments: Payment[] = [];
 
+  allCities: City[] = [];
+  allFacilities: Facility[] = [];
+  allGroups: Group[] = [];
+
+  selCityId: number = 0;
+  selFacilityId: number;
+  selGroupId: number;
+
+
   selRoleName: string = 'Student';
 
   dtOptions: any = {};
@@ -26,7 +39,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private roleService: RoleService,
-    private router: Router
+    private router: Router,
+    private dependetDropdown:DependetDropdownService
   ) {}
 
   ngOnInit(): void {
@@ -38,13 +52,13 @@ export class ListUserComponent implements OnInit, OnDestroy {
       },
       dom: 'Bfrtip',
       buttons: [
-        {
-          text: 'Öğrenci Ekle',
-          action: (): void => {
-            this.router.navigate(['/users/add-user']);
-          },
-          className: 'btn btn-info',
-        },
+        // {
+        //   text: 'Öğrenci Ekle',
+        //   action: (): void => {
+        //     this.router.navigate(['/users/add-user']);
+        //   },
+        //   className: 'btn btn-info',
+        // },
         'excel',
         'pdf',
         'print',
@@ -54,8 +68,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
       destroy: true,
     };
 
-    this.getAllRoles();
-    this.getUsersByRole(this.selRoleName);
+    this.fillCity();
   }
 
   getUsersByRole(roleName: string) {
@@ -85,6 +98,40 @@ export class ListUserComponent implements OnInit, OnDestroy {
     this.getUsersByRole(this.selRoleName);
   }
 
+  fillCity() {
+    this.dependetDropdown.getAllCities().subscribe(
+      (res) => {
+        this.allCities = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  fillFacility() {
+    this.dependetDropdown.getAllFacilities(this.selCityId).subscribe(
+      (res) => {
+        this.allFacilities = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  fillGroup() {
+    this.dependetDropdown
+      .getAllGroups(this.selFacilityId, this.selCityId)
+      .subscribe(
+        (res) => {
+          this.allGroups = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
   removeUser(id: any) {
     if (confirm('Silmek istediğinize emin misiniz?')) {
       this.userService.removeUser(id).subscribe(
@@ -98,6 +145,14 @@ export class ListUserComponent implements OnInit, OnDestroy {
       );
     }
   }
+
+  showTable: boolean = false;
+  toggleShowTable(): void {
+    this.showTable = !this.showTable;
+    this.getUsersByRole(this.selRoleName);
+  }
+
+
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }

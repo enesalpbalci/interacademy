@@ -21,7 +21,7 @@
             <h2 class="col-md-6 col-sm-6">Kişi Bilgileri</h2>
           </div>
           <!-- <div formGroupName="student"> -->
-          <div class="item form-group d-flex align-items-center">
+          <!-- <div class="item form-group d-flex align-items-center">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="image"
@@ -43,7 +43,7 @@
                 </ng-template>
               </div>
               <br />
-              <!-- <div
+               <div
                     *ngIf="
                       f['student.image'].invalid &&
                       (f['student.image'].dirty || f['student.image'].touched)
@@ -53,10 +53,10 @@
                     <div *ngIf="f['student.image'].errors.required">
                       Bu alan boş bırakılamaz
                     </div>
-                  </div> -->
+                  </div> 
               <div class="invalide-feedback"></div>
             </div>
-          </div>
+          </div> -->
           <div class="item form-group" hidden>
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
@@ -890,7 +890,7 @@
                 id="cityId"
                 formControlName="cityId"
                 [(ngModel)]="selCityId"
-                (change)="fillFacility()"
+                (change)="fillFacilitySelected()"
               >
                 <option *ngFor="let city of cities" [ngValue]="city.plateCode">
                   {{ city.name }}
@@ -910,7 +910,7 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
-          <div *ngIf="selCityId; else hiddenFacility" class="item form-group">
+          <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="facility"
@@ -922,7 +922,7 @@
                 id="facilityId"
                 formControlName="facilityId"
                 [(ngModel)]="selFacilityId"
-                (change)="fillGroup()"
+                (change)="fillGroupSelected()"
               >
                 <option
                   *ngFor="let facility of facilities"
@@ -947,7 +947,7 @@
           </div>
           <ng-template #hiddenFacility> </ng-template>
 
-          <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
+          <div class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="groupId"
@@ -958,6 +958,7 @@
                 class="form-control"
                 id="groupId"
                 formControlName="groupId"
+                [(ngModel)]="selGroupId"
               >
                 <option *ngFor="let group of groups" [ngValue]="group.id">
                   {{ group.name }}

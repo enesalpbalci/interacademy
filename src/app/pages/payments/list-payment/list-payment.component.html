@@ -72,8 +72,8 @@
                   <th>#</th>
                   <!-- <th>Üye</th> -->
                   <th>Ödeme Tarihi</th>
-                  <th>Bitiş Tarihi</th>
-                  <th>Fiyat</th>
+                  <th>Vade Tarihi</th>
+                  <th>Tutar</th>
                   <th>Ödeme Tipi</th>
                   <th>Not</th>
                   <th></th>
@@ -86,22 +86,25 @@
                   <!-- <td></td> -->
                   <td>{{ payment.paymentDate | date }}</td>
                   <td>{{ payment.dueDate | date }}</td>
-                  <td>{{payment.amount | currency : "₺"}}</td>
-                  <td>{{payment.type}}</td>
-                  <td>{{payment.note}}</td>
+                  <td>{{ payment.amount | currency: "₺" }}</td>
+                  <td>{{ payment.type }}</td>
+                  <td>{{ payment.note }}</td>
                   <td>
                     <button
-                      class="btn btn-primary"
-                      routerLink="/payments/get/{{ payment.id }}"
+                      *ngIf="payment.paymentDate; else button"
+                      class="btn btn-primary w-100"
+                      routerLink="/payments/update/{{ payment.id }}"
                     >
                       Güncelle
                     </button>
-                    <!-- <button
-                      class="btn btn-light"
-                      routerLink="/payments/get/{{ payment.id }}"
-                    >
-                      Detay
-                    </button> -->
+                    <ng-template #button>
+                      <button
+                        class="btn btn-success w-100"
+                        routerLink="/payments/update/{{ payment.id }}"
+                      >
+                        Ödeme Al
+                      </button>
+                    </ng-template>
                   </td>
                 </tr>
               </tbody>

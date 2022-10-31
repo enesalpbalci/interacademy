@@ -210,9 +210,9 @@ export class AddUserComponent implements OnInit {
           profession: [''],
           address: [''],
         }),
-        cityId: [],
-        facilityId: [],
-        groupId: [],
+        cityId: [0],
+        facilityId: [0],
+        groupId: [0],
       }
       // {
       //   validators: this.MustMuch('passWord', 'confirmPassword'),

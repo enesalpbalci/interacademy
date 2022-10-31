@@ -46,7 +46,7 @@ export class ListRoleComponent implements OnInit, OnDestroy {
   getAllRoles() {
     this.roleService.getAllRoles().subscribe(
       (data) => {
-        this.roles = data;
+        this.roles = data.filter(x=>x.name!="Administrator" && x.name !="Student" && x.name!="User" && x.name != "Parent");
         this.dtTrigger.next();
       },
       (error) => {

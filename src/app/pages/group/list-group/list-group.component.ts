@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './list-group.component.html',
   styleUrls: ['./list-group.component.css'],
 })
-export class ListGroupComponent implements OnInit, OnDestroy{
+export class ListGroupComponent implements OnInit, OnDestroy {
   allCities: City[] = [];
   allFacilities: Facility[] = [];
   allGroups: Group[] = [];
@@ -26,7 +26,6 @@ export class ListGroupComponent implements OnInit, OnDestroy{
   selCityId: number = 0;
   selFacilityId: number;
 
-  
   dtOptions: any = {};
   dtTrigger: Subject<void> = new Subject<void>();
 
@@ -34,7 +33,7 @@ export class ListGroupComponent implements OnInit, OnDestroy{
     private groupService: GroupService,
     private dependetDropdown: DependetDropdownService,
     private formBuilder: FormBuilder,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -45,16 +44,21 @@ export class ListGroupComponent implements OnInit, OnDestroy{
         url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json',
       },
       dom: 'Bfrtip',
-      buttons:[{
-        text: 'Grup Ekle',
-        action: (): void => {
-          this.router.navigate(['/groups/add']);
-        },
-        className: 'btn btn-info',
-      },'excel', 'pdfHtml5', 'print'],
+      buttons: [
+        // {
+        //   text: 'Grup Ekle',
+        //   action: (): void => {
+        //     this.router.navigate(['/groups/add']);
+        //   },
+        //   className: 'btn btn-info',
+        // },
+        'excel',
+        'pdfHtml5',
+        'print',
+      ],
       responsive: true,
       lengthMenu: [5, 15, 25],
-      destroy:true
+      destroy: true,
     };
     this.listForm = this.formBuilder.group({
       city: [],

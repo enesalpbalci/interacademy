@@ -11,6 +11,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import localeTr from '@angular/common/locales/tr';
 import { registerLocaleData } from '@angular/common';
 import { DataTablesModule } from "angular-datatables";
+import { UserContractsComponent } from './user-contracts/user-contracts.component';
 
 registerLocaleData(localeTr, 'tr');
 
@@ -20,6 +21,7 @@ registerLocaleData(localeTr, 'tr');
     UpdateContractComponent,
     ViewContractComponent,
     ListContractComponent,
+    UserContractsComponent,
   ],
   imports: [
     CommonModule,

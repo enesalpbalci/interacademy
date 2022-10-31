@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>{{ userName }} kişisinin Kontratları</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box table-responsive">
+              <button routerLink="/users/students" class="btn btn-info">
+                Kontrat Ekle
+              </button>
+            </div>
+            <table
+              datatable
+              [dtOptions]="dtOptions"
+              class="table table-hover table-responsive"
+            >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tc No</th>
+                  <th>Paket Adı</th>
+                  <th>Paket Süresi</th>
+                  <th>Başlama Tarihi</th>
+                  <th>Bitiş Tarihi</th>
+                  <th>Fiyat</th>
+                  <th>Taksit Sayısı</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let contract of allContracts; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ contract.student.idNumber }}</td>
+                  <td>{{ contract.product.name }}</td>
+                  <td>
+                    {{ contract.product.duration }}
+                  </td>
+                  <td>{{ contract.start | date: "longDate":"mmm" }}</td>
+                  <td>{{ contract.end | date: "longDate" }}</td>
+                  <td>{{ contract.price | currency: "₺" }}</td>
+                  <td>{{ contract.installments }}</td>
+                  <td>
+                    <button
+                      class="btn btn-primary"
+                      routerLink="/contracts/get/{{ contract.id }}"
+                    >
+                      Güncelle/Ödeme Tablosu
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ng-template #hide>
+              <div class="text-center">
+                Listelenecek kontratlar için lütfen yukarıdaki seçenekleri
+                doldurunuz!
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

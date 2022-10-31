@@ -23,9 +23,9 @@ export class PaymentService {
     const { note, type } = updatePayment;
 
     const formData = new FormData()
-    formData.append('path', file)
+    formData.append('document', file)
 
-    return this.http.put<Payment>(`${this.apiUrl}/Payments/?id=${id}&type=${type}&note=${note}`, formData);
+    return this.http.put<Payment>(`${this.apiUrl}/Payments/?id=${id}&type=${type.trim()}&note=${note}`, formData);
   }
 
   private handleError(error: HttpErrorResponse) {

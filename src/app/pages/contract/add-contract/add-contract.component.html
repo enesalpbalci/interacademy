@@ -103,6 +103,7 @@
                 formControlName="cityId"
                 [(ngModel)]="selCityId"
                 (change)="fillFacility()"
+                [attr.disabled]="true ? '' : null"
               >
                 <option *ngFor="let city of cities" [ngValue]="city.plateCode">
                   {{ city.name }}
@@ -135,6 +136,7 @@
                 formControlName="facilityId"
                 [(ngModel)]="selFacilityId"
                 (change)="fillProducts()"
+                [attr.disabled]="true ? '' : null"
               >
                 <option
                   *ngFor="let facility of facilities"
@@ -246,6 +248,21 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
+
+          <div *ngIf="addForm.get('productId').value" class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Kontrat Süresi (Ay)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="duration"
+                readonly
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
           <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align"
               >Ödeme Şekli
@@ -256,10 +273,12 @@
                 id="groupId"
                 formControlName="installments"
               >
-                <option *ngFor="let paymentType of paymentTypes" [ngValue]="paymentType.duration">
-                  {{  paymentType.text  }}
+                <option
+                  *ngFor="let paymentType of paymentTypes"
+                  [ngValue]="paymentType.duration"
+                >
+                  {{ paymentType.text }}
                 </option>
-             
               </select>
               <div
                 *ngIf="
@@ -285,6 +304,7 @@
                 class="date-picker form-control"
                 formControlName="start"
                 type="date"
+                (change)="startDateOnChange()"
               />
               <div
                 *ngIf="
@@ -296,6 +316,21 @@
                   Bu alan boş bırakılamaz
                 </div>
               </div>
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+          <div *ngIf="addForm.get('start').value" class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Bitiş Tarihi
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                id="end"
+                class="date-picker form-control"
+                formControlName="end"
+                type="date"
+                readonly
+              />
               <div class="invalide-feedback"></div>
             </div>
           </div>

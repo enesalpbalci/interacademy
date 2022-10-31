@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { addMonthToDate } from 'src/app/helper/date.helper';
 import { UserIdHelper } from 'src/app/helper/user-id.helper';
 import { City } from 'src/app/models/city.interface';
 import { Contract } from 'src/app/models/contract.interface';
@@ -37,16 +38,16 @@ export class UpdateContractComponent implements OnInit {
   selFacilityId: number;
 
   paymentTypes: {
-    duration: number,
-    price: number,
-    text: string
-  }[]
+    duration: number;
+    price: number;
+    text: string;
+  }[];
 
   approved: boolean = true;
 
   constructor(
     private contractService: ContractService,
-    private productService:ProductService,
+    private productService: ProductService,
     private dependetDropdown: DependetDropdownService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -73,22 +74,23 @@ export class UpdateContractComponent implements OnInit {
         this.updateForm.controls['phoneNumber'].setValue(
           data.student.phoneNumber
         );
-        this.updateForm.controls['userId'].setValue(data.userId)
+        this.updateForm.controls['userId'].setValue(data.userId);
 
         let facility = this.facilities.filter(
           (e) => e.id == data.product.facilityId
         )[0];
         this.updateForm.controls['cityId'].setValue(facility.cityId);
-         this.fillProducts(facility.id);
+        this.fillProducts(facility.id);
         this.updateForm.controls['facilityId'].setValue(
           data.product.facilityId
         );
-        this.updateForm.controls['productId'].setValue(
-          data.productId
-        );
+        this.updateForm.controls['productId'].setValue(data.productId);
         this.updateForm.controls['installments'].setValue(data.installments);
         this.updateForm.controls['start'].setValue(this.formatDate(data.start));
         this.updateForm.controls['price'].setValue(data.price);
+        this.updateForm.controls['end'].setValue(this.formatDate(data.end));
+        this.updateForm.controls['duration'].setValue(data.product.duration);
+        this.updateForm.controls['approverId'].setValue(data.approverId);
       });
     });
   }
@@ -105,15 +107,20 @@ export class UpdateContractComponent implements OnInit {
       price: [null, Validators.required],
       approverId: ['0', Validators.required],
       installments: [null, Validators.required],
+      end:[''],
       name: [],
       surName: [],
       email: [],
       phoneNumber: [],
       approved: [],
+      duration:[],
     });
   }
   checkValue(event: any) {
     console.log(event);
+  }
+  getApproved(){
+    return this.updateForm.controls["approverId"]
   }
 
   updateContract() {
@@ -139,31 +146,48 @@ export class UpdateContractComponent implements OnInit {
 
   setPaymentType() {
     if (this.products.length > 0) {
-      const productId = this.updateForm.get('productId').value
+      const productId = this.updateForm.get('productId').value;
 
       const product = this.products.find((p) => {
-        return p.id == productId
-      })
+        return p.id == productId;
+      });
 
-      this.paymentTypes = []
+      this.paymentTypes = [];
 
       this.paymentTypes.push({
         duration: 1,
         price: product.advancePrice,
-        text: `Peşin ${product.advancePriceStr}`
-      })
+        text: `Peşin ${product.advancePriceStr}₺`,
+      });
 
       if (product.duration > 1 && product.installmentPrice > 0) {
         this.paymentTypes.push({
           duration: product.duration,
           price: product.installmentPrice,
-          text: `Taksit ${product.duration} Ay ${product.installmentPriceStr}`
-        })
+          text: `Taksit ${product.duration} Ay ${product.installmentPriceStr}₺ Toplam ${product.installmentTotalStr}₺`,
+        });
       }
+
+      this.updateForm
+        .get('duration')
+        .setValue(
+          this.paymentTypes.length > 1 ? this.paymentTypes[1].duration : 1
+        );
+      this.startDateOnChange();
     }
   }
 
-  private formatDate(date:any) {
+  startDateOnChange() {
+    let startDate = this.updateForm.get('start').value;
+
+    startDate = new Date(startDate);
+
+    let endDate = addMonthToDate(startDate, this.updateForm.get('duration').value);
+
+    this.updateForm.get('end').setValue(this.formatDate(endDate));
+  }
+
+  private formatDate(date: any) {
     const d = new Date(date);
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();
@@ -219,6 +243,7 @@ export class UpdateContractComponent implements OnInit {
       (res) => {
         console.log(res);
         this.products = res;
+        this.setPaymentType();
         return res;
       },
       (err) => {
@@ -231,38 +256,11 @@ export class UpdateContractComponent implements OnInit {
     this.fillProducts(this.selFacilityId);
   }
 
-  // getPaymentDurationById(id: number): undefined | PaymentDuration {
-  //   // const paymentDuration: PaymentDuration[] = this.paymentDurations.filter(
-  //   //   (paymentDuration) => {
-  //   //     return paymentDuration.id === id;
-  //   //   }
-  //   // );
-  //   // return paymentDuration[0];
-  //}
-
-  calculatePrice() {
-    // const contractDuration = parseInt(
-    //   this.updateForm.get('duration').value || 0
-    // );
-    // const paymentDurationId = parseInt(
-    //   this.updateForm.get('paymentDurationId').value || 0
-    // );
-
-    // if (contractDuration === 0 || paymentDurationId === 0) {
-    //   return;
-    // }
-
-    // const paymentDuration = this.getPaymentDurationById(paymentDurationId);
-    // const paymentCount = contractDuration / paymentDuration.duration;
-
-    // this.updateForm.get('price').setValue(paymentCount * paymentDuration.price);
-  }
-
   get f() {
     return this.updateForm.controls;
   }
 
-  loadForm(){  
+  loadForm() {
     this.dependetDropdown.getAllCities().subscribe(
       (cRes) => {
         this.cities = cRes;

@@ -20,7 +20,7 @@ export class UpdateUserComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private dependetDropDownService:DependetDropdownService
+    private dependetDropDownService: DependetDropdownService
   ) {}
 
   url: string;
@@ -29,9 +29,11 @@ export class UpdateUserComponent implements OnInit {
   facilities: Facility[] = [];
   groups: Group[] = [];
   selectedUserId: string;
+  user: User;
 
   selCityId: number;
   selFacilityId: number;
+  selGroupId: number;
 
   updateForm: FormGroup;
 
@@ -50,7 +52,9 @@ export class UpdateUserComponent implements OnInit {
             this.updateForm.controls['phoneNumber'].setValue(res.phoneNumber);
             this.updateForm.controls['idNumber'].setValue(res.idNumber);
             this.updateForm.controls['gender'].setValue(res.gender);
-            this.updateForm.controls['birthDay'].setValue(this.formatDate(res.birthDay));
+            this.updateForm.controls['birthDay'].setValue(
+              this.formatDate(res.birthDay)
+            );
             this.updateForm.controls['bloodGroup'].setValue(res.bloodGroup);
             this.updateForm.controls['school'].setValue(res.school);
             this.updateForm.controls['height'].setValue(res.height);
@@ -67,6 +71,13 @@ export class UpdateUserComponent implements OnInit {
             this.updateForm.controls['cityId'].setValue(res.cityId);
             this.updateForm.controls['facilityId'].setValue(res.facilityId);
             this.updateForm.controls['groupId'].setValue(res.groupId);
+
+            this.selCityId = res.cityId
+            this.selFacilityId = res.facilityId
+            this.selGroupId = res.groupId
+            
+            this.fillFacilitySelected()
+            this.fillGroupSelected()
           },
           (err) => {
             console.log(err);
@@ -74,7 +85,7 @@ export class UpdateUserComponent implements OnInit {
         );
       }
     });
-    this.fillCity()
+    this.fillCity();
     this.createForm();
   }
   fillCity() {
@@ -87,7 +98,7 @@ export class UpdateUserComponent implements OnInit {
       }
     );
   }
-  fillFacility() {
+  fillFacility(cityId: any) {
     this.dependetDropDownService.getAllFacilities(this.selCityId).subscribe(
       (res) => {
         this.facilities = res;
@@ -97,8 +108,11 @@ export class UpdateUserComponent implements OnInit {
       }
     );
   }
+  fillFacilitySelected() {
+    this.fillFacility(this.selCityId);
+  }
 
-  fillGroup() {
+  fillGroup(facilityId: any) {
     this.dependetDropDownService
       .getAllGroups(this.selFacilityId, this.selCityId)
       .subscribe(
@@ -109,6 +123,9 @@ export class UpdateUserComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+  fillGroupSelected() {
+    this.fillGroup(this.selFacilityId);
   }
 
   createForm() {
@@ -176,30 +193,16 @@ export class UpdateUserComponent implements OnInit {
       diseases: [''],
       allergies: [''],
       foodRestrictions: [''],
-      cityId:[],
-      facilityId:[],
-      groupId:[]
+      cityId: [],
+      facilityId: [],
+      groupId: [],
     });
   }
 
   updateStudent() {
-    // this.userService
-    //   .updateUser(this.userDetails.id, this.userDetails)
-    //   .subscribe((user) => {
-    //     this.router.navigate(['users/']);
-    //   });
     if (this.updateForm.valid) {
       let email = this.updateForm.get('email').value;
       this.updateForm.get('userName').setValue(email);
-
-      // let motherEmail = this.updateForm.get('mother.email').value;
-      // this.updateForm.get('mother.userName').setValue(motherEmail);
-
-      // let fatherEmail = this.updateForm.get('father.email').value;
-      // this.updateForm.get('father.userName').setValue(fatherEmail);
-
-      
-
 
       let data: User = Object.assign({}, this.updateForm.value);
       this.userService.updateUser(this.selectedUserId, data).subscribe(
@@ -215,7 +218,7 @@ export class UpdateUserComponent implements OnInit {
     }
   }
 
-  private formatDate(date:any) {
+  private formatDate(date: any) {
     const d = new Date(date);
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();

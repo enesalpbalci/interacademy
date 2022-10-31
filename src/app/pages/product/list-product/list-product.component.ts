@@ -44,13 +44,13 @@ export class ListProductComponent implements OnInit {
       },
       dom: 'Bfrtip',
       buttons: [
-        {
-          text: 'Kontrat Paketi Ekle',
-          action: (): void => {
-            this.router.navigate(['/products/add']);
-          },
-          className: 'btn btn-info',
-        },
+        // {
+        //   text: 'Kontrat Paketi Ekle',
+        //   action: (): void => {
+        //     this.router.navigate(['/products/add']);
+        //   },
+        //   className: 'btn btn-info',
+        // },
         'excel',
         'pdfHtml5',
         'print',

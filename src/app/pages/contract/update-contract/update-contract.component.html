@@ -187,6 +187,21 @@
             </div>
           </div>
 
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Kontrat Süresi (Ay)
+            </label>
+            <div class="col-md-6 col-sm-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="duration"
+                readonly
+              />
+              <div class="invalide-feedback"></div>
+            </div>
+          </div>
+
           <div *ngIf="selFacilityId" class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align"
               >Ödeme Şekli
@@ -197,10 +212,12 @@
                 id="groupId"
                 formControlName="installments"
               >
-                <option *ngFor="let paymentType of paymentTypes" [ngValue]="paymentType.duration">
-                  {{  paymentType.text  }}
+                <option
+                  *ngFor="let paymentType of paymentTypes"
+                  [ngValue]="paymentType.duration"
+                >
+                  {{ paymentType.text }}
                 </option>
-             
               </select>
               <div
                 *ngIf="
@@ -217,69 +234,6 @@
             </div>
           </div>
 
-          <!-- <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
-            <label
-              class="col-form-label col-md-3 col-sm-3 label-align"
-              for="groupId"
-              >Grup
-            </label>
-            <div class="col-md-6 col-sm-6">
-              <select
-                class="form-control"
-                id="groupId"
-                formControlName="groupId"
-              >
-                <option *ngFor="let group of groups" [ngValue]="group.id">
-                  {{ group.name }}
-                </option>
-              </select>
-              <div
-                *ngIf="
-                  f['groupId'].invalid &&
-                  (f['groupId'].dirty || f['groupId'].touched)
-                "
-                class="text-danger"
-              >
-                <div *ngIf="f['groupId'].errors.required">
-                  Bu alan boş bırakılamaz
-                </div>
-              </div>
-              <div class="invalide-feedback"></div>
-            </div>
-          </div> -->
-          <!-- <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align"
-              >Ödeme Süresi(Ay)
-            </label>
-            <div class="col-md-6 col-sm-6">
-              <select
-                class="form-control"
-                id="groupId"
-                formControlName="paymentDurationId"
-                (change)="calculatePrice()"
-              >
-                <option
-                  *ngFor="let paymentDuration of paymentDurations"
-                  [ngValue]="paymentDuration.id"
-                >
-                  {{ paymentDuration.duration }}
-                </option>
-              </select>
-              <div
-                *ngIf="
-                  f['paymentDurationId'].invalid &&
-                  (f['paymentDurationId'].dirty ||
-                    f['paymentDurationId'].touched)
-                "
-                class="text-danger"
-              >
-                <div *ngIf="f['paymentDurationId'].errors.required">
-                  Bu alan boş bırakılamaz
-                </div>
-              </div>
-              <div class="invalide-feedback"></div>
-            </div>
-          </div> -->
           <div *ngIf="selFacilityId" class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align"
               >Başlama Tarihi
@@ -290,6 +244,7 @@
                 class="date-picker form-control"
                 formControlName="start"
                 type="date"
+                (blur)="startDateOnChange()"
               />
               <div
                 *ngIf="
@@ -304,65 +259,34 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
-          <!-- <div *ngIf="selFacilityId" class="item form-group">
-            <label
-              class="col-form-label col-md-3 col-sm-3 label-align"
-              for="duration"
-              >Kontrat Süresi(Ay)
+          <div *ngIf="updateForm.get('start').value" class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align"
+              >Bitiş Tarihi
             </label>
             <div class="col-md-6 col-sm-6">
               <input
-                class="form-control"
-                formControlName="duration"
-                type="number"
-                id="duration"
-                (change)="calculatePrice()"
-              />
-              <div
-                *ngIf="
-                  f['duration'].invalid &&
-                  (f['duration'].dirty || f['duration'].touched)
-                "
-                class="text-danger"
-              >
-                <div *ngIf="f['duration'].errors?.required">
-                  Bu kısım boş bırakılamaz
-                </div>
-              </div>
-              <div class="invalide-feedback"></div>
-            </div>
-          </div> -->
-          <!-- <div *ngIf="selFacilityId" class="item form-group">
-            <label
-              class="col-form-label col-md-3 col-sm-3 label-align"
-              for="price"
-              >Fiyat(₺)
-            </label>
-            <div class="col-md-6 col-sm-6">
-              <input
-                class="form-control"
-                formControlName="price"
-                type="number"
-                id="price"
+                id="end"
+                class="date-picker form-control"
+                formControlName="end"
+                type="date"
                 readonly
               />
               <div class="invalide-feedback"></div>
             </div>
-          </div> -->
+          </div>
           <div *ngIf="selFacilityId" class="item form-group">
             <label
               class="col-form-label col-md-3 col-sm-3 label-align"
               for="price"
             >
             </label>
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-6 col-sm-6" 
+            *ngIf="!getApproved()">
               <div class="form-check">
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  formControlName="approved"
-                  [(ngModel)]="approved"
-                  (change)="checkValue(approved ? true : false)"
+                  formControlName="approverId"
                 />
                 <label class="form-check-label" for="flexCheckDefault">
                   Kontratı Onayla

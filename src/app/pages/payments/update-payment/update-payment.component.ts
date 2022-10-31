@@ -1,5 +1,11 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Payment } from 'src/app/models/payment.interface';
 import { PaymentService } from 'src/app/services/payment.service';
@@ -14,7 +20,7 @@ export class UpdatePaymentComponent implements OnInit {
     private paymentService: PaymentService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
   ) {}
 
   payments: Payment[] = [];
@@ -34,7 +40,7 @@ export class UpdatePaymentComponent implements OnInit {
       userId: ['0'],
       note: [''],
       dueDate: ['', Validators.required],
-      fileSource: [null]
+      fileSource: [null],
     });
     this.getPayment();
   }
@@ -45,7 +51,7 @@ export class UpdatePaymentComponent implements OnInit {
       if (id) {
         this.paymentService.getPaymentClaimById(id).subscribe(
           (res) => {
-            this.payment=res
+            this.payment = res;
             this.updateForm.controls['id'].setValue(res.id);
             this.updateForm.controls['contractId'].setValue(res.contractId);
             this.updateForm.controls['amount'].setValue(res.amount);
@@ -64,17 +70,18 @@ export class UpdatePaymentComponent implements OnInit {
   updatePayment() {
     if (this.updateForm.valid) {
       let data: Payment = Object.assign({}, this.updateForm.value);
-     
-      this.paymentService.updatePayment(this.payment.id, data, this.file).subscribe(
-        (res) => {
-          alert('Ödeme Güncellendi');
-          this.updateForm.reset();
-          this.router.navigate(['/payments']);
-        },
-        (err) => {
-          alert('Ödeme güncellenirken bir hata oluştu');
-        }
-      );
+      this.paymentService
+        .updatePayment(this.payment.id, data, this.file)
+        .subscribe(
+          (res) => {
+            alert('Ödeme Güncellendi');
+            this.updateForm.reset();
+            this.router.navigate(['/payments']);
+          },
+          (err) => {
+            alert('Ödeme güncellenirken bir hata oluştu');
+          }
+        );
     }
   }
   get f() {
@@ -83,7 +90,7 @@ export class UpdatePaymentComponent implements OnInit {
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-     this.file = event.target.files[0];
+      this.file = event.target.files[0];
     }
   }
 }

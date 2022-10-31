@@ -46,13 +46,13 @@ export class ListFacilityComponent implements OnInit, OnDestroy {
       },
       dom: 'Bfrtip',
       buttons: [
-        {
-          text: 'Tesis Ekle',
-          action: (): void => {
-            this.router.navigate(['/facilities/add']);
-          },
-          className: 'btn btn-info',
-        },
+        // {
+        //   text: 'Tesis Ekle',
+        //   action: (): void => {
+        //     this.router.navigate(['/facilities/add']);
+        //   },
+        //   className: 'btn btn-info',
+        // },
         'excel',
         'pdfHtml5',
         'print',

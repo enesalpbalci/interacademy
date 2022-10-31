@@ -10,16 +10,19 @@ import { PaymentService } from 'src/app/services/payment.service';
 @Component({
   selector: 'app-view-contract',
   templateUrl: './view-contract.component.html',
-  styleUrls: ['./view-contract.component.css']
+  styleUrls: ['./view-contract.component.css'],
 })
 export class ViewContractComponent implements OnInit {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private contractService: ContractService,
+    private paymentService: PaymentService
+  ) {}
 
-  constructor(private activatedRoute:ActivatedRoute, private contractService:ContractService, private paymentService:PaymentService) { }
+  contract: Contract;
+  allPayments: Payment[] = [];
+  payments: Payment;
 
-  contract:Contract
-  allPayments:Payment[]=[]
-  payments:Payment
-  
   dtOptions: any = {};
   dtTrigger: Subject<void> = new Subject<void>();
 
@@ -34,18 +37,18 @@ export class ViewContractComponent implements OnInit {
       buttons: ['excel', 'pdf', 'print'],
       responsive: true,
       lengthMenu: [5, 15, 25],
-      destroy:true
+      destroy: true,
     };
-    this.activatedRoute.params.subscribe(params=>{
-      this.contractService.getContractById(params["id"]).subscribe(data => {
+    this.activatedRoute.params.subscribe((params) => {
+      this.contractService.getContractById(params['id']).subscribe((data) => {
         this.contract = data;
-        data.payments.forEach(e=>{
-          this.paymentService.getPaymentClaimById(e.id).subscribe(data=>{
-            this.allPayments[this.allPayments.length]=data
-          })
-        })
-      })
-    })
+        data.payments.forEach((e) => {
+          this.paymentService.getPaymentClaimById(e.id).subscribe((data) => {
+            this.allPayments[this.allPayments.length] = data;
+          });
+        });
+      });
+    });
   }
 
   // onFileChanged(e: any) {
@@ -79,5 +82,4 @@ export class ViewContractComponent implements OnInit {
   //     this.imageUrl = event.target.result;
   //   };
   // }
-
 }

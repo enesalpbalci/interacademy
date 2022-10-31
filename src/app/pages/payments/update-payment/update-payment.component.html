@@ -19,9 +19,24 @@
 
                   <div class="col-md-6 col-sm-6">
                     <select class="form-control" formControlName="type">
-                      <option value="Nakit" [selected]="payment?.type.trim()=='Nakit'">Nakit</option>
-                      <option value="Kredi Kartı" [selected]="payment?.type.trim()=='Kredi Kartı'">Kredi Kartı</option>
-                      <option value="Havale/EFT" [selected]="payment?.type.trim()=='Havale/EFT'">Havale/EFT</option>
+                      <option
+                        value="Nakit"
+                        [selected]="payment?.type?.trim() == 'Nakit'"
+                      >
+                        Nakit
+                      </option>
+                      <option
+                        value="Kredi Kartı"
+                        [selected]="payment?.type?.trim() == 'Kredi Kartı'"
+                      >
+                        Kredi Kartı
+                      </option>
+                      <option
+                        value="Havale/EFT"
+                        [selected]="payment?.type?.trim() == 'Havale/EFT'"
+                      >
+                        Havale/EFT
+                      </option>
                     </select>
                     <div
                       *ngIf="
@@ -72,10 +87,11 @@
                   </label>
                   <div class="col-md-6 col-sm-6">
                     <input
-                      type="number"
+                      type="text"
                       id="amount"
                       class="form-control"
                       formControlName="amount"
+                      [value]="updateForm.get('amount').value | currency: '₺'"
                       readonly
                     />
                     <div
@@ -93,8 +109,12 @@
                   </div>
                 </div>
                 <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="fileSource">Dosya</label>
-                  
+                  <label
+                    class="col-form-label col-md-3 col-sm-3 label-align"
+                    for="fileSource"
+                    >Dosya</label
+                  >
+
                   <div class="col-md-6 col-sm-6">
                     <input
                       formControlName="fileSource"

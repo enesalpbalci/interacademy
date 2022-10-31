@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { addMonthToDate } from 'src/app/helper/date.helper';
 import { UserIdHelper } from 'src/app/helper/user-id.helper';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
@@ -29,8 +30,6 @@ export class AddContractComponent implements OnInit {
   cities: City[] = [];
   facilities: Facility[] = [];
   groups: Group[] = [];
-  // paymentDurations: PaymentDuration[] = [];
-  // selectedDuration: PaymentDuration;
   products: Product[] = [];
   selectedProduct: Product;
 
@@ -38,15 +37,15 @@ export class AddContractComponent implements OnInit {
   selFacilityId: number;
 
   paymentTypes: {
-    duration: number,
-    price: number,
-    text: string
-  }[]
+    duration: number;
+    price: number;
+    text: string;
+  }[];
 
   constructor(
     private contractService: ContractService,
     private paymentDurationService: PaymentDurationService,
-    private productService:ProductService,
+    private productService: ProductService,
     private dependetDropdown: DependetDropdownService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -55,7 +54,7 @@ export class AddContractComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getByContractId()
+    this.getByContractId();
     this.fillCity();
     this.createForm();
   }
@@ -64,6 +63,10 @@ export class AddContractComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.userService.getUserById(params['id']).subscribe((data) => {
         this.userDetails = data;
+        this.selCityId = data.cityId
+        this.selFacilityId = data.facilityId
+        this.fillFacility();
+        this.fillProducts();
         this.addForm.get('studentId').setValue(data.id);
       });
     });
@@ -76,11 +79,13 @@ export class AddContractComponent implements OnInit {
       groupId: [''],
       studentId: ['', Validators.required],
       start: ['', [Validators.required]],
+      end: [''],
       userId: ['0', Validators.required],
       price: [0],
       approverId: ['0', Validators.required],
-      productId:[null,Validators.required],
+      productId: [null, Validators.required],
       installments: [null],
+      duration: [],
     });
   }
 
@@ -89,6 +94,7 @@ export class AddContractComponent implements OnInit {
       this.contractService.addContract(this.addForm.value).subscribe(
         (res) => {
           alert('Kontrat Eklendi');
+          this.router.navigate([`/user-contracts/${res.studentId}`]);
           console.log(res);
         },
         (err) => {
@@ -96,7 +102,6 @@ export class AddContractComponent implements OnInit {
         }
       );
       this.addForm.reset();
-      this.router.navigate(['/contracts']);
     }
     console.log(this.addForm.value);
   }
@@ -136,103 +141,67 @@ export class AddContractComponent implements OnInit {
   }
 
   fillProducts() {
-    this.productService
-      .getAllProducts(this.selFacilityId)
-      .subscribe(
-        (res) => {
-          console.log(res);
-          this.products = res;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    this.productService.getAllProducts(this.selFacilityId).subscribe(
+      (res) => {
+        this.products = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
-
-  // fillPaymentDurations() {
-  //   this.paymentDurationService
-  //     .getAllPaymentDurations(this.selFacilityId)
-  //     .subscribe(
-  //       (res) => {
-  //         console.log(res);
-  //         this.paymentDurations = res;
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  // }
-
-  // getPaymentDurationById(id: number): undefined | PaymentDuration {
-  //   const paymentDuration: PaymentDuration[] = this.paymentDurations.filter(
-  //     (paymentDuration) => {
-  //       return paymentDuration.id === id;
-  //     }
-  //   );
-
-  //   return paymentDuration[0];
-  // }
-
-  // calculatePrice() {
-  //   const contractDuration = parseInt(this.addForm.get('duration').value || 0);
-  //   const paymentDurationId = parseInt(
-  //     this.addForm.get('paymentDurationId').value || 0
-  //   );
-
-  //   if (contractDuration === 0 || paymentDurationId === 0) {
-  //     return;
-  //   }
-
-  //   const paymentDuration = this.getPaymentDurationById(paymentDurationId);
-  //   const paymentCount = contractDuration / paymentDuration.duration;
-
-  //   this.addForm.get('price').setValue(paymentCount * paymentDuration.price);
-  // }
-
-  // async setDurationToForm(): Promise<boolean> {
-  //   const paymentDurationId: number =
-  //     this.addForm.get('paymentDurationId').value;
-  //   console.log(paymentDurationId, this.paymentDurations);
-  //   const duration: PaymentDuration = this.paymentDurations.find(
-  //     (paymentDuration) => {
-  //       if (paymentDuration.id == paymentDurationId) {
-  //         return paymentDuration;
-  //       }
-  //     }
-  //   );
-  //   if (typeof duration !== 'undefined') {
-  //     this.checkDuration(duration);
-  //     this.checkPrice(duration);
-  //   }
-  //   return true;
-  // }
-
-
 
   setPaymentType() {
     if (this.products.length > 0) {
-      const productId = this.addForm.get('productId').value
+      const productId = this.addForm.get('productId').value;
 
       const product = this.products.find((p) => {
-        return p.id == productId
-      })
+        return p.id == productId;
+      });
 
-      this.paymentTypes = []
+      this.paymentTypes = [];
 
       this.paymentTypes.push({
         duration: 1,
         price: product.advancePrice,
-        text: `Peşin ${product.advancePriceStr}`
-      })
+        text: `Peşin ${product.advancePriceStr}₺`,
+      });
 
       if (product.duration > 1 && product.installmentPrice > 0) {
         this.paymentTypes.push({
           duration: product.duration,
           price: product.installmentPrice,
-          text: `Taksit ${product.duration} Ay ${product.installmentPriceStr}`
-        })
+          text: `Taksit ${product.duration} Ay ${product.installmentPriceStr}₺ Toplam ${product.installmentTotalStr}₺`,
+        });
       }
+
+      this.addForm
+        .get('duration')
+        .setValue(
+          this.paymentTypes.length > 1 ? this.paymentTypes[1].duration : 1
+        );
+      this.startDateOnChange();
     }
+  }
+
+  startDateOnChange() {
+    let startDate = this.addForm.get('start').value;
+
+    startDate = new Date(startDate);
+
+    let endDate = addMonthToDate(startDate, this.addForm.get('duration').value);
+
+    this.addForm.get('end').setValue(this.formatDate(endDate));
+  }
+
+  private formatDate(date: any) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
   }
 
   get f() {
