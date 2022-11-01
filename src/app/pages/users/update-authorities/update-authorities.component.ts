@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from 'src/app/models/role.interface';
 import { User } from 'src/app/models/user.interface';
 import { RoleService } from 'src/app/services/role.service';
-import { UserRoleService } from 'src/app/services/user-role.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -31,7 +30,7 @@ export class UpdateAuthoritiesComponent implements OnInit {
   ngOnInit(): void {
     this.updateForm = this.formBuilder.group({
       // roleName: ['', Validators.required],
-      id:[],
+      id: [],
       userName: [
         '',
         [
@@ -41,7 +40,7 @@ export class UpdateAuthoritiesComponent implements OnInit {
         ],
       ],
       name: [
-        'aaa',
+        '',
         [
           Validators.required,
           Validators.minLength(2),
@@ -49,7 +48,7 @@ export class UpdateAuthoritiesComponent implements OnInit {
         ],
       ],
       email: [
-        'aaaa@asd.ca',
+        '',
         [
           Validators.required,
           Validators.email,
@@ -57,7 +56,7 @@ export class UpdateAuthoritiesComponent implements OnInit {
         ],
       ],
       phoneNumber: [
-        '22222222222',
+        '',
         [
           Validators.required,
           Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
@@ -66,7 +65,7 @@ export class UpdateAuthoritiesComponent implements OnInit {
         ],
       ],
       surName: [
-        'ss',
+        '',
         [
           Validators.required,
           Validators.minLength(2),
@@ -92,18 +91,15 @@ export class UpdateAuthoritiesComponent implements OnInit {
         );
       }
     });
-    console.log(this.updateForm);
     this.fillRoles();
   }
 
   updateAuthority() {
-    if (true || this.updateForm.valid) {
-      // await this.setDurationToForm();
+    if (this.updateForm.valid) {
       let data: User = Object.assign({}, this.updateForm.value);
       let email = this.updateForm.get('email').value;
       this.updateForm.get('userName').setValue(email);
 
-      // this.userRoleService.addUserRole().subscribe()
       this.userService.updateUser(data, this.updateForm.value).subscribe(
         (res) => {
           alert('Kullanıcı Güncellendi');
@@ -115,7 +111,6 @@ export class UpdateAuthoritiesComponent implements OnInit {
       this.updateForm.reset();
       this.router.navigate(['/users/authorities']);
     }
-    console.log(this.updateForm.value);
   }
 
   fillRoles() {
@@ -143,39 +138,6 @@ export class UpdateAuthoritiesComponent implements OnInit {
       }
     };
   }
-
-  // onFileChanged(e: any) {
-  //   let files = e.target.files;
-  //   if (files[0]) {
-  //     this.readAsByteArray(files[0]);
-  //     this.readAsDataURL(files[0]);
-  //   }
-  // }
-
-  // readAsByteArray(file: any) {
-  //   let reader = new FileReader();
-  //   let fileByteArray: number[] = [];
-  //   reader.readAsArrayBuffer(file);
-  //   reader.onloadend = (evt) => {
-  //     if (evt.target.readyState == FileReader.DONE) {
-  //       this.url = evt.target.result as string;
-  //       let arrayBuffer = evt.target.result as ArrayBuffer;
-  //       let array = new Uint8Array(arrayBuffer);
-  //       for (let i = 0; i < array.length; i++) {
-  //         fileByteArray.push(array[i]);
-  //       }
-  //       this.updateForm.controls['image'].setValue(fileByteArray);
-  //     }
-  //   };
-  // }
-
-  // readAsDataURL(file: any) {
-  //   let reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onloadend = (event: any) => {
-  //     this.url = event.target.result;
-  //   };
-  // }
 
   get f() {
     return this.updateForm.controls;

@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { PaymentDuration } from 'src/app/models/payment-duration.interface';
-import { CityService } from 'src/app/services/city.service';
-import { FacilityService } from 'src/app/services/facility.service';
 import { PaymentDurationService } from 'src/app/services/payment-duration.service';
-import { Observable } from 'rxjs';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 @Component({
   selector: 'app-update-payment-durations',
@@ -16,10 +13,7 @@ import { DependetDropdownService } from 'src/app/services/dependet-dropdown.serv
 })
 export class UpdatePaymentDurationsComponent implements OnInit {
   constructor(
-    private facilityService: FacilityService,
     private paymentDurationService: PaymentDurationService,
-    private activatedRoute: ActivatedRoute,
-    private cityService: CityService,
     private formBuilder: FormBuilder,
     private dependetDropdown: DependetDropdownService,
     private router: Router
@@ -66,29 +60,8 @@ export class UpdatePaymentDurationsComponent implements OnInit {
       facilityId: [0, Validators.required],
       cityId:[]
     });
-    // this.getPaymentDuration();
     this.fillCity();
   }
-
-  // private getPaymentDuration() {
-  //   this.activatedRoute.paramMap.subscribe((params) => {
-  //     let id = params.get('id');
-  //     if (id) {
-  //       this.paymentDurationId = id;
-  //       this.paymentDurationService.getPaymentDurationById(id).subscribe(
-  //         (res) => {
-  //           this.updateForm.controls['id'].setValue(res.id);
-  //           this.updateForm.controls['duration'].setValue(res.duration);
-  //           this.updateForm.controls['price'].setValue(res.price);
-  //           this.updateForm.controls['facilityId'].setValue(res.facilityId);
-  //         },
-  //         (error) => {
-  //           console.log(error);
-  //         }
-  //       );
-  //     }
-  //   });
-  // }
 
   updatePaymentDuration() {
     if (this.updateForm.valid) {

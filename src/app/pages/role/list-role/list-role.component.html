@@ -8,11 +8,11 @@
       <div class="x_content">
         <div class="row">
           <div class="col-sm-12">
-            <!-- <div class="card-box">
-              <button routerLink="/roles/add" class="btn btn-success">
+            <div class="card-box">
+              <button routerLink="/roles/add" class="btn btn-info">
                 Rol Ekle
               </button>
-            </div> -->
+            </div>
             <table
               datatable
               [dtOptions]="dtOptions"
@@ -39,12 +39,6 @@
                     >
                       Güncelle
                     </button>
-                    <!-- <button
-                      class="btn btn-light"
-                      routerLink="/roles/get/{{ role.id }}"
-                    >
-                      Detay
-                    </button> -->
                     <button
                       class="btn btn-danger"
                       (click)="removeRole(role.id)"

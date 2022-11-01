@@ -86,7 +86,6 @@ export class AddAuthoritiesComponent implements OnInit {
         validators: this.MustMatch('passWord', 'confirmPassWord'),
       }
     );
-    console.log(this.addForm);
     this.fillRoles();
   }
 
@@ -125,7 +124,6 @@ export class AddAuthoritiesComponent implements OnInit {
 
   addUser() {
     if (this.addForm.valid) {
-      // await this.setDurationToForm();
       let email = this.addForm.get('email').value;
       this.addForm.get('userName').setValue(email);
 
@@ -133,8 +131,6 @@ export class AddAuthoritiesComponent implements OnInit {
 
       let userRole = this.addForm.get('roleName').value;
 
-      console.log(email);
-      // this.userRoleService.addUserRole().subscribe()
       this.userService
         .addUser(passWord, userRole, this.addForm.value)
         .subscribe(
@@ -149,41 +145,8 @@ export class AddAuthoritiesComponent implements OnInit {
       this.addForm.reset();
       this.router.navigate(['/users/authorities']);
     }
-    console.log(this.addForm.value);
   }
 
-  // onFileChanged(e: any) {
-  //   let files = e.target.files;
-  //   if (files[0]) {
-  //     this.readAsByteArray(files[0]);
-  //     this.readAsDataURL(files[0]);
-  //   }
-  // }
-
-  // readAsByteArray(file: any) {
-  //   let reader = new FileReader();
-  //   let fileByteArray: number[] = [];
-  //   reader.readAsArrayBuffer(file);
-  //   reader.onloadend = (evt) => {
-  //     if (evt.target.readyState == FileReader.DONE) {
-  //       this.url = evt.target.result as string;
-  //       let arrayBuffer = evt.target.result as ArrayBuffer;
-  //       let array = new Uint8Array(arrayBuffer);
-  //       for (let i = 0; i < array.length; i++) {
-  //         fileByteArray.push(array[i]);
-  //       }
-  //       this.addForm.controls['image'].setValue(fileByteArray);
-  //     }
-  //   };
-  // }
-
-  // readAsDataURL(file: any) {
-  //   let reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onloadend = (event: any) => {
-  //     this.url = event.target.result;
-  //   };
-  // }
 
   get f() {
     return this.addForm.controls;
@@ -197,20 +160,4 @@ export class AddAuthoritiesComponent implements OnInit {
     }
   }
 
-  // async setRole(): Promise<boolean> {
-  //   const paymentDurationId = this.addForm.get('paymentDurationId').value;
-
-  //   console.log(paymentDurationId, this.roles);
-  //   const duration: Role = this.roles.find((paymentDuration) => {
-  //     if (paymentDuration.id == paymentDurationId) {
-  //       return paymentDuration;
-  //     }
-  //   });
-
-  //   if (typeof duration !== 'undefined') {
-  //     this.addForm.get('userId').setValue(duration.id);
-  //   }
-
-  //   return true;
-  // }
 }

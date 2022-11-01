@@ -3,9 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Payment } from 'src/app/models/payment.interface';
 import { User } from 'src/app/models/user.interface';
-import { PaymentService } from 'src/app/services/payment.service';
 import { UserService } from 'src/app/services/user.service';
-import { PaymentsModule } from '../../payments/payments.module';
 
 @Component({
   selector: 'app-view-user',
@@ -15,15 +13,15 @@ import { PaymentsModule } from '../../payments/payments.module';
 })
 export class ViewUserComponent implements OnInit {
   user: User;
+  parents: User;
   payments: Payment;
-  allPayments:Payment[]=[]
+  allPayments: Payment[] = [];
 
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private paymentService: PaymentService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +35,7 @@ export class ViewUserComponent implements OnInit {
       buttons: ['excel', 'pdf', 'print'],
       responsive: true,
       lengthMenu: [5, 15, 25],
-      destroy:true
+      destroy: true,
     };
     this.activatedRoute.params.subscribe((params) => {
       this.userService.getUserById(params['id']).subscribe((data) => {

@@ -3,11 +3,10 @@ import { Group } from 'src/app/models/group.interface';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { GroupService } from 'src/app/services/group.service';
 
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-group',
@@ -32,8 +31,7 @@ export class ListGroupComponent implements OnInit, OnDestroy {
   constructor(
     private groupService: GroupService,
     private dependetDropdown: DependetDropdownService,
-    private formBuilder: FormBuilder,
-    private router: Router
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {

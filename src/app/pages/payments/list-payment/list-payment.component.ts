@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subject, zip } from 'rxjs';
+import { Subject } from 'rxjs';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { PaymentDuration } from 'src/app/models/payment-duration.interface';

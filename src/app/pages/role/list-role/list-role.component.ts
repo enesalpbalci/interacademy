@@ -26,13 +26,13 @@ export class ListRoleComponent implements OnInit, OnDestroy {
       },
       dom: 'Bfrtip',
       buttons: [
-        {
-          text: 'Rol Ekle',
-          action: (): void => {
-            this.router.navigate(['/roles/add']);
-          },
-          className: 'btn btn-info',
-        },
+        // {
+        //   text: 'Rol Ekle',
+        //   action: (): void => {
+        //     this.router.navigate(['/roles/add']);
+        //   },
+        //   className: 'btn btn-info',
+        // },
         'excel',
         'pdf',
         'print',

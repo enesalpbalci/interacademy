@@ -1,25 +1,23 @@
 <div *ngIf="group; else no_group">
-    <div class="row">
-      <div class="col-md-12 col-sm-12">
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>{{group.name}} Tesis Detayı</h2>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="card-box">
-                  <p>Grup Adı: {{ group.name}}</p>
-                  <p>Bulunduğu Tesisin Adı: {{ group.facilityId }}</p>
-                  <!-- <p>Durum: {{ role.concurrencyStamp }}</p> -->
-                  <button
-                    class="btn btn-primary"
-                    routerLink="/groups/update/{{ group.id }}"
-                  >
-                    Güncelle
-                  </button>
-                </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>{{ group.name }} Tesis Detayı</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-box">
+                <p>Grup Adı: {{ group.name }}</p>
+                <p>Bulunduğu Tesisin Adı: {{ group.facilityId }}</p>
+                <button
+                  class="btn btn-primary"
+                  routerLink="/groups/update/{{ group.id }}"
+                >
+                  Güncelle
+                </button>
               </div>
             </div>
           </div>
@@ -27,6 +25,6 @@
       </div>
     </div>
   </div>
-  
-  <ng-template #no_group> Grup bulunamadı </ng-template>
-  
+</div>
+
+<ng-template #no_group> Grup bulunamadı </ng-template>

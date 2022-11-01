@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -12,11 +11,7 @@ import { Facility } from 'src/app/models/facility.interface';
 import { Group } from 'src/app/models/group.interface';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { PaymentDuration } from 'src/app/models/payment-duration.interface';
-import { PaymentDurationService } from 'src/app/services/payment-duration.service';
-import { ContractService } from 'src/app/services/contract.service';
-import { Contract } from 'src/app/models/contract.interface';
 import { UserService } from 'src/app/services/user.service';
-import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-user',
@@ -78,19 +73,6 @@ export class AddUserComponent implements OnInit {
         }
       );
   }
-
-  // fillPaymentDurations() {
-  //   this.paymentDurationService
-  //     .getAllPaymentDurations(this.selFacilityId)
-  //     .subscribe(
-  //       (res) => {
-  //         this.paymentDurations = res;
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  // }
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group(
@@ -214,11 +196,7 @@ export class AddUserComponent implements OnInit {
         facilityId: [0],
         groupId: [0],
       }
-      // {
-      //   validators: this.MustMuch('passWord', 'confirmPassword'),
-      // }
     );
-    console.log(this.addForm);
 
     this.fillCity();
   }
@@ -239,8 +217,7 @@ export class AddUserComponent implements OnInit {
   }
 
   addStudent() {
-    if (true || this.addForm.valid) {
-      // await this.setDurationToForm();
+    if (this.addForm.valid) {
       let email = this.addForm.get('email').value;
       this.addForm.get('userName').setValue(email);
 
@@ -264,7 +241,6 @@ export class AddUserComponent implements OnInit {
       this.addForm.reset();
       this.router.navigate(['users/students']);
     }
-    console.log(this.addForm.value);
   }
 
   onFileChanged(e: any) {
@@ -311,24 +287,4 @@ export class AddUserComponent implements OnInit {
       event.preventDefault();
     }
   }
-
-  // async setDurationToForm(): Promise<boolean> {
-  //   const paymentDurationId = this.addForm.get('paymentDurationId').value;
-
-  //   console.log(paymentDurationId, this.paymentDurations);
-  //   const duration: PaymentDuration = this.paymentDurations.find(
-  //     (paymentDuration) => {
-  //       if (paymentDuration.id == paymentDurationId) {
-  //         return paymentDuration;
-  //       }
-  //     }
-  //   );
-
-  //   if (typeof duration !== 'undefined') {
-  //     this.addForm.get('duration').setValue(duration.duration);
-  //     this.addForm.get('price').setValue(duration.price);
-  //   }
-
-  //   return true;
-  // }
 }

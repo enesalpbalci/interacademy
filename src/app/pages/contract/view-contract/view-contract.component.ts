@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Contract } from 'src/app/models/contract.interface';
 import { Payment } from 'src/app/models/payment.interface';
-import { User } from 'src/app/models/user.interface';
 import { ContractService } from 'src/app/services/contract.service';
 import { Subject } from 'rxjs';
 import { PaymentService } from 'src/app/services/payment.service';

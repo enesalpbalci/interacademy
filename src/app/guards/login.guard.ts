@@ -32,7 +32,6 @@ export class LoginGuard implements CanActivate {
       alert('Sayfaya erişim için giriş yapmalasınız');
       return false
     })
-    console.log(result);
     return result!=undefined;
     
   }

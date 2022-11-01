@@ -31,9 +31,6 @@
                 <p>
                   Toplam Fiyat: <b>{{ contract.price | currency: "₺" }}</b>
                 </p>
-                <!-- <p>
-                  Taksit: <b>{{ contract }}</b>
-                </p> -->
                 <p>
                   E-Mail: <b>{{ contract.student.email }}</b>
                 </p>
@@ -86,12 +83,6 @@
                               Ödeme Al
                             </button>
                           </ng-template>
-                          <!-- <button
-                      class="btn btn-light"
-                      routerLink="/payments/get/{{ payment.id }}"
-                    >
-                      Detay
-                    </button> -->
                         </td>
                       </tr>
                     </tbody>

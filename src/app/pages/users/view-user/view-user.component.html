@@ -53,6 +53,10 @@
                   Aile Harici Veli: <b>{{ user?.emergencyPerson }}</b>
                 </p>
 
+                <p>
+                  Aile Harici Veli: <b>{{ user?.mother }}</b>
+                </p>
+
                 <button class="btn btn-danger" (click)="removeUser(user.id)">
                   Sil
                 </button>
@@ -62,13 +66,6 @@
                 >
                   Güncelle
                 </button>
-
-                <!-- <button
-                  class="btn btn-primary"
-                  routerLink="/payments/get/{{ user.id }}"
-                >
-                  Ödeme Yap
-                </button> -->
               </div>
             </div>
           </div>

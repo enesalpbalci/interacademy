@@ -30,7 +30,6 @@ export class ListUserComponent implements OnInit, OnDestroy {
   selFacilityId: number;
   selGroupId: number;
 
-
   selRoleName: string = 'Student';
 
   dtOptions: any = {};
@@ -40,7 +39,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private roleService: RoleService,
     private router: Router,
-    private dependetDropdown:DependetDropdownService
+    private dependetDropdown: DependetDropdownService
   ) {}
 
   ngOnInit(): void {
@@ -151,7 +150,6 @@ export class ListUserComponent implements OnInit, OnDestroy {
     this.showTable = !this.showTable;
     this.getUsersByRole(this.selRoleName);
   }
-
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

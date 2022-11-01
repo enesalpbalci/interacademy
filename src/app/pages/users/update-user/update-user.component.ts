@@ -7,7 +7,6 @@ import { Group } from 'src/app/models/group.interface';
 import { User } from 'src/app/models/user.interface';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
 import { UserService } from 'src/app/services/user.service';
-import { FacilityModule } from '../../facility/facility.module';
 
 @Component({
   selector: 'app-update-user',

@@ -161,63 +161,6 @@
           </div>
           <ng-template #hiddenFacility> </ng-template>
 
-          <!-- <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
-            <label
-              class="col-form-label col-md-3 col-sm-3 label-align"
-              for="groupId"
-              >Grup
-            </label>
-            <div class="col-md-6 col-sm-6">
-              <select
-                class="form-control"
-                id="groupId"
-                formControlName="groupId"
-              >
-                <option *ngFor="let group of groups" [ngValue]="group.id">
-                  {{ group.name }}
-                </option>
-              </select>
-              <div
-                *ngIf="
-                  f['groupId'].invalid &&
-                  (f['groupId'].dirty || f['groupId'].touched)
-                "
-                class="text-danger"
-              >
-                <div *ngIf="f['groupId'].errors.required">
-                  Bu alan boş bırakılamaz
-                </div>
-              </div>
-              <div class="invalide-feedback"></div>
-            </div>
-          </div> -->
-          <!-- <div *ngIf="selFacilityId" class="item form-group">
-            <label
-              class="col-form-label col-md-3 col-sm-3 label-align"
-              for="duration"
-              >Kontrat Tipi
-            </label>
-            <div class="col-md-6 col-sm-6">
-              <input
-                class="form-control"
-                formControlName="duration"
-                type="number"
-                id="duration"
-              />
-              <div
-                *ngIf="
-                  f['duration'].invalid &&
-                  (f['duration'].dirty || f['duration'].touched)
-                "
-                class="text-danger"
-              >
-                <div *ngIf="f['duration'].errors?.required">
-                  Bu kısım boş bırakılamaz
-                </div>
-              </div>
-              <div class="invalide-feedback"></div>
-            </div>
-          </div> -->
           <ng-template #hiddenGroup> </ng-template>
           <div *ngIf="selFacilityId; else hiddenGroup" class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -334,24 +277,6 @@
               <div class="invalide-feedback"></div>
             </div>
           </div>
-
-          <!-- <div *ngIf="selFacilityId" class="item form-group">
-            <label
-              class="col-form-label col-md-3 col-sm-3 label-align"
-              for="price"
-              >Fiyat(₺)
-            </label>
-            <div class="col-md-6 col-sm-6">
-              <input
-                class="form-control"
-                formControlName="price"
-                type="number"
-                id="price"
-                readonly
-              />
-              <div class="invalide-feedback"></div>
-            </div>
-          </div> -->
 
           <ng-template #hidden></ng-template>
           <div class="ln_solid"></div>

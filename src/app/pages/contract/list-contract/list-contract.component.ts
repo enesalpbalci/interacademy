@@ -1,10 +1,7 @@
 import {
   Component,
   OnInit,
-  ViewChild,
-  AfterViewInit,
   OnDestroy,
-  OnChanges,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { City } from 'src/app/models/city.interface';
@@ -98,6 +95,7 @@ export class ListContractComponent implements  OnInit,OnDestroy {
   toggleShowTable(): void {
     this.showTable = !this.showTable;
     this.fillContract();
+    this.dtTrigger.next();
   }
 
   ngOnDestroy(): void {

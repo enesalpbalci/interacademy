@@ -83,7 +83,6 @@
               <tbody>
                 <tr *ngFor="let payment of allPayments; let i = index">
                   <td>{{ i + 1 }}</td>
-                  <!-- <td></td> -->
                   <td>{{ payment.paymentDate | date }}</td>
                   <td>{{ payment.dueDate | date }}</td>
                   <td>{{ payment.amount | currency: "₺" }}</td>

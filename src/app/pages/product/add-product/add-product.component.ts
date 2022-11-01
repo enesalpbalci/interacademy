@@ -63,10 +63,6 @@ export class AddProductComponent implements OnInit {
 
   addProduct() {
     if (this.addForm.valid) {
-      // if(typeof this.addForm.value === "object" && typeof this.addForm.value.installmentTotal !== "undefined") {
-      //   delete this.addForm.value.installmentTotal
-      // }
-
       console.log(this.addForm.value);
       this.productService.addProduct(this.addForm.value).subscribe(
         (res) => {

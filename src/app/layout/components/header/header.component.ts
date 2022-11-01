@@ -27,6 +27,5 @@ export class HeaderComponent implements OnInit {
   onLogOut(){
     localStorage.removeItem("token")
     this.router.navigate(['/login'])
-    console.log("çıkış")
   }
 }

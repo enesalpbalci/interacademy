@@ -45,13 +45,13 @@ export class ListAuthorityComponent
       },
       dom: 'Bfrtip',
       buttons: [
-        {
-          text: 'Kullanıcı Ekle',
-          action: (): void => {
-            this.router.navigate(['/users/add-authority'])
-          },
-          className: "btn btn-info",
-        },
+        // {
+        //   text: 'Kullanıcı Ekle',
+        //   action: (): void => {
+        //     this.router.navigate(['/users/add-authority'])
+        //   },
+        //   className: "btn btn-info",
+        // },
         'pdf',
         'excel',
         'print',

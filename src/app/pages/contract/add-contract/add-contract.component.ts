@@ -1,22 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addMonthToDate } from 'src/app/helper/date.helper';
-import { UserIdHelper } from 'src/app/helper/user-id.helper';
 import { City } from 'src/app/models/city.interface';
 import { Facility } from 'src/app/models/facility.interface';
 import { Group } from 'src/app/models/group.interface';
-import { PaymentDuration } from 'src/app/models/payment-duration.interface';
 import { Product } from 'src/app/models/product.interface';
 import { User } from 'src/app/models/user.interface';
 import { ContractService } from 'src/app/services/contract.service';
 import { DependetDropdownService } from 'src/app/services/dependet-dropdown.service';
-import { PaymentDurationService } from 'src/app/services/payment-duration.service';
 import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
-import { duration } from 'src/assets/vendors/moment/moment';
-import { UsersModule } from '../../users/users.module';
-
 @Component({
   selector: 'app-add-contract',
   templateUrl: './add-contract.component.html',
@@ -44,7 +38,6 @@ export class AddContractComponent implements OnInit {
 
   constructor(
     private contractService: ContractService,
-    private paymentDurationService: PaymentDurationService,
     private productService: ProductService,
     private dependetDropdown: DependetDropdownService,
     private formBuilder: FormBuilder,
@@ -95,7 +88,6 @@ export class AddContractComponent implements OnInit {
         (res) => {
           alert('Kontrat Eklendi');
           this.router.navigate([`/user-contracts/${res.studentId}`]);
-          console.log(res);
         },
         (err) => {
           alert('Kontrat eklenirken bir hata oluştu!');
@@ -103,7 +95,6 @@ export class AddContractComponent implements OnInit {
       );
       this.addForm.reset();
     }
-    console.log(this.addForm.value);
   }
 
   fillCity() {
